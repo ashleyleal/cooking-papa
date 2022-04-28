@@ -20,7 +20,8 @@ ORANGE = (251, 199, 141)
 GREEN = (167, 214, 118)
 
 # Placeholder title text
-placeholder_title = pygame.image.load(r"images\cookingPapaPlaceholderTitle.png")
+placeholder_title = pygame.image.load("images/cookingPapaPlaceholderTitle.png")
+placeholder_title_rect = placeholder_title.get_rect()
 
 # Sets up display window (w x h)
 size_x = 500
