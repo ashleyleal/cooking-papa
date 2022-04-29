@@ -4,6 +4,7 @@ import math
 import time
 
 import module
+import button
 
 # Initialize pygame library
 pygame.init()
@@ -12,7 +13,7 @@ pygame.init()
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 
-    # Colour palette
+# Colour palette
 BLUE = (133, 203, 205)
 LIGHT_BLUE = (168, 222, 224)
 LIGHT_ORANGE = (249, 226, 174)
@@ -21,10 +22,12 @@ GREEN = (167, 214, 118)
 
 # Placeholder title text
 placeholder_title = pygame.image.load("images/cookingPapaPlaceholderTitle.png")
-placeholder_title_rect = placeholder_title.get_rect()
+
+# Placeholder button image
+placeholder_button = pygame.image.load("images/buttonPlaceholder.png")
 
 # Sets up display window (w x h)
-size_x = 500
+size_x = 700
 size_y = 500
 screen = pygame.display.set_mode((size_x, size_y))
 
@@ -34,8 +37,30 @@ pygame.display.set_caption("Cooking Papa")
 # Used to manage how fast the screen updates
 clock = pygame.time.Clock()
 
+# Initialize buttons here
+
+start_button = button.Button((size_x / 2) - 100, (size_y / 2), placeholder_button, 0.9)
+quit_button = button.Button((size_x / 2) - 100, (size_y / 2) + 100, placeholder_button, 0.9)
+
+def main_menu():
+    #main menu loop here
+    screen.fill(ORANGE) #screen fill for testing purposes only
+    screen.blit(pygame.transform.scale(placeholder_title, (450, 100)), ((size_x / 2) - 220, (size_y / 2) - 150))
+    if start_button.draw(screen):
+        print("Start game")
+        play()
+    if quit_button.draw(screen):
+        global running
+        running = False
+
+def play():
+    #maingame screen loop here
+    screen.fill(LIGHT_BLUE)
+
+# Variable to determine whether main game loop is running
 running = True
 
+# Game loop
 while running:
 
     for event in pygame.event.get():
@@ -55,10 +80,8 @@ while running:
         elif event.type == pygame.MOUSEBUTTONUP:
             print("click released")
 
-    # Fills window colour
-    screen.fill(LIGHT_ORANGE)
-    screen.blit(placeholder_title, (size_x/2, size_y/2))
-
+    main_menu()
+    
     # Updates display
     pygame.display.flip()
     clock.tick(60)
