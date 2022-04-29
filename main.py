@@ -52,7 +52,7 @@ def main_menu():
         print("Start game")
         play()
     if customize_button.draw(screen):
-        print("Customization menu")
+        customization_menu()
     if quit_button.draw(screen):
         global running
         running = False
@@ -60,6 +60,9 @@ def main_menu():
 def play():
     #maingame screen loop here
     screen.fill(LIGHT_BLUE)
+
+def customization_menu():
+    print("Customization menu")    
 
 # Variable to determine whether main game loop is running
 running = True
