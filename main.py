@@ -39,16 +39,20 @@ clock = pygame.time.Clock()
 
 # Initialize buttons here
 
-start_button = button.Button((size_x / 2) - 100, (size_y / 2), placeholder_button, 0.9)
-quit_button = button.Button((size_x / 2) - 100, (size_y / 2) + 100, placeholder_button, 0.9)
+start_button = button.Button((size_x / 2) - 80, (size_y / 2) - 50, placeholder_button, 0.8)
+customize_button = button.Button((size_x / 2) - 80, (size_y / 2) + 50, placeholder_button, 0.8)
+quit_button = button.Button((size_x / 2) - 80, (size_y / 2) + 150, placeholder_button, 0.8)
+
 
 def main_menu():
     #main menu loop here
     screen.fill(ORANGE) #screen fill for testing purposes only
-    screen.blit(pygame.transform.scale(placeholder_title, (450, 100)), ((size_x / 2) - 220, (size_y / 2) - 150))
+    screen.blit(pygame.transform.scale(placeholder_title, (450, 100)), ((size_x / 2) - 220, (size_y / 2) - 170))
     if start_button.draw(screen):
         print("Start game")
         play()
+    if customize_button.draw(screen):
+        print("Customization menu")
     if quit_button.draw(screen):
         global running
         running = False
