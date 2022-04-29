@@ -52,17 +52,20 @@ def main_menu():
         print("Start game")
         play()
     if customize_button.draw(screen):
-        customization_menu()
+        shop_menu()
     if quit_button.draw(screen):
         global running
         running = False
 
 def play():
     #maingame screen loop here
-    screen.fill(LIGHT_BLUE)
+    while True:
+        screen.fill(ORANGE)
 
-def customization_menu():
-    print("Customization menu")    
+        pygame.display.update()
+
+def shop_menu():
+    print("Shop menu")    
 
 # Variable to determine whether main game loop is running
 running = True
