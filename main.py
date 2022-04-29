@@ -20,6 +20,8 @@ LIGHT_ORANGE = (249, 226, 174)
 ORANGE = (251, 199, 141)
 GREEN = (167, 214, 118)
 
+ARIAL = pygame.font.SysFont(arial, size)
+
 # Placeholder title text
 placeholder_title = pygame.image.load("images/cookingPapaPlaceholderTitle.png")
 
@@ -37,12 +39,11 @@ pygame.display.set_caption("Cooking Papa")
 # Used to manage how fast the screen updates
 clock = pygame.time.Clock()
 
-# Initialize buttons here
+# Initialize main menu buttons here
 
 start_button = button.Button((size_x / 2) - 80, (size_y / 2) - 50, placeholder_button, 0.8)
 customize_button = button.Button((size_x / 2) - 80, (size_y / 2) + 50, placeholder_button, 0.8)
 quit_button = button.Button((size_x / 2) - 80, (size_y / 2) + 150, placeholder_button, 0.8)
-
 
 def main_menu():
     #main menu loop here
@@ -58,10 +59,10 @@ def main_menu():
         running = False
 
 def play():
-    #maingame screen loop here
     while True:
         screen.fill(ORANGE)
-
+        back = button.Button(50, 50, placeholder_button, 0.5)
+        module.draw_text(text, font, color, surface, x, y)
         pygame.display.update()
 
 def shop_menu():
