@@ -42,7 +42,7 @@ clock = pygame.time.Clock()
 # Universal return button
 return_button = Button(100, 50, placeholder_button, 0.5)
 
-
+# Main menu screen
 def main_menu():
 
     # Make variables global so that they can be modified from within this function
@@ -76,28 +76,42 @@ def main_menu():
 
     pygame.display.update()
 
+# Playing screen
 def play():
 
     # Make variables global so that they can be modified from within this function
     global in_menu, running, is_shopping, is_playing
     
+    # Fills screen with colour to give illusion of new screen
     screen.fill(BLUE)
     draw_text("Game started", NEXA_FONT, BLACK, screen, size_x/2, size_y/2)
 
+    # Play game states
+
+    if at_counter:
+        counter()
+    
+    elif in_kitchen:
+        kitchen
+
+    # Returns player to main menu when button is pressed
     if return_button.draw(screen):
         in_menu = True
         is_playing = False
 
     pygame.display.update()
 
+# Shop screen
 def shop_menu():
 
     # Make variables global so that they can be modified from within this function
     global in_menu, running, is_shopping, is_playing
     
+    # Fills screen with colour to give illusion of new screen
     screen.fill(GREEN)
     draw_text("Shop entered", NEXA_FONT, BLACK, screen, size_x/2, size_y/2)
 
+    # Returns player to main menu when button is pressed
     if return_button.draw(screen):
         
         in_menu = True
@@ -113,6 +127,17 @@ in_menu = True
 is_playing = False
 is_shopping = False
 
+# Functions for each play state
+def counter():
+    counter = pygame.draw.rect(screen, LIGHT_ORANGE, pygame.Rect(0, size_y / 2, size_x, size_y / 2))
+
+def kitchen():
+    pygame.draw.rect(screen, ORANGE, pygame.Rect(0,size_y / 2, size_x, size_y / 2))
+
+# Variables to determine which play state the game is in
+
+at_counter = True
+in_kitchen = False
 
 # Game loop
 while running:
