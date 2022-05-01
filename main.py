@@ -1,7 +1,6 @@
 # Import required libraries
 import pygame
 import math
-import time
 
 from module import draw_image, draw_text
 from button import Button
@@ -21,12 +20,13 @@ ORANGE = (251, 199, 141)
 GREEN = (167, 214, 118)
 
 NEXA_FONT = pygame.font.Font("assets/fonts/Nexa-Trial-Regular.ttf", 15)
+YOSTER_FONT = pygame.font.Font("assets/fonts/yoster.ttf", 50)
 
-# Placeholder title text
+# Load images
 placeholder_title = pygame.image.load("assets/images/titles/cookingPapaPlaceholderTitle.png")
-
-# Placeholder button image
-placeholder_button = pygame.image.load("assets/images/buttons/buttonPlaceholder.png")
+placeholder_button = pygame.image.load("assets/images/icons/buttonPlaceholder.png")
+return_arrow = pygame.image.load("assets/images/icons/return_arrow.png")
+gold_icon = pygame.image.load("assets/images/icons/coin.png")
 
 # Sets up display window (w x h)
 size_x = 1280
@@ -40,7 +40,7 @@ pygame.display.set_caption("Cooking Papa")
 clock = pygame.time.Clock()
 
 # Universal return button
-return_button = Button(100, 50, placeholder_button, 0.5)
+return_button = Button(50, 50, return_arrow, 5)
 
 # Main menu screen
 def main_menu():
@@ -84,7 +84,7 @@ def play():
     
     # Fills screen with colour to give illusion of new screen
     screen.fill(BLUE)
-    draw_text("Game started", NEXA_FONT, BLACK, screen, size_x/2, size_y/2)
+    draw_text("Game started", YOSTER_FONT, WHITE, screen, size_x/2, size_y/3)
 
     # Play game states
 
@@ -98,6 +98,8 @@ def play():
     if return_button.draw(screen):
         in_menu = True
         is_playing = False
+
+    draw_image(gold_icon, 5, screen, size_x - 150, size_y - 50)
 
     pygame.display.update()
 
