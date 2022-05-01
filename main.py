@@ -20,7 +20,7 @@ LIGHT_ORANGE = (249, 226, 174)
 ORANGE = (251, 199, 141)
 GREEN = (167, 214, 118)
 
-NEXA_FONT = ("assets/fonts/Nexa-Trial-Regular.ttf")
+NEXA_FONT = pygame.font.Font("assets/fonts/Nexa-Trial-Regular.ttf", 15)
 
 # Placeholder title text
 placeholder_title = pygame.image.load("assets/images/cookingPapaPlaceholderTitle.png")
@@ -29,8 +29,8 @@ placeholder_title = pygame.image.load("assets/images/cookingPapaPlaceholderTitle
 placeholder_button = pygame.image.load("assets/images/buttonPlaceholder.png")
 
 # Sets up display window (w x h)
-size_x = 700
-size_y = 500
+size_x = 1280
+size_y = 720
 screen = pygame.display.set_mode((size_x, size_y))
 
 # Sets the name of the window
@@ -39,41 +39,41 @@ pygame.display.set_caption("Cooking Papa")
 # Used to manage how fast the screen updates
 clock = pygame.time.Clock()
 
-# Initialize main menu buttons here
+# Variables to determine which state the game is in
+menu = True
+playing = False
+shopping = False
+
+# Initialize main menu buttons 
 
 start_button = button.Button((size_x / 2) - 80, (size_y / 2) - 50, placeholder_button, 0.8)
 customize_button = button.Button((size_x / 2) - 80, (size_y / 2) + 50, placeholder_button, 0.8)
 quit_button = button.Button((size_x / 2) - 80, (size_y / 2) + 150, placeholder_button, 0.8)
 
 def main_menu():
-    #main menu loop here
     screen.fill(ORANGE) #screen fill for testing purposes only
     screen.blit(pygame.transform.scale(placeholder_title, (450, 100)), ((size_x / 2) - 220, (size_y / 2) - 170))
     if start_button.draw(screen):
         print("Start game")
-        play()
+        menu = False
+        playing = True
     if customize_button.draw(screen):
-        shop_menu()
+        shopping = True
     if quit_button.draw(screen):
         global running
         running = False
 
 def play():
-    while True:
-        screen.fill(ORANGE)
-        back = button.Button(50, 50, placeholder_button, 0.5)
-        module.draw_text(text, font, color, surface, x, y)
-        pygame.display.update()
+    screen.fill(ORANGE)
+    back = button.Button(50, 50, placeholder_button, 0.5)
+    module.draw_text("Welcome to Cooking Papa", NEXA_FONT, BLACK, screen, size_x/2, size_y/2)
+    pygame.display.update()
 
 def shop_menu():
     print("Shop menu")    
 
 # Variable to determine whether main game loop is running
 running = True
-
-# Variables to determine which state the game is in
-playing = False
-shopping = False
 
 # Game loop
 while running:
@@ -95,7 +95,14 @@ while running:
         elif event.type == pygame.MOUSEBUTTONUP:
             print("click released")
 
-    main_menu()
+    if menu:
+        main_menu()
+
+    if playing:
+        play()
+
+    if shopping:
+        shop_menu()
     
     # Updates display
     pygame.display.flip()
