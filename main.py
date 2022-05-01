@@ -113,16 +113,19 @@ in_menu = True
 is_playing = False
 is_shopping = False
 
+
 # Game loop
 while running:
 
     for event in pygame.event.get():
-
+    
         if event.type == pygame.QUIT:
             running = False
 
-        # elif event.type == pygame.KEYDOWN:
-        #     print("button pressed")
+        elif event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_ESCAPE:
+                is_playing, is_shopping = False, False
+                in_menu = True
 
         # elif event.type == pygame.KEYUP:
         #     print("button released")
@@ -132,6 +135,8 @@ while running:
 
         # elif event.type == pygame.MOUSEBUTTONUP:
         #     print("click released")
+
+        
 
     if in_menu:
         main_menu()
