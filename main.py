@@ -95,7 +95,7 @@ def shop_menu():
     # Make variables global so that they can be modified from within this function
     global in_menu, running, is_shopping, is_playing
     
-    screen.fill(LIGHT_ORANGE)
+    screen.fill(GREEN)
     draw_text("Shop entered", NEXA_FONT, BLACK, screen, size_x/2, size_y/2)
 
     if return_button.draw(screen):
