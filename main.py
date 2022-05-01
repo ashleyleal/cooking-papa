@@ -20,13 +20,13 @@ LIGHT_ORANGE = (249, 226, 174)
 ORANGE = (251, 199, 141)
 GREEN = (167, 214, 118)
 
-ARIAL = pygame.font.SysFont(arial, size)
+NEXA_FONT = ("assets/fonts/Nexa-Trial-Regular.ttf")
 
 # Placeholder title text
-placeholder_title = pygame.image.load("images/cookingPapaPlaceholderTitle.png")
+placeholder_title = pygame.image.load("assets/images/cookingPapaPlaceholderTitle.png")
 
 # Placeholder button image
-placeholder_button = pygame.image.load("images/buttonPlaceholder.png")
+placeholder_button = pygame.image.load("assets/images/buttonPlaceholder.png")
 
 # Sets up display window (w x h)
 size_x = 700
@@ -70,6 +70,10 @@ def shop_menu():
 
 # Variable to determine whether main game loop is running
 running = True
+
+# Variables to determine which state the game is in
+playing = False
+shopping = False
 
 # Game loop
 while running:
