@@ -1,10 +1,10 @@
 import pygame, random
 
 def generate_customer():
-    # Load customer base
-    # Draw customer base
+    # Load customer base image
+    # Draw customer base image
     # Get customer base image rectangle
-    # Load clothing and accessories
+    # Load clothing and accessories images
     # Draw clothing and accessories according to customer base rectangle
     print()
 
