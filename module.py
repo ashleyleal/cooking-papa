@@ -12,3 +12,10 @@ def draw_image(image, scale, surface, x, y):
     imagerect.x, imagerect.y = image.get_width(), image.get_height()
     surface.blit(imagescaled, imagescaled.get_rect(center = (x,y)))
 
+def gradient_rect(window, top_colour, bottom_colour, target_rect):
+    # Draw a vertical-gradient filled rectangle covering <target_rect> 
+    colour_rect = pygame.Surface((2, 2))                                  
+    pygame.draw.line(colour_rect, top_colour, (0, 0), (1, 0))            
+    pygame.draw.line(colour_rect, bottom_colour, (0, 1), (1, 1))            
+    colour_rect = pygame.transform.smoothscale(colour_rect, (target_rect.width, target_rect.height)) 
+    window.blit(colour_rect, target_rect)
