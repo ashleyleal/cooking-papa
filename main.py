@@ -55,7 +55,7 @@ def main_menu():
 
     # Fill screen
     screen.fill(ORANGE)
-    gradient_rect(screen, ORANGE, BLUE, pygame.Rect(0, 0, size_x, size_y)) 
+    pygame.draw.rect(screen, LIGHT_BLUE, pygame.Rect(size_x - size_x / 2, 0, size_x / 2, size_y))
     
     # Draw Game title image
     draw_image(placeholder_title, 5, screen, size_x/2, 200)
