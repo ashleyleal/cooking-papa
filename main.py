@@ -79,8 +79,6 @@ def main_menu():
         global running
         running = False
 
-    screen.blit(pygame.transform.scale(game_canvas, (screen_x, screen_y)), (0,0))
-    pygame.display.update()
 
 # Playing screen
 def play():
@@ -107,8 +105,6 @@ def play():
 
     draw_image(gold_icon, 2, game_canvas, game_x - 75, game_y - 75)
 
-    screen.blit(pygame.transform.scale(game_canvas, (screen_x, screen_y)), (0,0))
-    pygame.display.update()
 
 # Shop screen
 def shop_menu():
@@ -127,8 +123,6 @@ def shop_menu():
         in_menu = True
         is_shopping = False
 
-    screen.blit(pygame.transform.scale(game_canvas, (screen_x, screen_y)), (0,0))
-    pygame.display.update()  
 
 # Variable to determine whether main game loop is running
 running = True
@@ -173,7 +167,6 @@ while running:
         #     print("click released")
 
         
-
     if in_menu:
         main_menu()
 
@@ -184,8 +177,8 @@ while running:
         shop_menu()
     
     # Updates display
-    # screen.blit(pygame.transform.scale(game_canvas, (screen_x, screen_y)), (0,0))
-    # pygame.display.flip()
+    screen.blit(pygame.transform.scale(game_canvas, (screen_x, screen_y)), (0,0))
+    pygame.display.flip()
     clock.tick(60)
 
 pygame.quit()

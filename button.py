@@ -1,3 +1,4 @@
+from hashlib import new
 import pygame
 
 # Button class
@@ -15,9 +16,13 @@ class Button():
         action = False
         # mouse pos
         mouse_pos = pygame.mouse.get_pos()
-        
-        # check mouseover and clicked conditions
-        if self.rect.collidepoint(mouse_pos):
+        print(mouse_pos)
+
+        # Creates a new rectangle that is compatible with the upscaled game_canvas
+        new_rect = pygame.Rect(self.rect.x * 2, self.rect.y * 2, self.rect.w * 2, self.rect.h * 2)
+
+        # Check mouseover and clicked conditions
+        if new_rect.collidepoint(mouse_pos):
             if pygame.mouse.get_pressed()[0] == 1 and self.clicked == False:
                 self.clicked = True
                 action = True
@@ -29,3 +34,5 @@ class Button():
         surface.blit(self.image, (self.rect.x, self.rect.y))
 
         return action
+
+    
