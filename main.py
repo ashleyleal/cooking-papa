@@ -2,8 +2,8 @@
 import pygame
 import math
 
-from module import draw_image, draw_text, gradient_rect
-from button import Button
+from module import *
+from button import *
 
 # Initialize pygame library
 pygame.init()
@@ -19,8 +19,7 @@ LIGHT_ORANGE = (249, 226, 174)
 ORANGE = (251, 199, 141)
 GREEN = (167, 214, 118)
 
-NEXA_FONT = pygame.font.Font("assets/fonts/Nexa-Trial-Regular.ttf", 15)
-YOSTER_FONT = pygame.font.Font("assets/fonts/yoster.ttf", 50)
+NEXA_FONT = pygame.font.Font("assets/fonts/Nexa-Trial-Regular.ttf", 20)
 
 # Load images
 placeholder_title = pygame.image.load("assets/images/titles/cookingPapaPlaceholderTitle.png")
@@ -30,7 +29,7 @@ gold_icon = pygame.image.load("assets/images/icons/coin.png")
 restaurant_counter = pygame.image.load("assets/images/images/restaurant_counter.png")
 
 # Native resolution of game
-game_x, game_y = 640, 360
+game_x, game_y = 320, 180
 game_canvas = pygame.Surface((game_x, game_y))
 
 # Sets up display window (w x h)
@@ -44,7 +43,7 @@ pygame.display.set_caption("Cooking Papa")
 clock = pygame.time.Clock()
 
 # Universal return button
-return_button = Button(25, 25, return_arrow, 2.5)
+return_button = Button(25, 25, return_arrow, 1)
 
 # Main menu screen
 def main_menu():
@@ -53,16 +52,16 @@ def main_menu():
     global in_menu, running, is_shopping, is_playing
 
     # Initialize main menu buttons 
-    start_button = Button((game_x / 2), (game_y / 2), placeholder_button, 0.5)
-    shop_button = Button((game_x / 2), (game_y / 2) + 50, placeholder_button, 0.5)
-    quit_button = Button((game_x / 2), (game_y / 2) + 100, placeholder_button, 0.5)
+    start_button = Button((game_x / 2), (game_y / 2), placeholder_button, 0.25)
+    shop_button = Button((game_x / 2), (game_y / 2) + 25, placeholder_button, 0.25)
+    quit_button = Button((game_x / 2), (game_y / 2) + 50, placeholder_button, 0.25)
 
     # Fill screen
     game_canvas.fill(ORANGE)
     pygame.draw.rect(game_canvas, LIGHT_BLUE, pygame.Rect(game_x - game_x / 2, 0, game_x / 2, game_y))
     
     # Draw Game title image
-    draw_image(placeholder_title, 2, game_canvas, game_x/2, 100)
+    draw_image(placeholder_title, 1, game_canvas, game_x/2, 50)
     
     # Actions when start button pressed
     if start_button.draw(game_canvas):
@@ -88,7 +87,7 @@ def play():
     
     # Fills screen with colour to give illusion of new screen
     game_canvas.fill(BLUE)
-    draw_text("Game started", YOSTER_FONT, WHITE, game_canvas, game_x/2, game_y/3)
+    draw_text("Game started", NEXA_FONT, WHITE, game_canvas, game_x/2, game_y/3)
 
     # Play game states
 
@@ -103,7 +102,7 @@ def play():
         in_menu = True
         is_playing = False
 
-    draw_image(gold_icon, 2, game_canvas, game_x - 75, game_y - 75)
+    draw_image(gold_icon, 2, game_canvas, game_x - 35, game_y - 35)
 
 
 # Shop screen
@@ -134,7 +133,11 @@ is_shopping = False
 
 # Functions for each play state
 def counter():
-    counter = draw_image(restaurant_counter, 1, game_canvas, game_x/2, 272)
+    # Draw GUI
+    counter = draw_image(restaurant_counter, 1, game_canvas, game_x/2, 100)
+    # Generate customer
+    # Generate order
+    # Button to start
 
 def kitchen():
     pygame.draw.rect(game_canvas, ORANGE, pygame.Rect(0,game_y / 2, game_x, game_y / 2))

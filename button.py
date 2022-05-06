@@ -16,10 +16,9 @@ class Button():
         action = False
         # mouse pos
         mouse_pos = pygame.mouse.get_pos()
-        print(mouse_pos)
 
         # Creates a new rectangle that is compatible with the upscaled game_canvas
-        new_rect = pygame.Rect(self.rect.x * 2, self.rect.y * 2, self.rect.w * 2, self.rect.h * 2)
+        new_rect = pygame.Rect(self.rect.x * 4, self.rect.y * 4, self.rect.w * 4, self.rect.h * 4)
 
         # Check mouseover and clicked conditions
         if new_rect.collidepoint(mouse_pos):
