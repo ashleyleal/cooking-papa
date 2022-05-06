@@ -4,6 +4,7 @@ import math
 
 from module import *
 from button import *
+from play import *
 
 # Initialize pygame library
 pygame.init()
@@ -43,7 +44,7 @@ pygame.display.set_caption("Cooking Papa")
 clock = pygame.time.Clock()
 
 # Universal return button
-return_button = Button(25, 25, return_arrow, 1)
+return_button = Button(25, 25, return_arrow, 0.5)
 
 # Main menu screen
 def main_menu():
@@ -134,6 +135,7 @@ is_shopping = False
 # Functions for each play state
 def counter():
     # Draw GUI
+    generate_customer(game_x/2, game_y/2, game_canvas)
     counter = draw_image(restaurant_counter, 1, game_canvas, game_x/2, 100)
     # Generate customer
     # Generate order
