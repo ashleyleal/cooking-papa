@@ -1,6 +1,10 @@
 import pygame, random
 
 def generate_customer():
+
+
+
+    # Choose random name
     # Load customer base image
     # Draw customer base image
     # Get customer base image rectangle
