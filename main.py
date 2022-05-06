@@ -27,11 +27,15 @@ placeholder_title = pygame.image.load("assets/images/titles/cookingPapaPlacehold
 placeholder_button = pygame.image.load("assets/images/icons/buttonPlaceholder.png")
 return_arrow = pygame.image.load("assets/images/icons/return_arrow.png")
 gold_icon = pygame.image.load("assets/images/icons/coin.png")
+restaurant_counter = pygame.image.load("assets/images/images/restaurant_counter.png")
+
+# Native resolution of game
+game_x, game_y = 640, 360
+game_canvas = pygame.Surface((game_x, game_y))
 
 # Sets up display window (w x h)
-size_x = 1280
-size_y = 720
-screen = pygame.display.set_mode((size_x, size_y))
+screen_x, screen_y = 1280, 720
+screen = pygame.display.set_mode((screen_x, screen_y))
 
 # Sets the name of the window
 pygame.display.set_caption("Cooking Papa")
@@ -40,7 +44,7 @@ pygame.display.set_caption("Cooking Papa")
 clock = pygame.time.Clock()
 
 # Universal return button
-return_button = Button(50, 50, return_arrow, 5)
+return_button = Button(25, 25, return_arrow, 2.5)
 
 # Main menu screen
 def main_menu():
@@ -49,32 +53,33 @@ def main_menu():
     global in_menu, running, is_shopping, is_playing
 
     # Initialize main menu buttons 
-    start_button = Button((size_x / 2), (size_y / 2), placeholder_button, 0.9)
-    shop_button = Button((size_x / 2), (size_y / 2) + 100, placeholder_button, 0.9)
-    quit_button = Button((size_x / 2), (size_y / 2) + 200, placeholder_button, 0.9)
+    start_button = Button((game_x / 2), (game_y / 2), placeholder_button, 0.5)
+    shop_button = Button((game_x / 2), (game_y / 2) + 50, placeholder_button, 0.5)
+    quit_button = Button((game_x / 2), (game_y / 2) + 100, placeholder_button, 0.5)
 
     # Fill screen
-    screen.fill(ORANGE)
-    pygame.draw.rect(screen, LIGHT_BLUE, pygame.Rect(size_x - size_x / 2, 0, size_x / 2, size_y))
+    game_canvas.fill(ORANGE)
+    pygame.draw.rect(game_canvas, LIGHT_BLUE, pygame.Rect(game_x - game_x / 2, 0, game_x / 2, game_y))
     
     # Draw Game title image
-    draw_image(placeholder_title, 5, screen, size_x/2, 200)
+    draw_image(placeholder_title, 2, game_canvas, game_x/2, 100)
     
     # Actions when start button pressed
-    if start_button.draw(screen):
+    if start_button.draw(game_canvas):
         in_menu = False
         is_playing = True
     
     # Actions when shop button pressed
-    if shop_button.draw(screen):
+    if shop_button.draw(game_canvas):
         in_menu = False
         is_shopping = True
     
     # Actions when quit button pressed
-    if quit_button.draw(screen):
+    if quit_button.draw(game_canvas):
         global running
         running = False
 
+    screen.blit(pygame.transform.scale(game_canvas, (screen_x, screen_y)), (0,0))
     pygame.display.update()
 
 # Playing screen
@@ -84,8 +89,8 @@ def play():
     global in_menu, running, is_shopping, is_playing
     
     # Fills screen with colour to give illusion of new screen
-    screen.fill(BLUE)
-    draw_text("Game started", YOSTER_FONT, WHITE, screen, size_x/2, size_y/3)
+    game_canvas.fill(BLUE)
+    draw_text("Game started", YOSTER_FONT, WHITE, game_canvas, game_x/2, game_y/3)
 
     # Play game states
 
@@ -96,12 +101,13 @@ def play():
         kitchen
 
     # Returns player to main menu when button is pressed
-    if return_button.draw(screen):
+    if return_button.draw(game_canvas):
         in_menu = True
         is_playing = False
 
-    draw_image(gold_icon, 5, screen, size_x - 150, size_y - 50)
+    draw_image(gold_icon, 2, game_canvas, game_x - 75, game_y - 75)
 
+    screen.blit(pygame.transform.scale(game_canvas, (screen_x, screen_y)), (0,0))
     pygame.display.update()
 
 # Shop screen
@@ -111,16 +117,17 @@ def shop_menu():
     global in_menu, running, is_shopping, is_playing
     
     # Fills screen with colour to give illusion of new screen
-    screen.fill(GREEN)
-    pygame.draw.rect(screen, ORANGE, pygame.Rect(size_x - size_x / 2, 0, size_x / 2, size_y))
-    draw_text("Shop entered", NEXA_FONT, BLACK, screen, size_x/2, size_y/2)
+    game_canvas.fill(GREEN)
+    pygame.draw.rect(game_canvas, ORANGE, pygame.Rect(game_x - game_x / 2, 0, game_x / 2, game_y))
+    draw_text("Shop entered", NEXA_FONT, BLACK, game_canvas, game_x/2, game_y/2)
 
     # Returns player to main menu when button is pressed
-    if return_button.draw(screen):
+    if return_button.draw(game_canvas):
         
         in_menu = True
         is_shopping = False
 
+    screen.blit(pygame.transform.scale(game_canvas, (screen_x, screen_y)), (0,0))
     pygame.display.update()  
 
 # Variable to determine whether main game loop is running
@@ -133,10 +140,10 @@ is_shopping = False
 
 # Functions for each play state
 def counter():
-    counter = pygame.draw.rect(screen, LIGHT_ORANGE, pygame.Rect(0, size_y / 2, size_x, size_y / 2))
+    counter = draw_image(restaurant_counter, 1, game_canvas, game_x/2, 272)
 
 def kitchen():
-    pygame.draw.rect(screen, ORANGE, pygame.Rect(0,size_y / 2, size_x, size_y / 2))
+    pygame.draw.rect(game_canvas, ORANGE, pygame.Rect(0,game_y / 2, game_x, game_y / 2))
 
 # Variables to determine which play state the game is in
 
@@ -177,7 +184,8 @@ while running:
         shop_menu()
     
     # Updates display
-    pygame.display.flip()
+    # screen.blit(pygame.transform.scale(game_canvas, (screen_x, screen_y)), (0,0))
+    # pygame.display.flip()
     clock.tick(60)
 
 pygame.quit()
