@@ -28,6 +28,7 @@ placeholder_button = pygame.image.load("assets/images/icons/buttonPlaceholder.pn
 return_arrow = pygame.image.load("assets/images/icons/return_arrow.png")
 gold_icon = pygame.image.load("assets/images/icons/coin.png")
 restaurant_counter = pygame.image.load("assets/images/images/restaurant_counter.png")
+kitchen_grill = pygame.image.load("assets/images/images/kitchen_grill.png")
 
 # Native resolution of game
 game_x, game_y = 320, 180
@@ -84,7 +85,7 @@ def main_menu():
 def play():
 
     # Make variables global so that they can be modified from within this function
-    global in_menu, running, is_shopping, is_playing
+    global in_menu, running, is_shopping, is_playing, in_kitchen, at_counter
     
     # Fills screen with colour to give illusion of new screen
     game_canvas.fill(BLUE)
@@ -96,12 +97,14 @@ def play():
         counter()
     
     elif in_kitchen:
-        kitchen
+        kitchen()
 
     # Returns player to main menu when button is pressed
     if return_button.draw(game_canvas):
         in_menu = True
         is_playing = False
+        in_kitchen = False
+        at_counter = True
 
     draw_image(gold_icon, 2, game_canvas, game_x - 35, game_y - 35)
 
@@ -134,15 +137,23 @@ is_shopping = False
 
 # Functions for each play state
 def counter():
+    global at_counter, in_kitchen
     # Draw GUI
     generate_customer(game_x/2, game_y/2, game_canvas)
     counter = draw_image(restaurant_counter, 1, game_canvas, game_x/2, 100)
+    take_order = Button((game_x / 3), (game_y / 3), placeholder_button, 0.25)
+
+    if take_order.draw(game_canvas):
+        at_counter = False
+        in_kitchen = True
+
     # Generate customer
     # Generate order
     # Button to start
 
 def kitchen():
     pygame.draw.rect(game_canvas, ORANGE, pygame.Rect(0,game_y / 2, game_x, game_y / 2))
+    grill = draw_image(kitchen_grill, 1, game_canvas, game_x/2, game_y/2)
 
 # Variables to determine which play state the game is in
 
