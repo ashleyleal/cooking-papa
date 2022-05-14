@@ -1,6 +1,6 @@
 from states.state import State
 from button import Button
-from assets.fontcolors import *
+from assets.assets import *
 
 class Gameplay(State):
 

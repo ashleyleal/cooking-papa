@@ -5,34 +5,44 @@ from states.main_menu import Main_Menu
 class Game: 
     
         def __init__(self):
+            
             pygame.init()
+            
+            # Configure window
             self.GAME_X, self.GAME_Y = 320, 180
             self.SCREEN_X, self.SCREEN_Y = 1280, 720
             self.game_canvas = pygame.Surface((self.GAME_X, self.GAME_Y))
             self.screen = pygame.display.set_mode((self.SCREEN_X, self.SCREEN_Y))
             pygame.display.set_caption("Cooking Papa")
+            
+            # Set state of game
             self.running, self.playing = True, True
             self.actions = {"menu": False, "start": False, "shop": False, "quit": False}
-            self.clock = pygame.time.Clock()
             self.state_stack = []
             self.load_states()
+            
+            self.clock = pygame.time.Clock()
 
         def game_loop(self):
+            # Loop while playing 
             while self.playing:
                 self.get_events()
                 self.update()
                 self.render()
 
         def get_events(self):
+            # Event processing loop
             for event in pygame.event.get():
                 if event.type == pygame.QUIT or self.actions["quit"]:
                     self.running = False
                     self.playing = False
 
+        # Update state
         def update(self):
             self.state_stack[-1].update(self.actions)
 
         def render(self):
+            # Change screen when state is changed
             self.state_stack[-1].render(self.game_canvas)
             self.screen.blit(pygame.transform.scale(self.game_canvas, (self.SCREEN_X, self.SCREEN_Y)), (0, 0))
             pygame.display.flip()

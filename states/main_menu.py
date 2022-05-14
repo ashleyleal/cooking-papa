@@ -1,6 +1,6 @@
 from states.state import State
 from button import Button
-from assets.fontcolors import *
+from assets.assets import *
 
 from states.shop_menu import Shop_Menu
 from states.gameplay import Gameplay
