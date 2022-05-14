@@ -13,8 +13,8 @@ class Gameplay(State):
             main_menu.enter_state()
 
     def render(self, surface):
-        surface.fill(BLUE)
-        self.game.draw_text(surface, "Game started", YOSTER_FONT, WHITE, self.game.GAME_X / 2, self.game.GAME_Y / 2)
+        surface.fill(WHISTLES_GOLD)
+        self.game.draw_text(surface, "Game started", YOSTER_FONT, MARBLE_WHITE, self.game.GAME_X / 2, self.game.GAME_Y / 2)
         self.game.draw_image(restaurant_counter, 1, surface, self.game.GAME_X / 2, 100)
 
         if return_button.draw(surface):

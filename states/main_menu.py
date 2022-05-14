@@ -23,8 +23,8 @@ class Main_Menu(State):
         self.game.reset_keys()
 
     def render(self, surface):
-        surface.fill(ORANGE)
-        pygame.draw.rect(surface, LIGHT_BLUE, pygame.Rect(self.game.GAME_X - self.game.GAME_X / 2, 0, self.game.GAME_X / 2, self.game.GAME_Y))
+        surface.fill(BLUE_SONKI)
+        #pygame.draw.rect(surface, LIGHT_BLUE, pygame.Rect(self.game.GAME_X - self.game.GAME_X / 2, 0, self.game.GAME_X / 2, self.game.GAME_Y))
         self.game.draw_image(placeholder_title, 1, surface, self.game.GAME_X / 2, 50)
         
         self.start_button = Button((self.game.GAME_X / 2), (self.game.GAME_Y / 2), placeholder_button, 0.25)
