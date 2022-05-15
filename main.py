@@ -6,6 +6,22 @@ Known issues
 
 """
 
+"""
+To do
+
+- Add transition screen between states 
+- Learn how to implement music
+- Burger cooking
+- Pizza cooking
+- Stew cooking
+- Other food I don't remember
+- Cooking mechanics rating (requires time delay)
+- Shop
+- Music and sound
+- Saving data locally on player's game
+
+"""
+
 import pygame, math
 
 from states.main_menu import Main_Menu
