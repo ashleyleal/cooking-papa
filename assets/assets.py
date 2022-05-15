@@ -38,7 +38,11 @@ NEXA_FONT = pygame.font.Font("assets/fonts/Nexa-Trial-Regular.ttf", 15)
 DAYDREAM_FONT = pygame.font.Font("assets/fonts/Daydream.ttf", 15)
 YOSTER_FONT = pygame.font.Font("assets/fonts/yoster.ttf", 15)
 
-placeholder_title = pygame.image.load("assets/images/titles/cookingPapaPlaceholderTitle.png")
+game_logo = pygame.image.load("assets/images/titles/cookingPapaPlaceholderTitle.png")
+play_button = pygame.image.load("assets/images/icons/play_button.png")
+shop_button = pygame.image.load("assets/images/icons/shop_button.png")
+quit_button = pygame.image.load("assets/images/icons/quit_button.png")
+
 placeholder_button = pygame.image.load("assets/images/icons/buttonPlaceholder.png")
 return_arrow = pygame.image.load("assets/images/icons/return_arrow.png")
 gold_icon = pygame.image.load("assets/images/icons/coin.png")
