@@ -52,7 +52,7 @@ class Game:
         self.clock.tick(60)
 
     def draw_text(self, surface, text, font, color, px, py):
-        text_obj = font.render(text, True, color)
+        text_obj = font.render(text, False, color)
         text_rect = text_obj.get_rect()
         text_rect.center = (px, py)
         surface.blit(text_obj, text_rect)

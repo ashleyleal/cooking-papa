@@ -37,6 +37,7 @@ PURPLE_STONE = (95, 85, 106)
 NEXA_FONT = pygame.font.Font("assets/fonts/Nexa-Trial-Regular.ttf", 15)
 DAYDREAM_FONT = pygame.font.Font("assets/fonts/Daydream.ttf", 15)
 YOSTER_FONT = pygame.font.Font("assets/fonts/yoster.ttf", 15)
+MARIO_FONT = pygame.font.Font("assets/fonts/Mario-Kart-DS.ttf", 20)
 
 game_logo = pygame.image.load("assets/images/titles/cookingPapaPlaceholderTitle.png")
 play_button = pygame.image.load("assets/images/icons/play_button.png")
@@ -49,4 +50,4 @@ gold_icon = pygame.image.load("assets/images/icons/coin.png")
 restaurant_counter = pygame.image.load("assets/images/images/restaurant_counter.png")
 kitchen_grill = pygame.image.load("assets/images/images/kitchen_grill.png")
 
-return_button = Button(25, 25, return_arrow, 0.5)
+return_button = Button(20, 20, return_arrow, 1)
