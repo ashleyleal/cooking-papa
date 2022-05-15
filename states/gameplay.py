@@ -68,9 +68,42 @@ class Gameplay(State):
 
     def cook_burger(self, surface):
 
+        # create accumulator variable for performance rating
+        # fill screen
+
         surface.fill(FANCY_MOSS)
         self.game.draw_image(kitchen_grill, 1, surface, self.game.GAME_X / 4, self.game.GAME_Y / 2)
         self.game.draw_image(raw_patty, 1, surface, self.game.GAME_X / 4, 135)
+
+
+    def cook_patty(self, surface):
+        pass
+
+        # create variable for performance rating
+        # define variable for position of cooking arrow
+        # define velocity of cooking arrow
+        #draw grill
+        #draw cooking bar and arrow
+        #draw raw patty
+        #if arrow reaches middle draw cooked patty
+        # if arrow reaches red draw burned patty
+        # when player clicks, set velocity to 0
+        # if player clicks when position is in blue or red area, 1 point to accumulator
+        # if yellow area, 2 points
+        # if green area, 3 points
+        # return points
+
+
+    def cut_tomato(self, surface):
+
+        # create variable for performance rating
+        # draw counter and cutting board
+        # draw whole tomato
+
+        pass
+
+    def assemble_burger(self, surface):
+        pass
 
 
     def cook_pizza(self, surface):
