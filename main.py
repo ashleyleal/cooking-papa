@@ -2,6 +2,7 @@
 Known issues
 
 - Buttons don't lose functionality after screen is cleared
+- Don't know how to implement time delays
 
 """
 
