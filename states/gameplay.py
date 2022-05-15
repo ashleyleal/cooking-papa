@@ -70,8 +70,8 @@ class Gameplay(State):
 
         # create accumulator variable for performance rating
         # fill screen
-        cook_patty(surface)
-        cut_tomato(surface)
+        self.cook_patty(surface)
+        self.cut_tomato(surface)
 
         surface.fill(FANCY_MOSS)
         self.game.draw_image(kitchen_grill, 1, surface, self.game.GAME_X / 4, self.game.GAME_Y / 2)
@@ -79,6 +79,7 @@ class Gameplay(State):
 
 
     def cook_patty(self, surface):
+
         pass
 
         # create variable for performance rating

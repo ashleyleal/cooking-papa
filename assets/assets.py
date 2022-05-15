@@ -56,6 +56,7 @@ restaurant_counter = pygame.image.load("assets/images/images/restaurant_counter.
 kitchen_grill = pygame.image.load("assets/images/images/kitchen_grill.png")
 
 # Burger
+burger = pygame.image.load("assets/images/images/burger.png")
 raw_patty = pygame.image.load("assets/images/images/raw_burger_patty.png")
 cooked_patty = pygame.image.load("assets/images/images/cooked_burger_patty.png")
 burned_patty = pygame.image.load("assets/images/images/burned_burger_patty.png")
