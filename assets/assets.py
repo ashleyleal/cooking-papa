@@ -2,6 +2,7 @@ import pygame
 from button import Button
 
 pygame.font.init()
+pygame.mixer.init()
 
 MARBLE_WHITE = (242, 240, 229)
 SILVER_BULLET = (184, 181, 185)
@@ -32,7 +33,6 @@ FANCY_MOSS = (178, 180, 126)
 KASHMIR_PINK = (237, 200, 196)
 CARNATION_ROSE = (207, 138, 203)
 PURPLE_STONE = (95, 85, 106)
-
 
 NEXA_FONT = pygame.font.Font("assets/fonts/Nexa-Trial-Regular.ttf", 15)
 DAYDREAM_FONT = pygame.font.Font("assets/fonts/Daydream.ttf", 15)

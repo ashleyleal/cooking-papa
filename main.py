@@ -1,6 +1,7 @@
 import pygame, math
 
 from states.main_menu import Main_Menu
+from assets.assets import *
 
 class Game: 
     
@@ -19,7 +20,7 @@ class Game:
         
         # Set state of game
         self.running, self.playing = True, True
-        self.actions = {"menu": False, "start": False, "shop": False, "quit": False, "kitchen": False}
+        self.actions = {"menu": False, "start": False, "shop": False, "quit": False}
         self.state_stack = []
         self.load_states()
         
@@ -68,7 +69,7 @@ class Game:
         pygame.draw.line(color_rect, top_color, (0, 0), (1, 0))            
         pygame.draw.line(color_rect, bottom_color, (0, 1), (1, 1))
         color_rect = pygame.transform.smoothscale(color_rect, (target_rect.width, target_rect.height))
-        surface.blit(color_rect, target_rect)  
+        surface.blit(color_rect, target_rect)
 
     def load_states(self):
         self.main_menu = Main_Menu(self)
