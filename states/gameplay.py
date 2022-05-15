@@ -21,6 +21,11 @@ class Gameplay(State):
         if return_button.draw(surface):
             self.game.actions["menu"] = True 
 
+        if check_button.draw(surface):
+            if self.generate_order() == "Burger":
+                self.cook_burger(surface)
+
+
     def generate_order(self):
         possible_recipes = {
 
@@ -28,17 +33,17 @@ class Gameplay(State):
                 "Cook Patty": "Wait unti the bar reaches the middle to ensure that the patty is cooked.",
                 "Slice Tomato": "Click two points to make a slice.",
                 "Assemble Burger": "Put the ingredients of the burger together"
-            },
+            }
             
-            "Pizza": {
-                "Roll Dough": "Scroll your mouse to move the rolling pin back and forth until the dough is rolled.",
-                "Add Toppings": "Drag the toppings to the pizza.",
-                "Place in Oven": "Put the pizza in the oven"
-            },
+            #"Pizza": {
+               # "Roll Dough": "Scroll your mouse to move the rolling pin back and forth until the dough is rolled.",
+               # "Add Toppings": "Drag the toppings to the pizza.",
+              #  "Place in Oven": "Put the pizza in the oven"
+           # },
 
-            "Stew": {
+           # "Stew": {
                 #Instructions
-            },
+           # },
         }
 
         return(random.choice(list(possible_recipes.keys())))
@@ -47,5 +52,10 @@ class Gameplay(State):
     def generate_customer(self):
         possible_customers = []
         # selected customer is a random choice of the possible customers
+
+    def cook_burger(self, surface):
+
+        surface.fill(FANCY_MOSS)
+        self.game.draw_image(kitchen_grill, 1, surface, self.game.GAME_X / 2, 100)
 
 
