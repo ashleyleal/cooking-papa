@@ -34,11 +34,13 @@ KASHMIR_PINK = (237, 200, 196)
 CARNATION_ROSE = (207, 138, 203)
 PURPLE_STONE = (95, 85, 106)
 
+# Fonts
 NEXA_FONT = pygame.font.Font("assets/fonts/Nexa-Trial-Regular.ttf", 15)
 DAYDREAM_FONT = pygame.font.Font("assets/fonts/Daydream.ttf", 15)
 YOSTER_FONT = pygame.font.Font("assets/fonts/yoster.ttf", 15)
 MARIO_FONT = pygame.font.Font("assets/fonts/Mario-Kart-DS.ttf", 20)
 
+# Main Menu Assets
 game_logo = pygame.image.load("assets/images/titles/cookingPapaPlaceholderTitle.png")
 play_button = pygame.image.load("assets/images/icons/play_button.png")
 shop_button = pygame.image.load("assets/images/icons/shop_button.png")
@@ -48,8 +50,14 @@ placeholder_button = pygame.image.load("assets/images/icons/buttonPlaceholder.pn
 return_arrow = pygame.image.load("assets/images/icons/return_arrow.png")
 gold_icon = pygame.image.load("assets/images/icons/coin.png")
 check_mark = pygame.image.load("assets/images/icons/check_mark.png")
+
+# Kitchen assets
 restaurant_counter = pygame.image.load("assets/images/images/restaurant_counter.png")
 kitchen_grill = pygame.image.load("assets/images/images/kitchen_grill.png")
 
+# Burger
+raw_burger_patty = pygame.image.load("assets/images/images/raw_burger_patty.png")
+
+# Reocurring buttons
 return_button = Button(20, 20, return_arrow, 1)
 check_button = Button(300, 20, check_mark, 1)

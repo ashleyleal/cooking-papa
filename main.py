@@ -1,3 +1,10 @@
+"""
+Known issues
+
+- Buttons don't lose functionality after screen is cleared
+
+"""
+
 import pygame, math
 
 from states.main_menu import Main_Menu
@@ -20,7 +27,7 @@ class Game:
         
         # Set state of game
         self.running, self.playing = True, True
-        self.actions = {"menu": False, "start": False, "shop": False, "quit": False}
+        self.actions = {"menu": False, "start": False, "shop": False, "quit": False, "recipe": False}
         self.state_stack = []
         self.load_states()
         
@@ -83,6 +90,10 @@ if __name__ == "__main__":
     game = Game()
     while game.running:
         game.game_loop()
+
+
+
+
 
     
         
