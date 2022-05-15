@@ -56,7 +56,15 @@ restaurant_counter = pygame.image.load("assets/images/images/restaurant_counter.
 kitchen_grill = pygame.image.load("assets/images/images/kitchen_grill.png")
 
 # Burger
-raw_burger_patty = pygame.image.load("assets/images/images/raw_burger_patty.png")
+raw_patty = pygame.image.load("assets/images/images/raw_burger_patty.png")
+cooked_patty = pygame.image.load("assets/images/images/cooked_burger_patty.png")
+burned_patty = pygame.image.load("assets/images/images/burned_burger_patty.png")
+top_bun = pygame.image.load("assets/images/images/top_burger_bun.png")
+bottom_bun = pygame.image.load("assets/images/images/bottom_burger_bun.png")
+sliced_tomato = pygame.image.load("assets/images/images/burger_sliced_tomato.png")
+whole_tomato = pygame.image.load("assets/images/images/burger_whole_tomato.png")
+lettuce = pygame.image.load("assets/images/images/burger_lettuce.png")
+cheese = pygame.image.load("assets/images/images/burger_cheese.png")
 
 # Reocurring buttons
 return_button = Button(20, 20, return_arrow, 1)

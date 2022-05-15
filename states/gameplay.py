@@ -70,7 +70,7 @@ class Gameplay(State):
 
         surface.fill(FANCY_MOSS)
         self.game.draw_image(kitchen_grill, 1, surface, self.game.GAME_X / 4, self.game.GAME_Y / 2)
-        self.game.draw_image(raw_burger_patty, 1, surface, self.game.GAME_X / 4, 135)
+        self.game.draw_image(raw_patty, 1, surface, self.game.GAME_X / 4, 135)
 
 
     def cook_pizza(self, surface):
