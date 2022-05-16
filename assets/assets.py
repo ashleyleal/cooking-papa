@@ -55,6 +55,8 @@ check_mark = pygame.image.load("assets/images/icons/check_mark.png")
 restaurant_counter = pygame.image.load("assets/images/images/restaurant_counter.png")
 kitchen_grill = pygame.image.load("assets/images/images/kitchen_grill.png")
 
+cooking_bar = pygame.image.load("assets/images/images/cooking_bar.png")
+
 # Burger
 burger = pygame.image.load("assets/images/images/burger.png")
 raw_patty = pygame.image.load("assets/images/images/raw_burger_patty.png")
