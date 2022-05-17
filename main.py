@@ -3,6 +3,7 @@ Known issues
 
 - Buttons don't lose functionality after screen is cleared
 - Don't know how to implement time delays
+    - time delays must be added outside of the game loops
 
 """
 
@@ -22,7 +23,7 @@ To do
 
 """
 
-import pygame, math
+import pygame, math, time
 
 from states.main_menu import Main_Menu
 from assets.assets import *
@@ -102,6 +103,12 @@ class Game:
     def reset_keys(self):
         for action in self.actions:
             self.actions[action] = False
+
+    def transition_screen(self):
+        current_time = pygame.time.get_ticks()
+        transition_time = current_time + 5000
+        while current_time < transition_time:
+            pygame.draw.rect(self.game_canvas, MARBLE_WHITE, (0, 0, self.GAME_X, self.GAME_Y))
 
 if __name__ == "__main__":
     game = Game()

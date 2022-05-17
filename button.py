@@ -34,4 +34,14 @@ class Button():
 
         return action
 
+    def hover(self):
+        # Increase scale of button when mouse pos is the same as button rect position
+
+        # Set instance variable for scale
+        # Set instance varibale for button rect
+        # Get mouse pos
+        # If mouse pos is equal to button rect coordinates: 
+            # Multiply scale by a factor of 3
+        pass
+
     
