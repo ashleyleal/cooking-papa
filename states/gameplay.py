@@ -18,7 +18,7 @@ class Gameplay(State):
 
         if actions["recipe"]:
             self.selected_recipe = self.generate_order()
-            pygame.time.delay(5000)
+            pygame.time.delay(1000)
             self.current_recipe = self.selected_recipe
 
     def render(self, surface):
@@ -78,6 +78,7 @@ class Gameplay(State):
 
     def show_order(self, surface):
         self.game.draw_image
+
 
     def generate_customer(self, surface):
         possible_customers = []

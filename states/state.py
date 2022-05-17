@@ -14,6 +14,7 @@ class State:
         if len(self.game.state_stack) > 1:
             self.previous_state = self.game.state_stack[-1]
         self.game.state_stack.append(self)
+        self.game.transition_screen()
 
     def exit_state(self):
         self.game.state.state_stack.pop()

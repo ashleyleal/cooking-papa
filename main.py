@@ -108,7 +108,8 @@ class Game:
         current_time = pygame.time.get_ticks()
         transition_time = current_time + 5000
         while current_time < transition_time:
-            pygame.draw.rect(self.game_canvas, MARBLE_WHITE, (0, 0, self.GAME_X, self.GAME_Y))
+            print("Transition happening")
+            # Infinite loop error (revisit later)
 
 if __name__ == "__main__":
     game = Game()
