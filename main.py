@@ -10,7 +10,7 @@ Known issues
 """
 To do
 
-- Add transition screen between states 
+- Add transition screen between states (in progress)
 - Learn how to implement music
 - Burger cooking
 - Pizza cooking
@@ -45,7 +45,7 @@ class Game:
         
         # Set state of game
         self.running, self.playing = True, True
-        self.actions = {"menu": False, "start": False, "shop": False, "quit": False, "recipe": False}
+        self.actions = {"menu": False, "start": False, "shop": False, "quit": False, "recipe": False, "fade": False}
         self.state_stack = []
         self.load_states()
         
@@ -104,13 +104,20 @@ class Game:
         for action in self.actions:
             self.actions[action] = False
 
-    def transition_screen(self):
-        current_time = pygame.time.get_ticks()
-        transition_time = current_time + 5000
-        while current_time < transition_time:
-            print("Transition happening")
-            # Infinite loop error (revisit later)
+    def fade_screen(self, surface):
+        fade = pygame.Surface((self.GAME_X, self.GAME_Y))
+        fade.fill((0,0,0,1))
+        alpha_key = 1
+        while alpha_key <= 255:
+            self.surface.blit(fade, self.surface.get_rect())
+            alpha_key += 1
+            pygame.time.delay(10000)
 
+    def draw_countdown(self, surface):
+        for i in range(3):
+            self.draw_text(surface, str(i), MARIO_FONT, MARBLE_WHITE, self.GAME_X/2, self.GAME_Y/2)
+            pygame.time.delay(1000)
+            
 if __name__ == "__main__":
     game = Game()
     while game.running:

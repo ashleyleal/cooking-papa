@@ -12,6 +12,7 @@ class Main_Menu(State):
         State.__init__(self, game)
 
     def update(self, actions):
+        super().update(actions)
         if actions["shop"]:
             new_state = Shop_Menu(self.game)
             new_state.enter_state()

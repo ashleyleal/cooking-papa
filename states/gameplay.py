@@ -89,18 +89,14 @@ class Gameplay(State):
 
         # create accumulator variable for performance rating (outside of loop)
         # fill screen
+        surface.fill(FANCY_MOSS)
         self.cook_patty(surface)
         self.cut_tomato(surface)
 
-        surface.fill(FANCY_MOSS)
+    def cook_patty(self, surface):
         self.game.draw_image(kitchen_grill, 1, surface, self.game.GAME_X / 4, self.game.GAME_Y / 2)
         self.game.draw_image(cooking_bar, 1, surface, self.game.GAME_X / 4, self.game.GAME_Y / 4)
         self.game.draw_image(raw_patty, 1, surface, self.game.GAME_X / 4, 135)
-
-
-    def cook_patty(self, surface):
-
-        pass
 
         # create variable for performance rating
         # define variable for position of cooking arrow
