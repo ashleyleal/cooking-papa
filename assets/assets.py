@@ -1,3 +1,5 @@
+# Purpose: Load assets and buttons to keep main program and class programs uncluttered
+
 import pygame
 from button import Button
 

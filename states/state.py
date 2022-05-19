@@ -1,3 +1,5 @@
+# Purpose: creates new State class that determines behavior for each state
+
 from assets.assets import *
 
 class State:

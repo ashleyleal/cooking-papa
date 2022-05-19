@@ -1,3 +1,4 @@
+# Purpose: Button class that handles behaviour for all clickable UI
 import pygame
 
 # Button class

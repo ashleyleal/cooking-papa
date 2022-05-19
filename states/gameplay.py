@@ -1,3 +1,5 @@
+# Purpose: Gameplay child class that inherits from State class 
+
 import random, time
 from states.state import State
 from button import Button

@@ -1,3 +1,5 @@
+# Purpose: Shop_Menu child class that inherits from State class 
+
 from states.state import State
 from button import Button
 from assets.assets import *

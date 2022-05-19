@@ -1,3 +1,5 @@
+# Purpose: Main_Menu child class that inherits from State class, provides pathway to switch into other classes 
+
 from states.state import State
 from button import Button
 from assets.assets import *
