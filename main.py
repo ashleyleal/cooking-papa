@@ -17,7 +17,6 @@ To do
 - Burger cooking
 - Pizza cooking
 - Stew cooking
-- Other food I don't remember
 - Cooking mechanics rating (requires time delay)
 - Shop
 - Music and sound

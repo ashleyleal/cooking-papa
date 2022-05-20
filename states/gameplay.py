@@ -61,20 +61,21 @@ class Gameplay(State):
                 "Roll Dough": "Scroll your mouse to move the rolling pin back and forth until the dough is rolled.",
                 "Add Toppings": "Drag the toppings to the pizza.",
                 "Place in Oven": "Put the pizza in the oven"
+            },
+
+            "Stew": {
+                "Cut vegetables": "",
+                "": "",
+                "": "",
+            },
+
+            "Fried Chicken": {
+                "": "",
+                "": "",
+                "": "",
+        
             }
-
         }
-
-         #   "Stew": {
-           #     "Cut vegetables": "",
-            #    "": "",
-             #   "": "",
-           # },
-
-          #  "Fried Chicken": {
-           #     "": "",
-            #    "": "",
-             #   "": "",
 
         return(random.choice(list(possible_recipes.keys())))
 
