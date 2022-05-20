@@ -61,6 +61,7 @@ restaurant_counter = pygame.image.load("assets/images/images/restaurant_counter.
 kitchen_grill = pygame.image.load("assets/images/images/kitchen_grill.png")
 
 cooking_bar = pygame.image.load("assets/images/images/cooking_bar.png")
+speech_bubble = pygame.image.load("assets/images/icons/speech_bubble.png")
 
 # Burger
 burger = pygame.image.load("assets/images/images/burger.png")
