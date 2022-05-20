@@ -5,11 +5,21 @@ Pseudocode for the logic, not actual code so do not use in program
 
 # init 
 
+    # generate_order: choose a random order out of the possible actions, must be generated outside of the render loop
+
+        Dictionary that contains all the possible recipes and the instructions
+            Nested dictionary within each that shows detailed descriptions for each instruction
+
+    # generate_customer: choose one random customer of the possible customer images, must be generated outside of the render loop  
+
+        customer_images = list of all possible customer images
+        choose random in customer_images
+
     # Creates the variable for the selected customer to be generated later
-    selected_customer = None
+    selected_customer = generate_customer()
 
     # Creates the variable for the selected recipe to be generated later
-    selected_recipe = None
+    selected_recipe = generate_order()
 
     # Signals when the player has confirmed the customer's order to start the game
     enter_kitchen = False
@@ -21,56 +31,57 @@ Pseudocode for the logic, not actual code so do not use in program
         enter main menu state
 
     if action Recipe:
-        Generate the customer's order and save in selected_recipe
-        # Must find way to only activate this once per customer
+        enter_kitchen = True
 
 # render: loop that continuously updates the rendered screen
 
-    Clear screen
-    Draw selected_customer
-    Draw speech_bubble icon beside generated_customer
-    show_order()
-    Draw confirm_button
-    Draw cancel_button
-    Draw restaurant_counter
+    # show_order: take the generated order and draw the appropriate image inside of the speech bubble
 
-    if return_button is pressed:
-        action Menu = True
+        position = (px, py) # To be determined
 
-    if confirm_button is pressed:
         if selected_recipe == burger:
-            cook_burger()
+            draw burger at position
+
         elif selected_recipe == pizza:
-            cook_pizza()
+            draw pizza at position
+
         elif selected_recipe == stew:
-            cook_stew
-        elif selected_recipe == fried_chicken:game
+            draw stew at position
 
-# generate_order: choose a random order out of the possible actions, must be generated outside of the render loop
+        elif selected_recipe == fried chicken:
+            draw fried chicken at position
 
-    Dictionary that contains all the possible recipes and the instructions
-        Nested dictionary within each that shows detailed descriptions for each instruction
+    if not enter_kitchen:
+        Clear screen
+        Draw selected_customer
+        Draw speech_bubble icon beside generated_customer
+        show_order()
+        Draw confirm_button
+        Draw cancel_button
+        Draw restaurant_counter
 
-# show_order: take the generated order and draw the appropriate image inside of the speech bubble
+        if return_button is pressed:
+            action Menu = True
 
-    position = (px, py) # To be determined
+        if confirm_button is pressed:
+        action Recipe = True
+    
+            if selected_recipe == burger:
+                cook_burger()
+            elif selected_recipe == pizza:
+                cook_pizza()
+            elif selected_recipe == stew:
+                cook_stew()
+            elif selected_recipe == fried_chicken:
+                cook_chicken()
 
-    if selected_recipe == burger:
-        draw burger at position
 
-    elif selected_recipe == pizza:
-        draw pizza at position
+        
 
-    elif selected_recipe == stew:
-        draw stew at position
 
-    elif selected_recipe == fried chicken:
-        draw fried chicken at position
 
-# generate_customer: choose one random customer of the possible customer images, must be generated outside of the render loop  
 
-    customer_images = list of all possible customer images
-    choose random in customer_images
+
 
 #
     

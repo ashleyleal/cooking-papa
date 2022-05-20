@@ -1,6 +1,8 @@
 # Purpose: Button class that handles behaviour for all clickable UI
 import pygame
 
+# Add button deleted attribute to solve issue of buttons not being cleared out
+
 # Button class
 class Button():
     def __init__(self, x, y, image, scale):
