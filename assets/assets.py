@@ -63,6 +63,12 @@ kitchen_grill = pygame.image.load("assets/images/images/kitchen_grill.png")
 cooking_bar = pygame.image.load("assets/images/images/cooking_bar.png")
 speech_bubble = pygame.image.load("assets/images/icons/speech_bubble.png")
 
+# Order icons
+burger_icon = pygame.image.load("assets/images/icons/burger_icon.png")
+pizza_icon = pygame.image.load("assets/images/icons/pizza_icon.png")
+chicken_icon = pygame.image.load("assets/images/icons/chicken_icon.png")
+stew_icon = pygame.image.load("assets/images/icons/stew_icon.png")
+
 # Burger
 burger = pygame.image.load("assets/images/images/burger.png")
 raw_patty = pygame.image.load("assets/images/images/raw_burger_patty.png")
