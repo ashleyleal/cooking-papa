@@ -62,7 +62,9 @@ customer_3 = pygame.image.load("assets/images/images/customer_3.png")
 # Kitchen assets
 restaurant_counter = pygame.image.load("assets/images/images/restaurant_counter.png")
 kitchen_grill = pygame.image.load("assets/images/images/kitchen_grill.png")
+cutting_board = pygame.image.load("assets/images/images/kitchen_cutting_board.png")
 
+instruction_panel = pygame.image.load("assets/images/images/instruction_panel.png")
 cooking_bar = pygame.image.load("assets/images/images/cooking_bar.png")
 speech_bubble = pygame.image.load("assets/images/icons/speech_bubble.png")
 

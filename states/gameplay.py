@@ -1,3 +1,12 @@
+# Purpose: Gameplay child class that inherits from State class, controls main game mechanics such as customer and recipe generating and cooking 
+
+"""
+To do list:
+
+- Add return button to each cooking screen that goes back to restaurant
+
+"""
+
 import random, time
 from states.state import State
 from button import Button
@@ -9,7 +18,7 @@ class Gameplay(State):
         State.__init__(self, game)
         
         self.set_order()
-        self.enter_kitchen = False
+        self.kitchen_entered = False
 
     def generate_order(self): 
         possible_recipes = {
@@ -52,9 +61,13 @@ class Gameplay(State):
         if actions["recipe"]:
             self.set_order()
 
+        if actions["restaurant"]:
+            new_state = Gameplay(self.game)
+            new_state.enter_state()
+
     def render(self, surface):
 
-        if not self.enter_kitchen:
+        if not self.kitchen_entered:
             surface.fill(WHISTLES_GOLD)
             self.game.draw_image(self.selected_customer, 1, surface, self.game.GAME_X / 2, 100)
             self.game.draw_image(restaurant_counter, 1, surface, self.game.GAME_X / 2, 105)
@@ -68,24 +81,21 @@ class Gameplay(State):
                 self.game.actions["recipe"] = True
 
             if confirm_order_button.draw(surface):
-                self.enter_kitchen = True
+                self.kitchen_entered = True
 
                 if self.selected_recipe == "Burger":
                     self.cook_burger(surface)
 
                 elif self.selected_recipe == "Pizza":
-                    pass
                     self.cook_pizza(surface) 
 
                 elif self.selected_recipe == "Stew":
-                    pass
                     self.cook_stew(surface)
             
                 elif self.selected_recipe == "Fried Chicken":
-                    pass
                     self.cook_chicken(surface)
-        
 
+        
     def show_order(self, surface):  # MUST BE INSIDE OF LOOP
         
         icon_position = self.game.GAME_X/ 2 + 60, self.game.GAME_Y / 2 - 57
@@ -107,8 +117,10 @@ class Gameplay(State):
 
         def cook_patty(surface):
             self.game.draw_image(kitchen_grill, 1, surface, self.game.GAME_X / 4, self.game.GAME_Y / 2)
-            self.game.draw_image(cooking_bar, 1, surface, self.game.GAME_X / 4, self.game.GAME_Y / 4)
-            self.game.draw_image(raw_patty, 1, surface, self.game.GAME_X / 4, 135)
+            #pygame.draw.rect(surface, PALACE_ARMS, pygame.Rect(self.game.GAME_X - self.game.GAME_X / 2, 0, self.game.GAME_X / 2, self.game.GAME_Y))
+            self.game.draw_image(instruction_panel, 1, surface, self.game.GAME_X / 2 + self.game.GAME_X / 4, self.game.GAME_Y / 2)
+            #self.game.draw_image(cooking_bar, 1, surface, self.game.GAME_X / 4, self.game.GAME_Y / 4)
+            #self.game.draw_image(raw_patty, 1, surface, self.game.GAME_X / 4, 135)
 
         # create variable for performance rating
         # define variable for position of cooking arrow
@@ -143,29 +155,9 @@ class Gameplay(State):
     def cook_pizza(self, surface):
 
         def roll_dough(surface):
-            pass
-
-        # create variable for performance rating
-        # define variable for position of cooking arrow
-        # define velocity of cooking arrow
-        #draw grill
-        #draw cooking bar and arrow
-        #draw raw patty
-        #if arrow reaches middle draw cooked patty
-        # if arrow reaches red draw burned patty
-        # when player clicks, set velocity to 0
-        # if player clicks when position is in blue or red area, 1 point to accumulator
-        # if yellow area, 2 points
-        # if green area, 3 points
-        # return points
-
+            self.game.draw_image(cutting_board, 1, surface, self.game.GAME_X / 4, self.game.GAME_Y / 2)
 
         def add_sauce(surface):
-
-            # create variable for performance rating
-            # draw counter and cutting board
-            # draw whole tomato
-
             pass
 
         def add_toppings(surface):
@@ -181,27 +173,7 @@ class Gameplay(State):
         def step_1(surface):
             pass
 
-        # create variable for performance rating
-        # define variable for position of cooking arrow
-        # define velocity of cooking arrow
-        #draw grill
-        #draw cooking bar and arrow
-        #draw raw patty
-        #if arrow reaches middle draw cooked patty
-        # if arrow reaches red draw burned patty
-        # when player clicks, set velocity to 0
-        # if player clicks when position is in blue or red area, 1 point to accumulator
-        # if yellow area, 2 points
-        # if green area, 3 points
-        # return points
-
-
         def step_2(surface):
-
-            # create variable for performance rating
-            # draw counter and cutting board
-            # draw whole tomato
-
             pass
 
         def step_3(surface):
@@ -217,27 +189,7 @@ class Gameplay(State):
         def step_1(surface):
             pass
 
-        # create variable for performance rating
-        # define variable for position of cooking arrow
-        # define velocity of cooking arrow
-        #draw grill
-        #draw cooking bar and arrow
-        #draw raw patty
-        #if arrow reaches middle draw cooked patty
-        # if arrow reaches red draw burned patty
-        # when player clicks, set velocity to 0
-        # if player clicks when position is in blue or red area, 1 point to accumulator
-        # if yellow area, 2 points
-        # if green area, 3 points
-        # return points
-
-
         def step_2(surface):
-
-            # create variable for performance rating
-            # draw counter and cutting board
-            # draw whole tomato
-
             pass
 
         def step_3(surface):
