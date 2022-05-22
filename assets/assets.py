@@ -37,10 +37,10 @@ CARNATION_ROSE = (207, 138, 203)
 PURPLE_STONE = (95, 85, 106)
 
 # Fonts
-NEXA_FONT = pygame.font.Font("assets/fonts/Nexa-Trial-Regular.ttf", 15)
-DAYDREAM_FONT = pygame.font.Font("assets/fonts/Daydream.ttf", 15)
-YOSTER_FONT = pygame.font.Font("assets/fonts/yoster.ttf", 15)
-MARIO_FONT = pygame.font.Font("assets/fonts/Mario-Kart-DS.ttf", 20)
+NEXA_FONT = pygame.font.Font("assets/fonts/Nexa-Trial-Regular.ttf", 12)
+DAYDREAM_FONT = pygame.font.Font("assets/fonts/Daydream.ttf", 12)
+YOSTER_FONT = pygame.font.Font("assets/fonts/yoster.ttf", 12)
+MARIO_FONT = pygame.font.Font("assets/fonts/Mario-Kart-DS.ttf", 18)
 
 # Main Menu Assets
 game_logo = pygame.image.load("assets/images/titles/cookingPapaPlaceholderTitle.png")
@@ -52,9 +52,12 @@ placeholder_button = pygame.image.load("assets/images/icons/buttonPlaceholder.pn
 return_arrow = pygame.image.load("assets/images/icons/return_arrow.png")
 gold_icon = pygame.image.load("assets/images/icons/coin.png")
 check_mark = pygame.image.load("assets/images/icons/check_mark.png")
+red_cross = pygame.image.load("assets/images/icons/red_cross.png")
 
 # Customers
-placeholder_customer = pygame.image.load("assets/images/images/customer_base.png")
+customer_1 = pygame.image.load("assets/images/images/customer_1.png")
+customer_2 = pygame.image.load("assets/images/images/customer_2.png")
+customer_3 = pygame.image.load("assets/images/images/customer_3.png")
 
 # Kitchen assets
 restaurant_counter = pygame.image.load("assets/images/images/restaurant_counter.png")
@@ -83,4 +86,5 @@ cheese = pygame.image.load("assets/images/images/burger_cheese.png")
 
 # Reocurring buttons
 return_button = Button(20, 20, return_arrow, 1)
-check_button = Button(300, 20, check_mark, 1)
+confirm_order_button = Button(300, 160, check_mark, 1)
+decline_order_button = Button(25, 160, red_cross, 1)

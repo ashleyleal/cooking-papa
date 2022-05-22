@@ -3,8 +3,8 @@
 """
 Known issues
 
-- Buttons don't lose functionality after screen is cleared
-- Don't know how to implement time delays
+- Buttons don't lose functionality after screen is cleared (SOLVED)
+- Don't know how to implement time delays (SOLVED)
     - time delays must be added outside of the game loops
 
 """
