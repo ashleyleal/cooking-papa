@@ -47,6 +47,3 @@ class Button():
             # Multiply scale by a factor of 3
         pass
 
-# class Transition_Button(Button):
-    #def __init__(self, x, y, image, scale):
-    #    super().__init__(self, x, y, image, scale)

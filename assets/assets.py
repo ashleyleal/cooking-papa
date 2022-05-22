@@ -37,10 +37,12 @@ CARNATION_ROSE = (207, 138, 203)
 PURPLE_STONE = (95, 85, 106)
 
 # Fonts
-NEXA_FONT = pygame.font.Font("assets/fonts/Nexa-Trial-Regular.ttf", 12)
-DAYDREAM_FONT = pygame.font.Font("assets/fonts/Daydream.ttf", 12)
-YOSTER_FONT = pygame.font.Font("assets/fonts/yoster.ttf", 12)
 MARIO_FONT = pygame.font.Font("assets/fonts/Mario-Kart-DS.ttf", 18)
+PIXELLARI_FONT = pygame.font.Font("assets/fonts/Pixellari.ttf", 11)
+PRESS_START_FONT = pygame.font.Font("assets/fonts/PressStart.ttf", 6)
+
+cooking_papa = pygame.image.load("assets/images/images/cooking_papa.png")
+papa_speech = pygame.image.load("assets/images/images/papas_bubble.png")
 
 # Main Menu Assets
 game_logo = pygame.image.load("assets/images/titles/cookingPapaPlaceholderTitle.png")
@@ -64,7 +66,8 @@ restaurant_counter = pygame.image.load("assets/images/images/restaurant_counter.
 kitchen_grill = pygame.image.load("assets/images/images/kitchen_grill.png")
 cutting_board = pygame.image.load("assets/images/images/kitchen_cutting_board.png")
 
-instruction_panel = pygame.image.load("assets/images/images/instruction_panel.png")
+pink_instruction_panel = pygame.image.load("assets/images/images/papas_background_pink.png")
+green_instruction_panel = pygame.image.load("assets/images/images/papas_background_green.png")
 cooking_bar = pygame.image.load("assets/images/images/cooking_bar.png")
 speech_bubble = pygame.image.load("assets/images/icons/speech_bubble.png")
 

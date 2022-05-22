@@ -17,13 +17,9 @@ class Gameplay(State):
     def __init__(self, game):
         State.__init__(self, game)
         
-        self.set_order()
-        self.kitchen_entered = False
-
-    def generate_order(self): 
-        possible_recipes = {
+        self.possible_recipes =  {
             "Burger": {
-                "Cook Patty": "Wait unti the bar reaches the middle to ensure that the patty is cooked.",
+                "Cook Patty": "Flip at the right time!",
                 "Slice Tomato": "Click two points to make a slice.",
                 "Assemble Burger": "Put the ingredients of the burger together"
             },
@@ -43,15 +39,22 @@ class Gameplay(State):
                 "": "",
             }
         }
-        return(random.choice(list(possible_recipes.keys())))
+
+        self.set_order()
+        self.kitchen_entered = False
+
+    def generate_order(self): 
+        selected = random.choice(list(self.possible_recipes.keys()))
+        return(selected, self.possible_recipes[selected])
 
     def generate_customer(self):
         possible_customers = [customer_1, customer_2, customer_3]
         return random.choice(possible_customers) 
 
     def set_order(self):
+        returned = self.generate_order()
         self.selected_customer = self.generate_customer()
-        self.selected_recipe = self.generate_order()
+        self.selected_recipe = returned[0]
 
     def update(self, actions):
         if actions["menu"]:
@@ -95,6 +98,9 @@ class Gameplay(State):
                 elif self.selected_recipe == "Fried Chicken":
                     self.cook_chicken(surface)
 
+                if return_button.draw(surface):
+                    self.game.actions["menu"] = True
+
         
     def show_order(self, surface):  # MUST BE INSIDE OF LOOP
         
@@ -118,8 +124,13 @@ class Gameplay(State):
         def cook_patty(surface):
             self.game.draw_image(kitchen_grill, 1, surface, self.game.GAME_X / 4, self.game.GAME_Y / 2)
             #pygame.draw.rect(surface, PALACE_ARMS, pygame.Rect(self.game.GAME_X - self.game.GAME_X / 2, 0, self.game.GAME_X / 2, self.game.GAME_Y))
-            self.game.draw_image(instruction_panel, 1, surface, self.game.GAME_X / 2 + self.game.GAME_X / 4, self.game.GAME_Y / 2)
-            #self.game.draw_image(cooking_bar, 1, surface, self.game.GAME_X / 4, self.game.GAME_Y / 4)
+            self.game.draw_image(green_instruction_panel, 1, surface, self.game.GAME_X / 2 + self.game.GAME_X / 4, self.game.GAME_Y / 2)
+            self.game.draw_image(cooking_papa, 1, surface, 215, 128)
+            self.game.draw_image(papa_speech, 1, surface, 275, 110)
+            #self.game.draw_text(surface, str(self.possible_recipes[self.selected_recipe]["Cook Patty"]), PIXELLARI_FONT, NOBLE_BLACK, 275, 110)
+            self.game.draw_text(surface, "Flip at the", PRESS_START_FONT, NOBLE_BLACK, 275, 95)
+            self.game.draw_text(surface, "right time!", PRESS_START_FONT, NOBLE_BLACK, 275, 110)
+            self.game.draw_image(cooking_bar, 1, surface, self.game.GAME_X / 2 + self.game.GAME_X / 4, self.game.GAME_Y / 4)
             #self.game.draw_image(raw_patty, 1, surface, self.game.GAME_X / 4, 135)
 
         # create variable for performance rating
