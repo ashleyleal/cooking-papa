@@ -88,3 +88,5 @@ cheese = pygame.image.load("assets/images/images/burger_cheese.png")
 return_button = Button(20, 20, return_arrow, 1)
 confirm_order_button = Button(300, 160, check_mark, 1)
 decline_order_button = Button(25, 160, red_cross, 1)
+
+menu_music = "assets/sounds/menu_music.mp3"

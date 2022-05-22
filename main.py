@@ -38,7 +38,9 @@ class Game:
     def __init__(self):
         
         pygame.init()
-        
+        pygame.mixer.music.load(menu_music)
+        pygame.mixer.music.play(-1)
+
         # Configure window
         self.GAME_X, self.GAME_Y = 320, 180
         self.SCREEN_X, self.SCREEN_Y = 1280, 720
