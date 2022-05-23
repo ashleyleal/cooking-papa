@@ -128,12 +128,6 @@ class Game:
             alpha_key += 1
             pygame.time.delay(1000)
 
-    # Defines method that draws the countdown numbers (work in progress, need to move to Gameplay class)
-    def draw_countdown(self, surface):
-        for i in range(3):
-            self.draw_text(surface, str(i), MARIO_FONT, MARBLE_WHITE, self.GAME_X/2, self.GAME_Y/2)
-            pygame.time.delay(1000)
-
 # Creates an instance of Game class and runs the game loop while the program is running            
 if __name__ == "__main__":
     game = Game()
