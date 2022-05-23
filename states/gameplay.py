@@ -120,6 +120,16 @@ class Kitchen(State):
 
         }
 
+        self.burger_patty_speed = 0.15
+        self.burger_patty_pos = 0
+
+        self.stop_button_posx, self.stop_button_posy = self.game.GAME_X / 4, self.game.GAME_Y / 5
+        self.stop_button_velx, self.stop_button_vely = 1,1
+        
+
+        self.cooking_done = False
+    
+
     def update(self, actions):
         if actions["menu"]:
             main_menu = self.game.state_stack[0]
@@ -127,17 +137,13 @@ class Kitchen(State):
 
         if self.countdown_triggered:
             current_time = pygame.time.get_ticks()
-            print(current_time)
             
             if current_time - self.button_time >= 100 and current_time - self.button_time < 1100:
-                print("3")
                 self.countdown[3] = True
             if current_time - self.button_time >= 1100 and current_time - self.button_time < 2100:
-                print("2")
                 self.countdown[2] = True
                 self.countdown[3] = False
             if current_time - self.button_time >= 2100 and current_time - self.button_time < 3100:
-                print("1")
                 self.countdown[2] = False
                 self.countdown[1] = True
             if current_time - self.button_time >= 3100 and current_time - self.button_time < 4100:
@@ -150,7 +156,6 @@ class Kitchen(State):
 
         if self.current_recipe == "Burger":
             self.cook_burger(surface) 
-
 
     def cook_burger(self, surface):
 
@@ -173,19 +178,47 @@ class Kitchen(State):
                     self.countdown_triggered = True
 
             if self.countdown[3]:
-                print("3")
                 self.game.draw_image(countdown_3, 1, surface, self.game.GAME_X / 4, self.game.GAME_Y / 2)
 
             elif self.countdown[2]:
-                print("2")
                 self.game.draw_image(countdown_2, 1, surface, self.game.GAME_X / 4, self.game.GAME_Y / 2)
 
             elif self.countdown[1]:
-                print("1")
                 self.game.draw_image(countdown_1, 1, surface, self.game.GAME_X / 4, self.game.GAME_Y / 2)
 
             if self.countdown_completed:
-                self.game.draw_image(raw_patty, 1, surface, self.game.GAME_X / 4, 135)
+                
+                stop_button = Button(self.stop_button_posx, self.stop_button_posy, flip_button, 1)
+
+                self.stop_button_posx += self.stop_button_velx
+                self.stop_button_posy += self.stop_button_vely
+
+                if self.stop_button_posx >= self.game.GAME_X / 2 - 9 or self.stop_button_posx <= 9:
+                    self.stop_button_velx *= -1
+
+                if self.stop_button_posy >= self.game.GAME_Y / 2 - 28 or self.stop_button_posy <= 5:
+                    self.stop_button_vely *= -1
+
+                if stop_button.draw(surface):
+                    self.cooking_done = True
+                    self.burger_patty_speed, self.stop_button_velx, self.stop_button_vely = 0, 0, 0
+
+                self.game.draw_image(cooking_arrow, 1, surface, self.game.GAME_X / 2 + self.game.GAME_X / 4 - 65 + self.burger_patty_pos, self.game.GAME_Y / 4 + 10)
+                
+                self.burger_patty_pos += self.burger_patty_speed
+
+                if self.burger_patty_pos >= 135:
+                    self.burger_patty_speed = 0
+                    self.cooking_done = True
+
+                elif self.burger_patty_pos >= 0 and self.burger_patty_pos <= 40:
+                    self.game.draw_image(raw_patty, 1, surface, self.game.GAME_X / 4, 135)
+
+                elif self.burger_patty_pos > 40 and self.burger_patty_pos <= 90:
+                    self.game.draw_image(cooked_patty, 1, surface, self.game.GAME_X / 4, 135)
+
+                elif self.burger_patty_pos > 90:
+                    self.game.draw_image(burned_patty, 1, surface, self.game.GAME_X / 4, 135)
 
         # create variable for performance rating
         # define variable for position of cooking arrow

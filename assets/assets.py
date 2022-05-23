@@ -71,6 +71,8 @@ cutting_board = pygame.image.load("assets/images/images/kitchen_cutting_board.pn
 pink_instruction_panel = pygame.image.load("assets/images/images/papas_background_pink.png")
 green_instruction_panel = pygame.image.load("assets/images/images/papas_background_green.png")
 cooking_bar = pygame.image.load("assets/images/images/cooking_bar.png")
+cooking_arrow = pygame.image.load("assets/images/icons/cooking_arrow.png")
+flip_button = pygame.image.load("assets/images/icons/flip_button.png")
 speech_bubble = pygame.image.load("assets/images/icons/speech_bubble.png")
 
 # Order icons
