@@ -5,7 +5,7 @@ from button import Button
 from assets.assets import *
 
 from states.shop_menu import Shop_Menu
-from states.gameplay import Gameplay
+from states.gameplay import Restaurant
 
 
 class Main_Menu(State):

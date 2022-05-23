@@ -4,15 +4,15 @@
 To do list:
 
 - Add return button to each cooking screen that goes back to restaurant
+- Will need to make another state for being in the kitchen because buttons don't work after screen flipped
 
 """
-
 import random, time
 from states.state import State
 from button import Button
 from assets.assets import * 
 
-class Gameplay(State):
+class Restaurant(State):
 
     def __init__(self, game):
         State.__init__(self, game)
@@ -40,8 +40,17 @@ class Gameplay(State):
             }
         }
 
+        self.countdown = {
+
+            3: False,
+            2: False,
+            1: False
+
+        }
+
         self.set_order()
         self.kitchen_entered = False
+        self.countdown_triggered = False
 
     def generate_order(self): 
         selected = random.choice(list(self.possible_recipes.keys()))
@@ -55,6 +64,7 @@ class Gameplay(State):
         returned = self.generate_order()
         self.selected_customer = self.generate_customer()
         self.selected_recipe = returned[0]
+        self.game.current_recipe = self.selected_recipe
 
     def update(self, actions):
         if actions["menu"]:
@@ -67,6 +77,24 @@ class Gameplay(State):
         if actions["restaurant"]:
             new_state = Gameplay(self.game)
             new_state.enter_state()
+
+        if self.countdown_triggered:
+            current_time = pygame.time.get_ticks()
+            print("3")
+            self.countdown[3] = True
+            
+            if pygame.time.get_ticks() == current_time + 1000:
+                print("2")
+                self.countdown[3] = False
+                self.countdown[2] = True
+            elif pygame.time.get_ticks() == current_time + 2000:
+                print("1")
+                self.countdown[2] = False
+                self.countdown[1] = True
+            elif pygame.time.get_ticks() == current_time + 3000:
+                self.countdown[1] = True
+            elif pygame.time.get_ticks() == current_time + 4000:
+                self.countdown_triggered = False
 
     def render(self, surface):
 
@@ -128,9 +156,26 @@ class Gameplay(State):
             self.game.draw_image(cooking_papa, 1, surface, 215, 128)
             self.game.draw_image(papa_speech, 1, surface, 275, 110)
             #self.game.draw_text(surface, str(self.possible_recipes[self.selected_recipe]["Cook Patty"]), PIXELLARI_FONT, NOBLE_BLACK, 275, 110)
-            self.game.draw_text(surface, "Flip at the", PRESS_START_FONT, NOBLE_BLACK, 275, 95)
-            self.game.draw_text(surface, "right time!", PRESS_START_FONT, NOBLE_BLACK, 275, 110)
+            self.game.draw_text(surface, "FLIP AT THE", MINIMAL_FONT, NOBLE_BLACK, 275, 95)
+            self.game.draw_text(surface, "RIGHT TIME!", MINIMAL_FONT, NOBLE_BLACK, 275, 110)
             self.game.draw_image(cooking_bar, 1, surface, self.game.GAME_X / 2 + self.game.GAME_X / 4, self.game.GAME_Y / 4)
+
+            start_button = Button(self.game.GAME_X / 2, self.game.GAME_Y / 2, play_button, 1)
+            if start_button.draw(surface):
+                self.countdown_triggered = True
+
+            if self.countdown[3]:
+                print("3")
+                self.game.draw_image(countdown_3, 1, surface, self.game.GAME_X / 4, self.game.GAME_Y / 2)
+
+            elif self.countdown[2]:
+                print("2")
+                self.game.draw_image(countdown_2, 1, surface, self.game.GAME_X / 4, self.game.GAME_Y / 2)
+
+            elif self.countdown[1]:
+                print("1")
+                self.game.draw_image(countdown_1, 1, surface, self.game.GAME_X / 4, self.game.GAME_Y / 2)
+
             #self.game.draw_image(raw_patty, 1, surface, self.game.GAME_X / 4, 135)
 
         # create variable for performance rating
@@ -212,5 +257,11 @@ class Gameplay(State):
         step_3(surface)
 
 
+class Kitchen(State):
 
+    def __init__(self, game):
+        State.__init__(self, game)
+
+        self.current_recipe = self.game.current_recipe
+        
 

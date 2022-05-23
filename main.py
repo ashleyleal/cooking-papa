@@ -32,6 +32,7 @@ from assets.assets import *
 # Define Game class
 class Game: 
     
+    current_recipe = None
     gold = 0 
 
     # Define init method

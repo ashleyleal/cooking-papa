@@ -40,6 +40,7 @@ PURPLE_STONE = (95, 85, 106)
 MARIO_FONT = pygame.font.Font("assets/fonts/Mario-Kart-DS.ttf", 18)
 PIXELLARI_FONT = pygame.font.Font("assets/fonts/Pixellari.ttf", 11)
 PRESS_START_FONT = pygame.font.Font("assets/fonts/PressStart.ttf", 6)
+MINIMAL_FONT = pygame.font.Font("assets/fonts/minimal.ttf", 15)
 
 cooking_papa = pygame.image.load("assets/images/images/cooking_papa.png")
 papa_speech = pygame.image.load("assets/images/images/papas_bubble.png")
@@ -95,3 +96,8 @@ confirm_order_button = Button(300, 160, check_mark, 1)
 decline_order_button = Button(25, 160, red_cross, 1)
 
 menu_music = "assets/sounds/menu_music.mp3"
+
+# Countdown
+countdown_3 = pygame.image.load("assets/images/images/number_3.png")
+countdown_2 = pygame.image.load("assets/images/images/number_2.png")
+countdown_1 = pygame.image.load("assets/images/images/number_1.png")
