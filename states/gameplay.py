@@ -111,6 +111,8 @@ class Kitchen(State):
         self.current_recipe = self.game.current_recipe
         self.countdown_triggered = False
         self.countdown_completed = False
+        self.rating_triggered = False
+        self.ingredient_rating = None
         
         self.countdown = {
 
@@ -122,11 +124,9 @@ class Kitchen(State):
 
         self.burger_patty_speed = 0.15
         self.burger_patty_pos = 0
-
         self.stop_button_posx, self.stop_button_posy = self.game.GAME_X / 4, self.game.GAME_Y / 5
         self.stop_button_velx, self.stop_button_vely = 1,1
         
-
         self.cooking_done = False
     
 
@@ -152,6 +152,10 @@ class Kitchen(State):
                 self.countdown_triggered = False
                 self.countdown_completed = True
 
+        if self.cooking_done:
+            if pygame.time.get_ticks() > self.completed_time + 2000:
+                self.rating_triggered = True
+
     def render(self, surface):
 
         if self.current_recipe == "Burger":
@@ -161,13 +165,34 @@ class Kitchen(State):
 
         def cook_patty(surface):
             self.game.draw_image(kitchen_grill, 1, surface, self.game.GAME_X / 4, self.game.GAME_Y / 2)
-            #pygame.draw.rect(surface, PALACE_ARMS, pygame.Rect(self.game.GAME_X - self.game.GAME_X / 2, 0, self.game.GAME_X / 2, self.game.GAME_Y))
             self.game.draw_image(green_instruction_panel, 1, surface, self.game.GAME_X / 2 + self.game.GAME_X / 4, self.game.GAME_Y / 2)
             self.game.draw_image(cooking_papa, 1, surface, 215, 128)
             self.game.draw_image(papa_speech, 1, surface, 275, 110)
-            #self.game.draw_text(surface, str(self.possible_recipes[self.selected_recipe]["Cook Patty"]), PIXELLARI_FONT, NOBLE_BLACK, 275, 110)
-            self.game.draw_text(surface, "FLIP AT THE", MINIMAL_FONT, NOBLE_BLACK, 275, 95)
-            self.game.draw_text(surface, "RIGHT TIME!", MINIMAL_FONT, NOBLE_BLACK, 275, 110)
+
+            # Changes the text in cooking papa's speech bubble depending on the conditions
+
+            if not self.cooking_done:
+                
+                self.game.draw_text(surface, "FLIP AT THE", MINIMAL_FONT, NOBLE_BLACK, 275, 95)
+                self.game.draw_text(surface, "RIGHT TIME!", MINIMAL_FONT, NOBLE_BLACK, 275, 110)
+
+            if self.cooking_done:
+
+                if (self.burger_patty_pos >= 0 and self.burger_patty_pos <= 40) or self.burger_patty_pos > 90:
+                    self.game.draw_text(surface, "TRY BETTER", MINIMAL_FONT, NOBLE_BLACK, 275, 95)
+                    self.game.draw_text(surface, "NEXT TIME!", MINIMAL_FONT, NOBLE_BLACK, 275, 110)
+                    self.ingredient_rating = 1
+
+                elif (self.burger_patty_pos > 40 and self.burger_patty_pos <= 50) or (self.burger_patty_pos > 80 and self.burger_patty_pos <= 90):
+                    self.game.draw_text(surface, "GOOD JOB!", MINIMAL_FONT, NOBLE_BLACK, 275, 95)
+                    self.game.draw_text(surface, "DOING GREAT!", MINIMAL_FONT, NOBLE_BLACK, 275, 110)
+                    self.ingredient_rating = 2
+
+                elif self.burger_patty_pos > 50 and self.burger_patty_pos <= 80:
+                    self.game.draw_text(surface, "PERFECT!", MINIMAL_FONT, NOBLE_BLACK, 275, 95)
+                    self.game.draw_text(surface, "EXCELLENT JOB", MINIMAL_FONT, NOBLE_BLACK, 276, 110)
+                    self.ingredient_rating = 3
+
             self.game.draw_image(cooking_bar, 1, surface, self.game.GAME_X / 2 + self.game.GAME_X / 4, self.game.GAME_Y / 4)
 
             start_button = Button(self.game.GAME_X / 2, self.game.GAME_Y / 2, start, 1)
@@ -200,17 +225,20 @@ class Kitchen(State):
                     self.stop_button_vely *= -1
 
                 if stop_button.draw(surface):
-                    self.cooking_done = True
                     self.burger_patty_speed, self.stop_button_velx, self.stop_button_vely = 0, 0, 0
+                    self.cooking_done = True
+                    self.completed_time = pygame.time.get_ticks()
 
                 self.game.draw_image(cooking_arrow, 1, surface, self.game.GAME_X / 2 + self.game.GAME_X / 4 - 65 + self.burger_patty_pos, self.game.GAME_Y / 4 + 10)
                 
                 self.burger_patty_pos += self.burger_patty_speed
 
+                # Stops the cooking arrow when it reaches the end of the bar
                 if self.burger_patty_pos >= 135:
                     self.burger_patty_speed = 0
                     self.cooking_done = True
 
+                # Draw the appropriate patty depending on the cooking arrow position
                 elif self.burger_patty_pos >= 0 and self.burger_patty_pos <= 40:
                     self.game.draw_image(raw_patty, 1, surface, self.game.GAME_X / 4, 135)
 
@@ -220,20 +248,8 @@ class Kitchen(State):
                 elif self.burger_patty_pos > 90:
                     self.game.draw_image(burned_patty, 1, surface, self.game.GAME_X / 4, 135)
 
-        # create variable for performance rating
-        # define variable for position of cooking arrow
-        # define velocity of cooking arrow
-        #draw grill
-        #draw cooking bar and arrow
-        #draw raw patty
-        #if arrow reaches middle draw cooked patty
-        # if arrow reaches red draw burned patty
-        # when player clicks, set velocity to 0
-        # if player clicks when position is in blue or red area, 1 point to accumulator
-        # if yellow area, 2 points
-        # if green area, 3 points
-        # return points
-
+                if self.rating_triggered:
+                    self.rating_screen(surface, green_background, "COOK PATTY")
 
         def cut_tomato(surface):
 
@@ -297,5 +313,11 @@ class Kitchen(State):
         step_1(surface)
         step_2(surface)
         step_3(surface)
+
+    def rating_screen(self, surface, background_image, step_name):
+        self.game.draw_image(background_image, 1, surface, self.game.GAME_X / 2, self.game.GAME_Y / 2)
+        self.game.draw_text(surface, str(step_name), MARIO_FONT, NOBLE_BLACK, self.game.GAME_X / 2, self.game.GAME_Y / 4)
+        self.game.draw_text(surface, str(self.ingredient_rating), MARIO_FONT, NOBLE_BLACK, self.game.GAME_X / 2, self.game.GAME_Y / 2)
+
 
 

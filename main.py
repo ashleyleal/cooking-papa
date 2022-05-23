@@ -17,7 +17,7 @@ To do
 - Burger cooking
 - Pizza cooking
 - Stew cooking
-- Cooking mechanics rating (requires time delay)
+- Cooking mechanics rating (requires time delay) (SOLVED)
 - Shop
 - Music and sound
 - Saving data locally on player's game

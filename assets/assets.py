@@ -37,7 +37,7 @@ CARNATION_ROSE = (207, 138, 203)
 PURPLE_STONE = (95, 85, 106)
 
 # Fonts
-MARIO_FONT = pygame.font.Font("assets/fonts/Mario-Kart-DS.ttf", 18)
+MARIO_FONT = pygame.font.Font("assets/fonts/Mario-Kart-DS.ttf", 25)
 PIXELLARI_FONT = pygame.font.Font("assets/fonts/Pixellari.ttf", 11)
 PRESS_START_FONT = pygame.font.Font("assets/fonts/PressStart.ttf", 6)
 MINIMAL_FONT = pygame.font.Font("assets/fonts/minimal.ttf", 15)
@@ -70,6 +70,9 @@ cutting_board = pygame.image.load("assets/images/images/kitchen_cutting_board.pn
 
 pink_instruction_panel = pygame.image.load("assets/images/images/papas_background_pink.png")
 green_instruction_panel = pygame.image.load("assets/images/images/papas_background_green.png")
+
+green_background = pygame.image.load("assets/images/images/papas_background_green_full.png")
+
 cooking_bar = pygame.image.load("assets/images/images/cooking_bar.png")
 cooking_arrow = pygame.image.load("assets/images/icons/cooking_arrow.png")
 flip_button = pygame.image.load("assets/images/icons/flip_button.png")

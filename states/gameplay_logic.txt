@@ -88,6 +88,12 @@ Pseudocode for the logic, not actual code so do not use in program
         
 
 
+# Note about animating objects involving time:
+
+    Place time delays outside of main loop, make positions of elements variables that are updated outside of loop
+    Use boolean variables to connect variable outside of loop to events inside of loop
+    Time delays inside render loop cause program to crash
+    Delta time must be used to implement time delays
 
 
 
