@@ -56,6 +56,7 @@ return_arrow = pygame.image.load("assets/images/icons/return_arrow.png")
 gold_icon = pygame.image.load("assets/images/icons/coin.png")
 check_mark = pygame.image.load("assets/images/icons/check_mark.png")
 red_cross = pygame.image.load("assets/images/icons/red_cross.png")
+start = pygame.image.load("assets/images/icons/start_button.png")
 
 # Customers
 customer_1 = pygame.image.load("assets/images/images/customer_1.png")

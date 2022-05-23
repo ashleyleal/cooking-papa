@@ -110,6 +110,7 @@ class Kitchen(State):
 
         self.current_recipe = self.game.current_recipe
         self.countdown_triggered = False
+        self.countdown_completed = False
         
         self.countdown = {
 
@@ -128,22 +129,22 @@ class Kitchen(State):
             current_time = pygame.time.get_ticks()
             print(current_time)
             
-            print("3")
-            self.countdown[3] = True
-            
-            if pygame.time.get_ticks() >= current_time + 1:
+            if current_time - self.button_time >= 100 and current_time - self.button_time < 1100:
+                print("3")
+                self.countdown[3] = True
+            if current_time - self.button_time >= 1100 and current_time - self.button_time < 2100:
                 print("2")
-                self.countdown[3] = False
                 self.countdown[2] = True
-            elif pygame.time.get_ticks() == current_time + 2000:
+                self.countdown[3] = False
+            if current_time - self.button_time >= 2100 and current_time - self.button_time < 3100:
                 print("1")
                 self.countdown[2] = False
                 self.countdown[1] = True
-            elif pygame.time.get_ticks() == current_time + 3000:
-                self.countdown[1] = True
-            elif pygame.time.get_ticks() == current_time + 4000:
+            if current_time - self.button_time >= 3100 and current_time - self.button_time < 4100:
+                self.countdown[1] = False
+            if current_time - self.button_time >= 4100 and current_time - self.button_time < 5100:
                 self.countdown_triggered = False
-
+                self.countdown_completed = True
 
     def render(self, surface):
 
@@ -164,9 +165,12 @@ class Kitchen(State):
             self.game.draw_text(surface, "RIGHT TIME!", MINIMAL_FONT, NOBLE_BLACK, 275, 110)
             self.game.draw_image(cooking_bar, 1, surface, self.game.GAME_X / 2 + self.game.GAME_X / 4, self.game.GAME_Y / 4)
 
-            start_button = Button(self.game.GAME_X / 2, self.game.GAME_Y / 2, play_button, 1)
-            if start_button.draw(surface):
-                self.countdown_triggered = True
+            start_button = Button(self.game.GAME_X / 2, self.game.GAME_Y / 2, start, 1)
+            
+            if not self.countdown_triggered and not self.countdown_completed:
+                if start_button.draw(surface):
+                    self.button_time = pygame.time.get_ticks()
+                    self.countdown_triggered = True
 
             if self.countdown[3]:
                 print("3")
@@ -180,7 +184,8 @@ class Kitchen(State):
                 print("1")
                 self.game.draw_image(countdown_1, 1, surface, self.game.GAME_X / 4, self.game.GAME_Y / 2)
 
-            #self.game.draw_image(raw_patty, 1, surface, self.game.GAME_X / 4, 135)
+            if self.countdown_completed:
+                self.game.draw_image(raw_patty, 1, surface, self.game.GAME_X / 4, 135)
 
         # create variable for performance rating
         # define variable for position of cooking arrow
