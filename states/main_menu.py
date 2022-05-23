@@ -20,7 +20,7 @@ class Main_Menu(State):
             new_state.enter_state()
 
         if actions["start"]:
-            new_state = Gameplay(self.game)
+            new_state = Restaurant(self.game)
             new_state.enter_state()
 
     def render(self, surface):

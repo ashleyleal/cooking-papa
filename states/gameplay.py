@@ -40,17 +40,7 @@ class Restaurant(State):
             }
         }
 
-        self.countdown = {
-
-            3: False,
-            2: False,
-            1: False
-
-        }
-
         self.set_order()
-        self.kitchen_entered = False
-        self.countdown_triggered = False
 
     def generate_order(self): 
         selected = random.choice(list(self.possible_recipes.keys()))
@@ -74,60 +64,26 @@ class Restaurant(State):
         if actions["recipe"]:
             self.set_order()
 
-        if actions["restaurant"]:
-            new_state = Gameplay(self.game)
+        if actions["cooking"]:
+            new_state = Kitchen(self.game)
             new_state.enter_state()
-
-        if self.countdown_triggered:
-            current_time = pygame.time.get_ticks()
-            print("3")
-            self.countdown[3] = True
-            
-            if pygame.time.get_ticks() == current_time + 1000:
-                print("2")
-                self.countdown[3] = False
-                self.countdown[2] = True
-            elif pygame.time.get_ticks() == current_time + 2000:
-                print("1")
-                self.countdown[2] = False
-                self.countdown[1] = True
-            elif pygame.time.get_ticks() == current_time + 3000:
-                self.countdown[1] = True
-            elif pygame.time.get_ticks() == current_time + 4000:
-                self.countdown_triggered = False
 
     def render(self, surface):
 
-        if not self.kitchen_entered:
-            surface.fill(WHISTLES_GOLD)
-            self.game.draw_image(self.selected_customer, 1, surface, self.game.GAME_X / 2, 100)
-            self.game.draw_image(restaurant_counter, 1, surface, self.game.GAME_X / 2, 105)
-            self.game.draw_image(speech_bubble, 1, surface, self.game.GAME_X/ 2 + 60, self.game.GAME_Y / 2 - 50)
-            self.show_order(surface)
+        surface.fill(WHISTLES_GOLD)
+        self.game.draw_image(self.selected_customer, 1, surface, self.game.GAME_X / 2, 100)
+        self.game.draw_image(restaurant_counter, 1, surface, self.game.GAME_X / 2, 105)
+        self.game.draw_image(speech_bubble, 1, surface, self.game.GAME_X/ 2 + 60, self.game.GAME_Y / 2 - 50)
+        self.show_order(surface)
 
-            if return_button.draw(surface):
-                self.game.actions["menu"] = True
+        if return_button.draw(surface):
+            self.game.actions["menu"] = True
 
-            if decline_order_button.draw(surface):
-                self.game.actions["recipe"] = True
+        if decline_order_button.draw(surface):
+            self.game.actions["recipe"] = True
 
-            if confirm_order_button.draw(surface):
-                self.kitchen_entered = True
-
-                if self.selected_recipe == "Burger":
-                    self.cook_burger(surface)
-
-                elif self.selected_recipe == "Pizza":
-                    self.cook_pizza(surface) 
-
-                elif self.selected_recipe == "Stew":
-                    self.cook_stew(surface)
-            
-                elif self.selected_recipe == "Fried Chicken":
-                    self.cook_chicken(surface)
-
-                if return_button.draw(surface):
-                    self.game.actions["menu"] = True
+        if confirm_order_button.draw(surface):
+            self.game.actions["cooking"] = True
 
         
     def show_order(self, surface):  # MUST BE INSIDE OF LOOP
@@ -145,6 +101,54 @@ class Restaurant(State):
 
         elif self.selected_recipe == "Fried Chicken":
             self.game.draw_image(chicken_icon, 1, surface, icon_position[0], icon_position[1])
+
+
+class Kitchen(State):
+
+    def __init__(self, game):
+        State.__init__(self, game)
+
+        self.current_recipe = self.game.current_recipe
+        self.countdown_triggered = False
+        
+        self.countdown = {
+
+            3: False,
+            2: False,
+            1: False
+
+        }
+
+    def update(self, actions):
+        if actions["menu"]:
+            main_menu = self.game.state_stack[0]
+            main_menu.enter_state()
+
+        if self.countdown_triggered:
+            current_time = pygame.time.get_ticks()
+            print(current_time)
+            
+            print("3")
+            self.countdown[3] = True
+            
+            if pygame.time.get_ticks() >= current_time + 1:
+                print("2")
+                self.countdown[3] = False
+                self.countdown[2] = True
+            elif pygame.time.get_ticks() == current_time + 2000:
+                print("1")
+                self.countdown[2] = False
+                self.countdown[1] = True
+            elif pygame.time.get_ticks() == current_time + 3000:
+                self.countdown[1] = True
+            elif pygame.time.get_ticks() == current_time + 4000:
+                self.countdown_triggered = False
+
+
+    def render(self, surface):
+
+        if self.current_recipe == "Burger":
+            self.cook_burger(surface) 
 
 
     def cook_burger(self, surface):
@@ -256,12 +260,4 @@ class Restaurant(State):
         step_2(surface)
         step_3(surface)
 
-
-class Kitchen(State):
-
-    def __init__(self, game):
-        State.__init__(self, game)
-
-        self.current_recipe = self.game.current_recipe
-        
 
