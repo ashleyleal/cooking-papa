@@ -113,7 +113,9 @@ class Kitchen(State):
         self.countdown_completed = False
         self.rating_triggered = False
         self.ingredient_rating = None
-        
+        self.total_rating = 0
+        self.next_step = False
+
         self.countdown = {
 
             3: False,
@@ -127,8 +129,11 @@ class Kitchen(State):
         self.stop_button_posx, self.stop_button_posy = self.game.GAME_X / 4, self.game.GAME_Y / 5
         self.stop_button_velx, self.stop_button_vely = 1,1
         
+        self.step_1 = True
+        self.step_2 = False
+        self.step_3 = False
+
         self.cooking_done = False
-    
 
     def update(self, actions):
         if actions["menu"]:
@@ -153,13 +158,24 @@ class Kitchen(State):
                 self.countdown_completed = True
 
         if self.cooking_done:
-            if pygame.time.get_ticks() > self.completed_time + 2000:
+            if pygame.time.get_ticks() > self.completed_time + 3000:
                 self.rating_triggered = True
+                if pygame.time.get_ticks() > self.completed_time + 6000:
+                    self.next_step = True
 
     def render(self, surface):
 
         if self.current_recipe == "Burger":
-            self.cook_burger(surface) 
+            self.cook_burger(surface)
+
+        elif self.current_recipe == "Pizza":
+            self.cook_pizza(surface) 
+
+        elif self.current_recipe == "Stew":
+            self.cook_stew(surface)
+
+        elif self.current_recipe == "Fried Chicken":
+            self.cook_chicken(surface)
 
     def cook_burger(self, surface):
 
@@ -192,6 +208,8 @@ class Kitchen(State):
                     self.game.draw_text(surface, "PERFECT!", MINIMAL_FONT, NOBLE_BLACK, 275, 95)
                     self.game.draw_text(surface, "EXCELLENT JOB", MINIMAL_FONT, NOBLE_BLACK, 276, 110)
                     self.ingredient_rating = 3
+
+                self.total_rating += self.ingredient_rating                
 
             self.game.draw_image(cooking_bar, 1, surface, self.game.GAME_X / 2 + self.game.GAME_X / 4, self.game.GAME_Y / 4)
 
@@ -250,12 +268,37 @@ class Kitchen(State):
 
                 if self.rating_triggered:
                     self.rating_screen(surface, green_background, "COOK PATTY")
+                    
+                    if self.next_step:
+                        self.reset_status(1)
 
         def cut_tomato(surface):
+            self.game.draw_image(cutting_board, 1, surface, self.game.GAME_X / 4, self.game.GAME_Y / 2)
+            self.game.draw_image(green_instruction_panel, 1, surface, self.game.GAME_X / 2 + self.game.GAME_X / 4, self.game.GAME_Y / 2)
+            self.game.draw_image(cooking_papa, 1, surface, 215, 128)
+            self.game.draw_image(papa_speech, 1, surface, 275, 110)
 
-            # create variable for performance rating
-            # draw counter and cutting board
-            # draw whole tomato
+            if not self.cooking_done:
+                
+                self.game.draw_text(surface, "SLICE AT THE", MINIMAL_FONT, NOBLE_BLACK, 275, 95)
+                self.game.draw_text(surface, "RIGHT TIME!", MINIMAL_FONT, NOBLE_BLACK, 275, 110)
+
+            if self.cooking_done:
+
+                if (self.burger_patty_pos >= 0 and self.burger_patty_pos <= 40) or self.burger_patty_pos > 90:
+                    self.game.draw_text(surface, "TRY BETTER", MINIMAL_FONT, NOBLE_BLACK, 275, 95)
+                    self.game.draw_text(surface, "NEXT TIME!", MINIMAL_FONT, NOBLE_BLACK, 275, 110)
+                    self.ingredient_rating = 1
+
+                elif (self.burger_patty_pos > 40 and self.burger_patty_pos <= 50) or (self.burger_patty_pos > 80 and self.burger_patty_pos <= 90):
+                    self.game.draw_text(surface, "GOOD JOB!", MINIMAL_FONT, NOBLE_BLACK, 275, 95)
+                    self.game.draw_text(surface, "DOING GREAT!", MINIMAL_FONT, NOBLE_BLACK, 275, 110)
+                    self.ingredient_rating = 2
+
+                elif self.burger_patty_pos > 50 and self.burger_patty_pos <= 80:
+                    self.game.draw_text(surface, "PERFECT!", MINIMAL_FONT, NOBLE_BLACK, 275, 95)
+                    self.game.draw_text(surface, "EXCELLENT JOB", MINIMAL_FONT, NOBLE_BLACK, 276, 110)
+                    self.ingredient_rating = 3
 
             pass
 
@@ -263,8 +306,13 @@ class Kitchen(State):
             pass
 
         surface.fill(FANCY_MOSS)
-        cook_patty(surface)
-        cut_tomato(surface)
+        
+        if self.step_1:
+            cook_patty(surface)
+        elif self.step_2:
+            cut_tomato(surface)
+        elif self.step_3:
+            assemble_burger(surface)
         
     def cook_pizza(self, surface):
 
@@ -278,9 +326,12 @@ class Kitchen(State):
             pass
 
         surface.fill(MINERAL_RED)
-        roll_dough(surface)
-        add_sauce(surface)
-        add_toppings(surface)
+        if self.step_1:
+            roll_dough(surface)
+        elif self.step_2:
+            add_sauce(surface)
+        elif self.step_3:
+            add_toppings(surface)
 
     def cook_stew(self, surface):
 
@@ -318,6 +369,30 @@ class Kitchen(State):
         self.game.draw_image(background_image, 1, surface, self.game.GAME_X / 2, self.game.GAME_Y / 2)
         self.game.draw_text(surface, str(step_name), MARIO_FONT, NOBLE_BLACK, self.game.GAME_X / 2, self.game.GAME_Y / 4)
         self.game.draw_text(surface, str(self.ingredient_rating), MARIO_FONT, NOBLE_BLACK, self.game.GAME_X / 2, self.game.GAME_Y / 2)
+
+    def reset_status(self, current_step):
+        self.cooking_done = False
+        self.countdown_triggered = False
+        self.countdown_completed = False
+        self.rating_triggered = False
+        self.ingredient_rating = None
+        self.next_step = False
+
+        if current_step == 1:
+            self.step_1 = False
+            self.step_2 = True
+
+        elif current_step == 2:
+            self.step_2 = False
+            self.step_3 = True
+
+        elif current_step == 3:
+            self.step_3 = False
+
+            
+
+
+
 
 
 
