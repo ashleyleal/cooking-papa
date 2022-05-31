@@ -213,21 +213,7 @@ class Kitchen(State):
 
             self.game.draw_image(cooking_bar, 1, surface, self.game.GAME_X / 2 + self.game.GAME_X / 4, self.game.GAME_Y / 4)
 
-            start_button = Button(self.game.GAME_X / 2, self.game.GAME_Y / 2, start, 1)
-            
-            if not self.countdown_triggered and not self.countdown_completed:
-                if start_button.draw(surface):
-                    self.button_time = pygame.time.get_ticks()
-                    self.countdown_triggered = True
-
-            if self.countdown[3]:
-                self.game.draw_image(countdown_3, 1, surface, self.game.GAME_X / 4, self.game.GAME_Y / 2)
-
-            elif self.countdown[2]:
-                self.game.draw_image(countdown_2, 1, surface, self.game.GAME_X / 4, self.game.GAME_Y / 2)
-
-            elif self.countdown[1]:
-                self.game.draw_image(countdown_1, 1, surface, self.game.GAME_X / 4, self.game.GAME_Y / 2)
+            self.trigger_countdown(surface)
 
             if self.countdown_completed:
                 
@@ -243,9 +229,9 @@ class Kitchen(State):
                     self.stop_button_vely *= -1
 
                 if stop_button.draw(surface):
-                    self.burger_patty_speed, self.stop_button_velx, self.stop_button_vely = 0, 0, 0
                     self.cooking_done = True
                     self.completed_time = pygame.time.get_ticks()
+                    self.burger_patty_speed, self.stop_button_velx, self.stop_button_vely = 0, 0, 0
 
                 self.game.draw_image(cooking_arrow, 1, surface, self.game.GAME_X / 2 + self.game.GAME_X / 4 - 65 + self.burger_patty_pos, self.game.GAME_Y / 4 + 10)
                 
@@ -253,8 +239,9 @@ class Kitchen(State):
 
                 # Stops the cooking arrow when it reaches the end of the bar
                 if self.burger_patty_pos >= 135:
-                    self.burger_patty_speed = 0
+                    self.burger_patty_speed, self.stop_button_velx, self.stop_button_vely = 0, 0, 0
                     self.cooking_done = True
+                    self.completed_time = pygame.time.get_ticks()
 
                 # Draw the appropriate patty depending on the cooking arrow position
                 elif self.burger_patty_pos >= 0 and self.burger_patty_pos <= 40:
@@ -300,7 +287,59 @@ class Kitchen(State):
                     self.game.draw_text(surface, "EXCELLENT JOB", MINIMAL_FONT, NOBLE_BLACK, 276, 110)
                     self.ingredient_rating = 3
 
-            pass
+                self.total_rating += self.ingredient_rating
+    
+            self.game.draw_image(cooking_bar, 1, surface, self.game.GAME_X / 2 + self.game.GAME_X / 4, self.game.GAME_Y / 4)
+
+            self.trigger_countdown(surface)
+
+            if self.countdown_completed:
+                self.game.draw_image(whole_tomato, 1, surface, self.game.GAME_X / 4, 135)
+
+            if self.countdown_completed:
+                
+                stop_button = Button(self.stop_button_posx, self.stop_button_posy, flip_button, 1)
+
+                self.stop_button_posx += self.stop_button_velx
+                self.stop_button_posy += self.stop_button_vely
+
+                if self.stop_button_posx >= self.game.GAME_X / 2 - 9 or self.stop_button_posx <= 9:
+                    self.stop_button_velx *= -1
+
+                if self.stop_button_posy >= self.game.GAME_Y / 2 - 28 or self.stop_button_posy <= 5:
+                    self.stop_button_vely *= -1
+
+                if stop_button.draw(surface):
+                    self.burger_patty_speed, self.stop_button_velx, self.stop_button_vely = 0, 0, 0
+                    self.cooking_done = True
+                    self.completed_time = pygame.time.get_ticks()
+
+                self.game.draw_image(cooking_arrow, 1, surface, self.game.GAME_X / 2 + self.game.GAME_X / 4 - 65 + self.burger_patty_pos, self.game.GAME_Y / 4 + 10)
+                
+                self.burger_patty_pos += self.burger_patty_speed
+
+                # Stops the cooking arrow when it reaches the end of the bar
+                if self.burger_patty_pos >= 135:
+                    self.burger_patty_speed, self.stop_button_velx, self.stop_button_vely = 0, 0, 0
+                    self.cooking_done = True
+                    self.completed_time = pygame.time.get_ticks()
+
+                # Draw the appropriate patty depending on the cooking arrow position
+                elif self.burger_patty_pos >= 0 and self.burger_patty_pos <= 40:
+                    self.game.draw_image(raw_patty, 1, surface, self.game.GAME_X / 4, 135)
+
+                elif self.burger_patty_pos > 40 and self.burger_patty_pos <= 90:
+                    self.game.draw_image(cooked_patty, 1, surface, self.game.GAME_X / 4, 135)
+
+                elif self.burger_patty_pos > 90:
+                    self.game.draw_image(burned_patty, 1, surface, self.game.GAME_X / 4, 135)
+
+                if self.rating_triggered:
+                    self.rating_screen(surface, green_background, "SLICE TOMATO")
+                    
+                    if self.next_step:
+                        self.reset_status(2)
+
 
         def assemble_burger(surface):
             pass
@@ -389,6 +428,22 @@ class Kitchen(State):
         elif current_step == 3:
             self.step_3 = False
 
+    def trigger_countdown(self, surface):
+        start_button = Button(self.game.GAME_X / 2, self.game.GAME_Y / 2, start, 1)
+                
+        if not self.countdown_triggered and not self.countdown_completed:
+            if start_button.draw(surface):
+                self.button_time = pygame.time.get_ticks()
+                self.countdown_triggered = True
+
+        if self.countdown[3]:
+            self.game.draw_image(countdown_3, 1, surface, self.game.GAME_X / 4, self.game.GAME_Y / 2)
+
+        elif self.countdown[2]:
+            self.game.draw_image(countdown_2, 1, surface, self.game.GAME_X / 4, self.game.GAME_Y / 2)
+
+        elif self.countdown[1]:
+            self.game.draw_image(countdown_1, 1, surface, self.game.GAME_X / 4, self.game.GAME_Y / 2)
             
 
 
