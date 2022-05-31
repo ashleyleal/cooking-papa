@@ -96,6 +96,10 @@ whole_tomato = pygame.image.load("assets/images/images/burger_whole_tomato.png")
 lettuce = pygame.image.load("assets/images/images/burger_lettuce.png")
 cheese = pygame.image.load("assets/images/images/burger_cheese.png")
 
+# Pizza
+rolling_pin = pygame.image.load("assets/images/images/pizza_rolling_pin.png")
+plate = pygame.image.load("assets/images/images/plate.png")
+
 # Reocurring buttons
 return_button = Button(20, 20, return_arrow, 1)
 confirm_order_button = Button(300, 160, check_mark, 1)

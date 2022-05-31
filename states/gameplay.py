@@ -240,8 +240,6 @@ class Kitchen(State):
                 # Stops the cooking arrow when it reaches the end of the bar
                 if self.burger_patty_pos >= 135:
                     self.burger_patty_speed, self.stop_button_velx, self.stop_button_vely = 0, 0, 0
-                    self.cooking_done = True
-                    self.completed_time = pygame.time.get_ticks()
 
                 # Draw the appropriate patty depending on the cooking arrow position
                 elif self.burger_patty_pos >= 0 and self.burger_patty_pos <= 40:
@@ -294,45 +292,13 @@ class Kitchen(State):
             self.trigger_countdown(surface)
 
             if self.countdown_completed:
+                
+                stop_button = Button(self.game.GAME_X, 80, flip_button, 1)
                 self.game.draw_image(whole_tomato, 1, surface, self.game.GAME_X / 4, 135)
 
-            if self.countdown_completed:
-                
-                stop_button = Button(self.stop_button_posx, self.stop_button_posy, flip_button, 1)
-
-                self.stop_button_posx += self.stop_button_velx
-                self.stop_button_posy += self.stop_button_vely
-
-                if self.stop_button_posx >= self.game.GAME_X / 2 - 9 or self.stop_button_posx <= 9:
-                    self.stop_button_velx *= -1
-
-                if self.stop_button_posy >= self.game.GAME_Y / 2 - 28 or self.stop_button_posy <= 5:
-                    self.stop_button_vely *= -1
-
                 if stop_button.draw(surface):
-                    self.burger_patty_speed, self.stop_button_velx, self.stop_button_vely = 0, 0, 0
                     self.cooking_done = True
                     self.completed_time = pygame.time.get_ticks()
-
-                self.game.draw_image(cooking_arrow, 1, surface, self.game.GAME_X / 2 + self.game.GAME_X / 4 - 65 + self.burger_patty_pos, self.game.GAME_Y / 4 + 10)
-                
-                self.burger_patty_pos += self.burger_patty_speed
-
-                # Stops the cooking arrow when it reaches the end of the bar
-                if self.burger_patty_pos >= 135:
-                    self.burger_patty_speed, self.stop_button_velx, self.stop_button_vely = 0, 0, 0
-                    self.cooking_done = True
-                    self.completed_time = pygame.time.get_ticks()
-
-                # Draw the appropriate patty depending on the cooking arrow position
-                elif self.burger_patty_pos >= 0 and self.burger_patty_pos <= 40:
-                    self.game.draw_image(raw_patty, 1, surface, self.game.GAME_X / 4, 135)
-
-                elif self.burger_patty_pos > 40 and self.burger_patty_pos <= 90:
-                    self.game.draw_image(cooked_patty, 1, surface, self.game.GAME_X / 4, 135)
-
-                elif self.burger_patty_pos > 90:
-                    self.game.draw_image(burned_patty, 1, surface, self.game.GAME_X / 4, 135)
 
                 if self.rating_triggered:
                     self.rating_screen(surface, green_background, "SLICE TOMATO")
@@ -340,9 +306,12 @@ class Kitchen(State):
                     if self.next_step:
                         self.reset_status(2)
 
-
         def assemble_burger(surface):
-            pass
+            self.game.draw_image(cutting_board, 1, surface, self.game.GAME_X / 4, self.game.GAME_Y / 2)
+            self.game.draw_image(green_instruction_panel, 1, surface, self.game.GAME_X / 2 + self.game.GAME_X / 4, self.game.GAME_Y / 2)
+            self.game.draw_image(cooking_papa, 1, surface, 215, 128)
+            self.game.draw_image(papa_speech, 1, surface, 275, 110)
+            
 
         surface.fill(FANCY_MOSS)
         
