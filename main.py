@@ -41,8 +41,8 @@ class Game:
         pygame.init()
 
         # Music causing error
-        #pygame.mixer.music.load(menu_music)
-        #pygame.mixer.music.play(-1)
+        # pygame.mixer.music.load(menu_music)
+        # pygame.mixer.music.play(1)
 
         # Configure window
         self.GAME_X, self.GAME_Y = 320, 180
