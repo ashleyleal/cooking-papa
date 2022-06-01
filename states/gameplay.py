@@ -311,7 +311,6 @@ class Kitchen(State):
             self.game.draw_image(green_instruction_panel, 1, surface, self.game.GAME_X / 2 + self.game.GAME_X / 4, self.game.GAME_Y / 2)
             self.game.draw_image(cooking_papa, 1, surface, 215, 128)
             self.game.draw_image(papa_speech, 1, surface, 275, 110)
-            
 
         surface.fill(FANCY_MOSS)
         
@@ -377,6 +376,8 @@ class Kitchen(State):
         self.game.draw_image(background_image, 1, surface, self.game.GAME_X / 2, self.game.GAME_Y / 2)
         self.game.draw_text(surface, str(step_name), MARIO_FONT, NOBLE_BLACK, self.game.GAME_X / 2, self.game.GAME_Y / 4)
         self.game.draw_text(surface, str(self.ingredient_rating), MARIO_FONT, NOBLE_BLACK, self.game.GAME_X / 2, self.game.GAME_Y / 2)
+        
+        # Change to number of stars by drawing with offsets in for loop. Fionna do this pls
 
     def reset_status(self, current_step):
         self.cooking_done = False

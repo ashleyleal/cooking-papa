@@ -128,6 +128,13 @@ class Game:
             alpha_key += 1
             pygame.time.delay(1000)
 
+    def customer_payment(self, amount):
+        # Add amount to gold.
+        pass
+
+    def spend_gold(self, amount):
+        pass
+
 # Creates an instance of Game class and runs the game loop while the program is running            
 if __name__ == "__main__":
     game = Game()
