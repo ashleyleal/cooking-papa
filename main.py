@@ -129,7 +129,7 @@ class Game:
             pygame.time.delay(1000)
 
     def customer_payment(self, amount):
-        # Add amount to gold.
+        # Add amount to gold. Remove pass keyword after doing function; it is just there so the empty function doesn't error.
         pass
 
     def spend_gold(self, amount):

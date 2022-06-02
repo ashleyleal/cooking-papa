@@ -7,11 +7,13 @@ To do list:
 - Will need to make another state for being in the kitchen because buttons don't work after screen flipped
 
 """
+#  Import required libraries and modules
 import random, time
 from states.state import State
 from button import Button
 from assets.assets import * 
 
+# Restaurant state define behaviour inside of restaurant when serving customers
 class Restaurant(State):
 
     def __init__(self, game):
@@ -102,12 +104,14 @@ class Restaurant(State):
         elif self.selected_recipe == "Fried Chicken":
             self.game.draw_image(chicken_icon, 1, surface, icon_position[0], icon_position[1])
 
-
+# Kitchen state defines behaviour when the user is currently cooking
 class Kitchen(State):
 
+    # Inherit attributes from parent state class State
     def __init__(self, game):
         State.__init__(self, game)
 
+        # Variables that set attributes
         self.current_recipe = self.game.current_recipe
         self.countdown_triggered = False
         self.countdown_completed = False
@@ -116,6 +120,7 @@ class Kitchen(State):
         self.total_rating = 0
         self.next_step = False
 
+        # Controls which number is shown on the screen to emulate countdown
         self.countdown = {
 
             3: False,
@@ -124,17 +129,21 @@ class Kitchen(State):
 
         }
 
+        # Variables for burger cooking
         self.burger_patty_speed = 0.15
         self.burger_patty_pos = 0
         self.stop_button_posx, self.stop_button_posy = self.game.GAME_X / 4, self.game.GAME_Y / 5
         self.stop_button_velx, self.stop_button_vely = 1,1
         
+        # Controls which step the user is currently on
         self.step_1 = True
         self.step_2 = False
         self.step_3 = False
 
+        # Says whether a cooking step is completed 
         self.cooking_done = False
 
+    # Things that happen when certain variables are modified through gameplay, is outside of render loop
     def update(self, actions):
         if actions["menu"]:
             main_menu = self.game.state_stack[0]
@@ -163,6 +172,7 @@ class Kitchen(State):
                 if pygame.time.get_ticks() > self.completed_time + 6000:
                     self.next_step = True
 
+    # The render loop contains things that happen continuosly based on which variables are True and False 
     def render(self, surface):
 
         if self.current_recipe == "Burger":
