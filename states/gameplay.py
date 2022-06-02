@@ -7,6 +7,7 @@ To do list:
 - Will need to make another state for being in the kitchen because buttons don't work after screen flipped
 
 """
+
 #  Import required libraries and modules
 import random, time
 from states.state import State
@@ -20,6 +21,7 @@ class Restaurant(State):
         State.__init__(self, game)
         
         self.possible_recipes =  {
+            
             "Burger": {
                 "Cook Patty": "Flip at the right time!",
                 "Slice Tomato": "Click two points to make a slice.",
@@ -145,10 +147,12 @@ class Kitchen(State):
 
     # Things that happen when certain variables are modified through gameplay, is outside of render loop
     def update(self, actions):
+        # If menu actions is triggered the main menu state is entered
         if actions["menu"]:
             main_menu = self.game.state_stack[0]
             main_menu.enter_state()
 
+        # If countdown_triggered find the current time and compare it to the time when the countdown is triggered to set which numbers are shown on the screen
         if self.countdown_triggered:
             current_time = pygame.time.get_ticks()
             
@@ -163,9 +167,16 @@ class Kitchen(State):
             if current_time - self.button_time >= 3100 and current_time - self.button_time < 4100:
                 self.countdown[1] = False
             if current_time - self.button_time >= 4100 and current_time - self.button_time < 5100:
+                
+                # Reset countdown variable and set completed to true
                 self.countdown_triggered = False
                 self.countdown_completed = True
 
+                print(self.game.gold)
+                self.game.gold += 1
+                print(self.game.gold)
+
+        # When one cooking step is completed wait some time and trigger the rating screen. Then wait some more time and switch to the next cooking step
         if self.cooking_done:
             if pygame.time.get_ticks() > self.completed_time + 3000:
                 self.rating_triggered = True
@@ -174,6 +185,8 @@ class Kitchen(State):
 
     # The render loop contains things that happen continuosly based on which variables are True and False 
     def render(self, surface):
+
+        # Run the appropriate cooking process depending on the current customer order
 
         if self.current_recipe == "Burger":
             self.cook_burger(surface)
@@ -187,8 +200,10 @@ class Kitchen(State):
         elif self.current_recipe == "Fried Chicken":
             self.cook_chicken(surface)
 
+    # Define function that cooks the burger
     def cook_burger(self, surface):
 
+        
         def cook_patty(surface):
             self.game.draw_image(kitchen_grill, 1, surface, self.game.GAME_X / 4, self.game.GAME_Y / 2)
             self.game.draw_image(green_instruction_panel, 1, surface, self.game.GAME_X / 2 + self.game.GAME_X / 4, self.game.GAME_Y / 2)
