@@ -48,9 +48,9 @@ papa_speech = pygame.image.load("assets/images/images/papas_bubble.png")
 # Main Menu Assets
 main_menu_bg = pygame.image.load("assets/images/images/main_menu_bg.png")
 main_menu_title = pygame.image.load("assets/images/images/main_menu_title.png")
-play_button = pygame.image.load("assets/images/images/Play.png")
-shop_button = pygame.image.load("assets/images/images/Shop.png")
-quit_button = pygame.image.load("assets/images/images/Quit.png")
+play_button = pygame.image.load("assets/images/images/play.png")
+shop_button = pygame.image.load("assets/images/images/shop.png")
+quit_button = pygame.image.load("assets/images/images/quit.png")
 
 placeholder_button = pygame.image.load("assets/images/icons/buttonPlaceholder.png")
 return_arrow = pygame.image.load("assets/images/icons/return_arrow.png")
