@@ -183,10 +183,6 @@ class Kitchen(State):
                 self.countdown_triggered = False
                 self.countdown_completed = True
 
-                print(self.game.gold)
-                self.game.gold += 1
-                print(self.game.gold)
-
         # When one cooking step is completed wait some time and trigger the rating screen. Then wait some more time and switch to the next cooking step
         if self.cooking_done:
             if pygame.time.get_ticks() > self.completed_time + 3000:
@@ -215,13 +211,9 @@ class Kitchen(State):
     def cook_burger(self, surface):
 
         # Define function for cooking the burger patty
-        
         def cook_patty(surface):
-            # Draw required images and backgrounds (Will define in a variable later because redundant for each step)
-            self.game.draw_image(kitchen_grill, 1, surface, self.game.GAME_X / 4, self.game.GAME_Y / 2)
-            self.game.draw_image(green_instruction_panel, 1, surface, self.game.GAME_X / 2 + self.game.GAME_X / 4, self.game.GAME_Y / 2)
-            self.game.draw_image(cooking_papa, 1, surface, 215, 128)
-            self.game.draw_image(papa_speech, 1, surface, 275, 110)
+            # Draw required images and backgrounds 
+            self.draw_cooking_background(surface, green_instruction_panel, kitchen_grill)
 
             # Changes the text in cooking papa's speech bubble depending on the conditions
             
@@ -306,12 +298,8 @@ class Kitchen(State):
                         self.reset_status(1)
 
         # Define function for cooking (cutting) the tomato
-
         def cut_tomato(surface):
-            self.game.draw_image(cutting_board, 1, surface, self.game.GAME_X / 4, self.game.GAME_Y / 2)
-            self.game.draw_image(green_instruction_panel, 1, surface, self.game.GAME_X / 2 + self.game.GAME_X / 4, self.game.GAME_Y / 2)
-            self.game.draw_image(cooking_papa, 1, surface, 215, 128)
-            self.game.draw_image(papa_speech, 1, surface, 275, 110)
+            self.draw_cooking_background(surface, green_instruction_panel, cutting_board)
 
             if not self.cooking_done:
                 
@@ -356,11 +344,9 @@ class Kitchen(State):
                     if self.next_step:
                         self.reset_status(2)
 
+        # Define function to assemble burger
         def assemble_burger(surface):
-            self.game.draw_image(cutting_board, 1, surface, self.game.GAME_X / 4, self.game.GAME_Y / 2)
-            self.game.draw_image(green_instruction_panel, 1, surface, self.game.GAME_X / 2 + self.game.GAME_X / 4, self.game.GAME_Y / 2)
-            self.game.draw_image(cooking_papa, 1, surface, 215, 128)
-            self.game.draw_image(papa_speech, 1, surface, 275, 110)
+            self.draw_cooking_background(surface, green_instruction_panel, cutting_board)
 
         surface.fill(FANCY_MOSS)
         
@@ -427,14 +413,14 @@ class Kitchen(State):
         self.game.draw_text(surface, str(step_name), MARIO_FONT, NOBLE_BLACK, self.game.GAME_X / 2, self.game.GAME_Y / 4)
         self.game.draw_text(surface, str(self.ingredient_rating), MARIO_FONT, NOBLE_BLACK, self.game.GAME_X / 2, self.game.GAME_Y / 2)
         
-        # Change to number of stars by drawing with offsets in for loop. Fionna do this pls
+        # Change text to number of stars by drawing with offsets in for loop. Fionna do this pls
 
     def reset_status(self, current_step):
         self.cooking_done = False
         self.countdown_triggered = False
         self.countdown_completed = False
         self.rating_triggered = False
-        self.ingredient_rating = None
+        self.ingredient_rating = 0
         self.next_step = False
 
         if current_step == 1:
@@ -465,6 +451,14 @@ class Kitchen(State):
         elif self.countdown[1]:
             self.game.draw_image(countdown_1, 1, surface, self.game.GAME_X / 4, self.game.GAME_Y / 2)
             
+
+    def draw_cooking_background(self, surface, colourbg, cookingbg):
+        self.game.draw_image(cookingbg, 1, surface, self.game.GAME_X / 4, self.game.GAME_Y / 2)
+        self.game.draw_image(colourbg, 1, surface, self.game.GAME_X / 2 + self.game.GAME_X / 4, self.game.GAME_Y / 2)
+        self.game.draw_image(cooking_papa, 1, surface, 215, 128)
+        self.game.draw_image(papa_speech, 1, surface, 275, 110)
+
+
 
 
 
