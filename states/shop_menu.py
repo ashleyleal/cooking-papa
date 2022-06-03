@@ -17,7 +17,7 @@ class Shop_Menu(State):
 
     # Render loop that continously updates screen based on current conditions
     def render(self, surface):
-        surface.fill(MARBLE_WHITE)
+        self.game.draw_image(menu_bg, 1, surface, self.game.GAME_X / 2, self.game.GAME_Y / 2)
         
         if return_button.draw(surface):
             self.game.actions["menu"] = True
