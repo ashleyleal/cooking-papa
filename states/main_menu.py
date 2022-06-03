@@ -24,7 +24,7 @@ class Main_Menu(State):
             new_state.enter_state()
 
     def render(self, surface):
-        self.game.draw_image(main_menu_bg, surface, 1, self.game.GAME_X / 2, self.game.GAME_Y / 2 )
+        self.game.draw_image(main_menu_bg, surface, 1, self.game.GAME_X / 2, self.game.GAME_Y / 2)
         #gradient_rect(surface, WARM_CROISSANT, YUCCA_CREAM, surface.get_rect())
         #pygame.draw.rect(surface, YUCCA_CREAM, pygame.Rect(self.game.GAME_X - self.game.GAME_X / 2, 0, self.game.GAME_X / 2, self.game.GAME_Y))
         #self.game.draw_image(game_logo, 1, surface, self.game.GAME_X / 2, 50)
