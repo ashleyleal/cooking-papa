@@ -34,11 +34,6 @@ class Restaurant(State):
                 "Add Toppings": "Drag the toppings to the pizza.",
                 "Place in Oven": "Put the pizza in the oven"
             },
-            "Stew": {
-                "Cut vegetables": "",
-                "": "",
-                "": "",
-            },
             "Fried Chicken": {
                 "": "",
                 "": "",
@@ -107,9 +102,9 @@ class Restaurant(State):
 
         elif self.selected_recipe == "Pizza":
             self.game.draw_image(pizza_icon, 1, surface, icon_position[0], icon_position[1])
-
-        elif self.selected_recipe == "Stew":
-            self.game.draw_image(stew_icon, 1, surface, icon_position[0], icon_position[1])
+        
+        #elif self.selected_recipe == "Stew":
+            #self.game.draw_image(stew_icon, 1, surface, icon_position[0], icon_position[1])
 
         elif self.selected_recipe == "Fried Chicken":
             self.game.draw_image(chicken_icon, 1, surface, icon_position[0], icon_position[1])
@@ -193,8 +188,8 @@ class Kitchen(State):
             self.cook_burger(surface)
         elif self.current_recipe == "Pizza":
             self.cook_pizza(surface) 
-        elif self.current_recipe == "Stew":
-            self.cook_stew(surface)
+        #elif self.current_recipe == "Stew":
+            #self.cook_stew(surface)
         elif self.current_recipe == "Fried Chicken":
             self.cook_chicken(surface)
 
@@ -203,7 +198,7 @@ class Kitchen(State):
 
         # Define method for cooking the burger patty
         def cook_patty(surface):
-            self.draw_cooking_background(surface, "green", "grill")
+            self.draw_cooking_background(surface, green_instruction_panel, kitchen_grill)
 
             # Changes the text in cooking papa's speech bubble depending on the conditions
 
@@ -229,12 +224,16 @@ class Kitchen(State):
                     self.game.draw_text(surface, "EXCELLENT JOB", MINIMAL_FONT, NOBLE_BLACK, 276, 110)
                     self.ingredient_rating = 3
 
+                # Add the ingredient rating to the total recipe rating
                 self.total_rating += self.ingredient_rating                
 
+            # Draw the cooking bar that shows how cooked the patty is
             self.game.draw_image(cooking_bar, 1, surface, self.game.GAME_X / 2 + self.game.GAME_X / 4, self.game.GAME_Y / 4)
 
+            # Prompt countdown
             self.trigger_countdown(surface)
 
+            # Start cooking process when countdown is completed
             if self.countdown_completed:
                 
                 stop_button = Button(self.stop_button_posx, self.stop_button_posy, flip_button, 1)
@@ -274,9 +273,10 @@ class Kitchen(State):
                 if self.rating_triggered:
                     self.rating_screen(surface, green_background, "COOK PATTY")
                     
-                    if self.next_step:
-                        self.reset_status(1)
+                if self.next_step:
+                    self.reset_status(1)
 
+        # Define method for cutting the tomato
         def cut_tomato(surface):
             self.draw_cooking_background(surface, green_instruction_panel, cutting_board)
 
@@ -339,7 +339,7 @@ class Kitchen(State):
     def cook_pizza(self, surface):
 
         def roll_dough(surface):
-            self.game.draw_image(cutting_board, 1, surface, self.game.GAME_X / 4, self.game.GAME_Y / 2)
+            self.draw_cooking_background(surface, pink_instruction_panel, cutting_board)
 
         def add_sauce(surface):
             pass
@@ -347,7 +347,7 @@ class Kitchen(State):
         def add_toppings(surface):
             pass
 
-        surface.fill(MINERAL_RED)
+        surface.fill(CARNATION_ROSE)
         if self.step_1:
             roll_dough(surface)
         elif self.step_2:
@@ -355,6 +355,7 @@ class Kitchen(State):
         elif self.step_3:
             add_toppings(surface)
 
+    """
     def cook_stew(self, surface):
 
         def step_1(surface):
@@ -370,6 +371,7 @@ class Kitchen(State):
         step_1(surface)
         step_2(surface)
         step_3(surface)
+    """
 
     def cook_chicken(self, surface):
 
@@ -387,6 +389,7 @@ class Kitchen(State):
         step_2(surface)
         step_3(surface)
 
+    # Clears the screen and shows the user's rating after a ingredient cooking step
     def rating_screen(self, surface, background_image, step_name):
         self.game.draw_image(background_image, 1, surface, self.game.GAME_X / 2, self.game.GAME_Y / 2)
         self.game.draw_text(surface, str(step_name), MARIO_FONT, NOBLE_BLACK, self.game.GAME_X / 2, self.game.GAME_Y / 4)
@@ -394,6 +397,7 @@ class Kitchen(State):
         
         # Change text to number of stars by drawing with offsets in for loop. Fionna do this pls
 
+    # Resets the status for cooking processes
     def reset_status(self, current_step):
         self.cooking_done = False
         self.countdown_triggered = False
@@ -413,6 +417,7 @@ class Kitchen(State):
         elif current_step == 3:
             self.step_3 = False
 
+    # Draws a button that the player presses to trigger the countdown
     def trigger_countdown(self, surface):
         start_button = Button(self.game.GAME_X / 2, self.game.GAME_Y / 2, start, 1)
                 
@@ -430,21 +435,8 @@ class Kitchen(State):
         elif self.countdown[1]:
             self.game.draw_image(countdown_1, 1, surface, self.game.GAME_X / 4, self.game.GAME_Y / 2)
             
-
+    # Draws the right cooking background based on the color and cooking bg passed in as arguments
     def draw_cooking_background(self, surface, colourbg, cookingbg):
-
-        if colourbg == "green":
-            colourbg = green_instruction_panel
-
-        elif colourbg == "pink":
-            colourbg = pink_instruction_panel
-
-        if cookingbg == "grill":
-            cookingbg = kitchen_grill
-
-        elif cookingbg == "cuttingboard":
-            cookingbg = cutting_board
-
         self.game.draw_image(cookingbg, 1, surface, self.game.GAME_X / 4, self.game.GAME_Y / 2)
         self.game.draw_image(colourbg, 1, surface, self.game.GAME_X / 2 + self.game.GAME_X / 4, self.game.GAME_Y / 2)
         self.game.draw_image(cooking_papa, 1, surface, 215, 128)
