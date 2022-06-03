@@ -17,11 +17,9 @@ from assets.assets import *
 # Restaurant state define behaviour inside of restaurant when serving customers
 class Restaurant(State):
 
-    # Inherit attributes from State class
     def __init__(self, game):
         State.__init__(self, game)
         
-        # List of all possible recipes and steps
         self.possible_recipes =  {
             
             "Burger": {
@@ -48,24 +46,20 @@ class Restaurant(State):
 
         self.set_order()
 
-    # Define function that picks a random recipe from the dictionary of recipes and returns it
     def generate_order(self): 
         selected = random.choice(list(self.possible_recipes.keys()))
         return(selected, self.possible_recipes[selected])
 
-    # Define function that picks the apppearance of the customer at random
     def generate_customer(self):
         possible_customers = [customer_1, customer_2, customer_3]
         return random.choice(possible_customers) 
 
-    # Define function that generates the customer and the order and sends them to the game instance
     def set_order(self):
         returned = self.generate_order()
         self.selected_customer = self.generate_customer()
         self.selected_recipe = returned[0]
         self.game.current_recipe = self.selected_recipe
 
-    # Define behaviours when certain actions are triggered
     def update(self, actions):
         if actions["menu"]:
             main_menu = self.game.state_stack[0]
@@ -78,30 +72,25 @@ class Restaurant(State):
             new_state = Kitchen(self.game)
             new_state.enter_state()
 
-    # Define render loop
     def render(self, surface):
 
-        # Fill screen and draw customer with their order
         surface.fill(WHISTLES_GOLD)
         self.game.draw_image(self.selected_customer, 1, surface, self.game.GAME_X / 2, 100)
         self.game.draw_image(restaurant_counter, 1, surface, self.game.GAME_X / 2, 105)
         self.game.draw_image(speech_bubble, 1, surface, self.game.GAME_X/ 2 + 60, self.game.GAME_Y / 2 - 50)
         self.show_order(surface)
 
-        # Return button sets menu action to True
         if return_button.draw(surface):
             self.game.actions["menu"] = True
 
-        # Decline button sets recipe action to True and "rerolls" the customer and order
         if decline_order_button.draw(surface):
             self.game.actions["recipe"] = True
 
-        # Confirm button that sets cooking action to True and puts the player in the kitchen 
         if confirm_order_button.draw(surface):
             self.game.actions["cooking"] = True
 
-    # Define function that draws the chosen recipe inside of the customer's speech bubble    
-    def show_order(self, surface): 
+        
+    def show_order(self, surface):  # MUST BE INSIDE OF LOOP
         
         icon_position = self.game.GAME_X/ 2 + 60, self.game.GAME_Y / 2 - 57
         
@@ -210,13 +199,15 @@ class Kitchen(State):
     # Define function that cooks the burger
     def cook_burger(self, surface):
 
-        # Define function for cooking the burger patty
+        
         def cook_patty(surface):
-            # Draw required images and backgrounds 
-            self.draw_cooking_background(surface, green_instruction_panel, kitchen_grill)
+            self.game.draw_image(kitchen_grill, 1, surface, self.game.GAME_X / 4, self.game.GAME_Y / 2)
+            self.game.draw_image(green_instruction_panel, 1, surface, self.game.GAME_X / 2 + self.game.GAME_X / 4, self.game.GAME_Y / 2)
+            self.game.draw_image(cooking_papa, 1, surface, 215, 128)
+            self.game.draw_image(papa_speech, 1, surface, 275, 110)
 
             # Changes the text in cooking papa's speech bubble depending on the conditions
-            
+
             if not self.cooking_done:
                 
                 self.game.draw_text(surface, "FLIP AT THE", MINIMAL_FONT, NOBLE_BLACK, 275, 95)
@@ -239,16 +230,12 @@ class Kitchen(State):
                     self.game.draw_text(surface, "EXCELLENT JOB", MINIMAL_FONT, NOBLE_BLACK, 276, 110)
                     self.ingredient_rating = 3
 
-                # At the end of patty cooking add player's rating to the total rating
                 self.total_rating += self.ingredient_rating                
 
-            # Draw cooking bar
             self.game.draw_image(cooking_bar, 1, surface, self.game.GAME_X / 2 + self.game.GAME_X / 4, self.game.GAME_Y / 4)
 
-            # Trigger countdown
             self.trigger_countdown(surface)
 
-            # When the countdown is done draw the patty and the button to flip the patty. 
             if self.countdown_completed:
                 
                 stop_button = Button(self.stop_button_posx, self.stop_button_posy, flip_button, 1)
@@ -275,29 +262,22 @@ class Kitchen(State):
                 if self.burger_patty_pos >= 135:
                     self.burger_patty_speed, self.stop_button_velx, self.stop_button_vely = 0, 0, 0
 
-            # Draw the appropriate patty depending on the cooking arrow position
-                
-                # Draw raw patty when the bar is in the blue area
+                # Draw the appropriate patty depending on the cooking arrow position
                 elif self.burger_patty_pos >= 0 and self.burger_patty_pos <= 40:
                     self.game.draw_image(raw_patty, 1, surface, self.game.GAME_X / 4, 135)
 
-                # Draw cooked patty when the bar is within the yellow and green ranges
                 elif self.burger_patty_pos > 40 and self.burger_patty_pos <= 90:
                     self.game.draw_image(cooked_patty, 1, surface, self.game.GAME_X / 4, 135)
 
-                # Draw burned patty wben the bar is in the red area
                 elif self.burger_patty_pos > 90:
                     self.game.draw_image(burned_patty, 1, surface, self.game.GAME_X / 4, 135)
 
-                # If the rating screen is triggered, clear the screen, add a new background and show the player's score for the current step
                 if self.rating_triggered:
                     self.rating_screen(surface, green_background, "COOK PATTY")
                     
-                    # Reset variables when next step is entered
                     if self.next_step:
                         self.reset_status(1)
 
-        # Define function for cooking (cutting) the tomato
         def cut_tomato(surface):
             self.draw_cooking_background(surface, green_instruction_panel, cutting_board)
 

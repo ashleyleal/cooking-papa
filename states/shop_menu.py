@@ -16,7 +16,7 @@ class Shop_Menu(State):
             main_menu.enter_state()
 
     def render(self, surface):
-        self.game.draw_image(main_menu_bg, 1, surface, self.game.GAME_X / 2, self.game.GAME_Y / 2)
+        surface.fill(MARBLE_WHITE)
         
         if return_button.draw(surface):
             self.game.actions["menu"] = True
