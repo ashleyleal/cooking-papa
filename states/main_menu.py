@@ -30,7 +30,7 @@ class Main_Menu(State):
     # Render loop that continously updates screen based on current conditions
     def render(self, surface):
         # Draw background and title screen logo
-        self.game.gradient_rect(surface, WARM_CROISSANT, YUCCA_CREAM, surface.get_rect())
+        self.game.draw_image(menu_bg, 1, surface, self.game.GAME_X / 2, self.game.GAME_Y / 2)
         self.game.draw_image(game_logo, 1, surface, self.game.GAME_X / 2, 50)
         
         # Initialize buttons with position, image, and scale

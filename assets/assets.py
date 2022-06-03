@@ -46,10 +46,11 @@ cooking_papa = pygame.image.load("assets/images/images/cooking_papa.png")
 papa_speech = pygame.image.load("assets/images/images/papas_bubble.png")
 
 # Main Menu Assets
-game_logo = pygame.image.load("assets/images/titles/cookingPapaPlaceholderTitle.png")
-play_button = pygame.image.load("assets/images/icons/play_button.png")
-shop_button = pygame.image.load("assets/images/icons/shop_button.png")
-quit_button = pygame.image.load("assets/images/icons/quit_button.png")
+menu_bg = pygame.image.load("assets/images/images/Menu_bg.png")
+game_logo = pygame.image.load("assets/images/images/main_menu_title.png")
+play_button = pygame.image.load("assets/images/icons/Play.png")
+shop_button = pygame.image.load("assets/images/icons/Shop.png")
+quit_button = pygame.image.load("assets/images/icons/Quit.png")
 
 placeholder_button = pygame.image.load("assets/images/icons/buttonPlaceholder.png")
 return_arrow = pygame.image.load("assets/images/icons/return_arrow.png")
