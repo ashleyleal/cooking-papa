@@ -1,3 +1,7 @@
+# Ignore this
+
+# Fionna's text file for determining game logic 
+
 from states.state import State
 from button import Button
 from assets.assets import * 

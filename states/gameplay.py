@@ -8,7 +8,7 @@ To do list:
 
 """
 
-#  Import required libraries and modules
+#  Import required modules and classes
 import random, time
 from states.state import State
 from button import Button
@@ -17,9 +17,11 @@ from assets.assets import *
 # Restaurant state define behaviour inside of restaurant when serving customers
 class Restaurant(State):
 
+    # Inherits from game and State class
     def __init__(self, game):
         State.__init__(self, game)
         
+        # Nested dictionary of all possible recipes, the steps, and descriptions for each step
         self.possible_recipes =  {
             
             "Burger": {
@@ -46,51 +48,57 @@ class Restaurant(State):
 
         self.set_order()
 
+    # Method that selects and returns a recipe from possible_recipes dictionary
     def generate_order(self): 
         selected = random.choice(list(self.possible_recipes.keys()))
         return(selected, self.possible_recipes[selected])
 
+    # Method that selects and returns a customer image
     def generate_customer(self):
         possible_customers = [customer_1, customer_2, customer_3]
         return random.choice(possible_customers) 
 
+    # Method that sets the returned recipes and customers and passes them to the game class variable current_recipe
     def set_order(self):
         returned = self.generate_order()
         self.selected_customer = self.generate_customer()
         self.selected_recipe = returned[0]
         self.game.current_recipe = self.selected_recipe
 
+    # Updates events based on action triggers
     def update(self, actions):
+        # Enters Main Menu state when menu action is triggered
         if actions["menu"]:
             main_menu = self.game.state_stack[0]
             main_menu.enter_state()
-
+        # "Rerolls" customer and recipe when recipe action is triggered 
         if actions["recipe"]:
             self.set_order()
-
+        # Enters Kitchen state when cooking action is triggered
         if actions["cooking"]:
             new_state = Kitchen(self.game)
             new_state.enter_state()
 
+    # Render loop that continously updates screen based on current conditions
     def render(self, surface):
 
+        # Fills the background, draws the customer, counter, and speech bubble, and draws the selected recipe
         surface.fill(WHISTLES_GOLD)
         self.game.draw_image(self.selected_customer, 1, surface, self.game.GAME_X / 2, 100)
         self.game.draw_image(restaurant_counter, 1, surface, self.game.GAME_X / 2, 105)
         self.game.draw_image(speech_bubble, 1, surface, self.game.GAME_X/ 2 + 60, self.game.GAME_Y / 2 - 50)
         self.show_order(surface)
 
+        # Draw buttons and trigger actions when buttons are pressed
         if return_button.draw(surface):
             self.game.actions["menu"] = True
-
         if decline_order_button.draw(surface):
             self.game.actions["recipe"] = True
-
         if confirm_order_button.draw(surface):
             self.game.actions["cooking"] = True
 
-        
-    def show_order(self, surface):  # MUST BE INSIDE OF LOOP
+    # Method that draws the selected recipe in the customer's speech bubble
+    def show_order(self, surface):
         
         icon_position = self.game.GAME_X/ 2 + 60, self.game.GAME_Y / 2 - 57
         
@@ -109,11 +117,11 @@ class Restaurant(State):
 # Kitchen state defines behaviour when the user is currently cooking
 class Kitchen(State):
 
-    # Inherit attributes from parent state class State
+    # Inherit attributes from parent state class State 
     def __init__(self, game):
         State.__init__(self, game)
 
-        # Variables that set attributes
+        # Variables that set attributes for events in the cooking processes
         self.current_recipe = self.game.current_recipe
         self.countdown_triggered = False
         self.countdown_completed = False
@@ -124,11 +132,9 @@ class Kitchen(State):
 
         # Controls which number is shown on the screen to emulate countdown
         self.countdown = {
-
             3: False,
             2: False,
             1: False
-
         }
 
         # Variables for burger cooking
@@ -179,32 +185,25 @@ class Kitchen(State):
                 if pygame.time.get_ticks() > self.completed_time + 6000:
                     self.next_step = True
 
-    # The render loop contains things that happen continuosly based on which variables are True and False 
+    # Render loop that continously updates screen based on current conditions 
     def render(self, surface):
 
         # Run the appropriate cooking process depending on the current customer order
-
         if self.current_recipe == "Burger":
             self.cook_burger(surface)
-
         elif self.current_recipe == "Pizza":
             self.cook_pizza(surface) 
-
         elif self.current_recipe == "Stew":
             self.cook_stew(surface)
-
         elif self.current_recipe == "Fried Chicken":
             self.cook_chicken(surface)
 
-    # Define function that cooks the burger
+    # Define method that cooks the burger
     def cook_burger(self, surface):
 
-        
+        # Define method for cooking the burger patty
         def cook_patty(surface):
-            self.game.draw_image(kitchen_grill, 1, surface, self.game.GAME_X / 4, self.game.GAME_Y / 2)
-            self.game.draw_image(green_instruction_panel, 1, surface, self.game.GAME_X / 2 + self.game.GAME_X / 4, self.game.GAME_Y / 2)
-            self.game.draw_image(cooking_papa, 1, surface, 215, 128)
-            self.game.draw_image(papa_speech, 1, surface, 275, 110)
+            self.draw_cooking_background(surface, "green", "grill")
 
             # Changes the text in cooking papa's speech bubble depending on the conditions
 
@@ -433,6 +432,19 @@ class Kitchen(State):
             
 
     def draw_cooking_background(self, surface, colourbg, cookingbg):
+
+        if colourbg == "green":
+            colourbg = green_instruction_panel
+
+        elif colourbg == "pink":
+            colourbg = pink_instruction_panel
+
+        if cookingbg == "grill":
+            cookingbg = kitchen_grill
+
+        elif cookingbg == "cuttingboard":
+            cookingbg = cutting_board
+
         self.game.draw_image(cookingbg, 1, surface, self.game.GAME_X / 4, self.game.GAME_Y / 2)
         self.game.draw_image(colourbg, 1, surface, self.game.GAME_X / 2 + self.game.GAME_X / 4, self.game.GAME_Y / 2)
         self.game.draw_image(cooking_papa, 1, surface, 215, 128)

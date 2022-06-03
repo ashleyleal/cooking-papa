@@ -15,6 +15,7 @@ class Shop_Menu(State):
             main_menu = self.game.state_stack[0]
             main_menu.enter_state()
 
+    # Render loop that continously updates screen based on current conditions
     def render(self, surface):
         surface.fill(MARBLE_WHITE)
         
