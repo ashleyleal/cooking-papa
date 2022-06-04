@@ -11,7 +11,7 @@ from states.gameplay import Restaurant
 # Defines behaviour and attributes from the State class while in the main menu
 class Main_Menu(State):
 
-    # Inherit init method from Game class 
+    # Inherit init method from State class 
     def __init__(self, game):
         State.__init__(self, game)
 
