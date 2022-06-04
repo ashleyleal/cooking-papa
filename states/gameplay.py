@@ -2,10 +2,7 @@
 
 """
 To do list:
-
 - Add return button to each cooking screen that goes back to restaurant
-- Will need to make another state for being in the kitchen because buttons don't work after screen flipped
-
 """
 
 #  Import required modules and classes

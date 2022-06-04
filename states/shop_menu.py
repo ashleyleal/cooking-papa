@@ -6,9 +6,11 @@ from assets.assets import *
 
 class Shop_Menu(State):
 
+    # Inherit init method from State class 
     def __init__(self, game):
         State.__init__(self, game)
 
+    # Updates events based on action triggers
     def update(self, actions):
         super().update(actions)
         if actions["menu"]:
