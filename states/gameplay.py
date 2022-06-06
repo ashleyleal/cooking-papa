@@ -24,7 +24,7 @@ class Restaurant(State):
             "Burger": {
                 "Cook Patty": "Flip at the right time!",
                 "Slice Tomato": "Click two points to make a slice.",
-                "Assemble Burger": "Put the ingredients of the burger together"
+                "Assemble Burger": "Put the ingredients of the burger together by pressing the right button at the right time"
             },
             "Pizza": {
                 "Roll Dough": "Scroll your mouse to move the rolling pin back and forth until the dough is rolled.",
@@ -310,9 +310,7 @@ class Kitchen(State):
                 stop_button = Button(self.game.GAME_X, 80, flip_button, 1)
                 self.game.draw_image(whole_tomato, 1, surface, self.game.GAME_X / 4, 135)
 
-                if stop_button.draw(surface):
-                    self.cooking_done = True
-                    self.completed_time = pygame.time.get_ticks()
+                slice_1_button = Button(self.game.GAME_X, 150, slice_icon, 1)
 
                 if self.rating_triggered:
                     self.rating_screen(surface, green_background, "SLICE TOMATO")
