@@ -53,7 +53,7 @@ class Game:
         
         # Set state of game
         self.running, self.playing = True, True
-        self.actions = {"menu": False, "start": False, "shop": False, "quit": False, "recipe": False, "fade": False, "cooking": False}
+        self.actions = {"menu": False, "start": False, "shop": False, "quit": False, "recipe": False, "fade": False, "cooking": False, "music": False, "characters": False, "colours": False}
         self.state_stack = []
         self.load_states()
         
