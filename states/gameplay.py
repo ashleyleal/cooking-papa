@@ -393,6 +393,7 @@ class Kitchen(State):
         self.game.draw_text(surface, str(self.ingredient_rating), MARIO_FONT, NOBLE_BLACK, self.game.GAME_X / 2, self.game.GAME_Y / 2)
         
         # Change text to number of stars by drawing with offsets in for loop. Fionna do this pls
+        # FIONNA
 
     # Resets the status for cooking processes
     def reset_status(self, current_step):
