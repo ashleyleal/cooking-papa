@@ -52,8 +52,14 @@ play_button = pygame.image.load("assets/images/icons/Play.png")
 shop_button = pygame.image.load("assets/images/icons/Shop.png")
 quit_button = pygame.image.load("assets/images/icons/Quit.png")
 
+# Shop Menu Assets
+shop_title = pygame.image.load("assets/images/titles/Shop_title.png")
+characters_button = pygame.image.load("assets/images/images/characters_button.png")
+recolour_button = pygame.image.load("assets/images/images/recolour_button.png")
+music_button = pygame.image.load("assets/images/images/music_button.png")
+
 placeholder_button = pygame.image.load("assets/images/icons/buttonPlaceholder.png")
-return_arrow = pygame.image.load("assets/images/icons/return_arrow.png")
+return_arrow = pygame.image.load("assets/images/icons/return_button.png")
 gold_icon = pygame.image.load("assets/images/icons/coin.png")
 check_mark = pygame.image.load("assets/images/icons/check_mark.png")
 red_cross = pygame.image.load("assets/images/icons/red_cross.png")

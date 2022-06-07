@@ -31,12 +31,12 @@ class Main_Menu(State):
     def render(self, surface):
         # Draw background and title screen logo
         self.game.draw_image(menu_bg, 1, surface, self.game.GAME_X / 2, self.game.GAME_Y / 2)
-        self.game.draw_image(game_logo, 1, surface, self.game.GAME_X / 2, 50)
+        self.game.draw_image(game_logo, 1, surface, self.game.GAME_X / 2, 38)
         
         # Initialize buttons with position, image, and scale
-        self.start_button = Button((self.game.GAME_X / 2), (self.game.GAME_Y / 2) + 10 , play_button, 1)
-        self.shop_button = Button((self.game.GAME_X / 2), (self.game.GAME_Y / 2) + 37, shop_button, 1)
-        self.quit_button = Button((self.game.GAME_X / 2), (self.game.GAME_Y / 2) + 64, quit_button, 1)
+        self.start_button = Button((self.game.GAME_X / 2), (self.game.GAME_Y / 2) + 5 , play_button, 1)
+        self.shop_button = Button((self.game.GAME_X / 2), (self.game.GAME_Y / 2) + 32, shop_button, 1)
+        self.quit_button = Button((self.game.GAME_X / 2), (self.game.GAME_Y / 2) + 59, quit_button, 1)
 
         # Draw buttons and trigger actions when buttons are pressed
         if self.start_button.draw(surface):
