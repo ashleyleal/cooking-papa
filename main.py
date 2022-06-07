@@ -53,7 +53,7 @@ class Game:
         
         # Set state of game
         self.running, self.playing = True, True
-        self.actions = {"menu": False, "start": False, "shop": False, "quit": False, "recipe": False, "fade": False, "cooking": False}
+        self.actions = {"menu": False, "start": False, "shop": False, "quit": False, "recipe": False, "fade": False, "cooking": False, "music": False, "characters": False, "colours": False}
         self.state_stack = []
         self.load_states()
         
@@ -130,9 +130,12 @@ class Game:
 
     def customer_payment(self, amount):
         # Add amount to gold. Remove pass keyword after doing function; it is just there so the empty function doesn't error.
+        # FIONNA
         pass
 
     def spend_gold(self, amount):
+        # Subtract amount from gold but check if there is enough first and if there isn't enough return something to indicate that there isn't enough. Remove pass when done. 
+        # FIONNA
         pass
 
 # Creates an instance of Game class and runs the game loop while the program is running            
