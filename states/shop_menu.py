@@ -30,9 +30,9 @@ class Shop_Menu(State):
         #(Draw buttons for confirm or decline purchase)
         #(Draw bg for confirm or decline purchase prompt)
   
-        #self.shop_button_1 = Button((self.game.GAME_X / 2), (self.game.GAME_Y / 2) + 10, shop_button_1, 1)
-        #self.shop_button_2 = Button((self.game.GAME_X / 2), (self.game.GAME_Y / 2) + 37, shop_button_2, 1)
-        #self.shop_button_3 = Button((self.game.GAME_X / 2), (self.game.GAME_Y / 2) + 64, shop_button_3, 1)
+        self.shop_button_1 = Button((self.game.GAME_X / 2), (self.game.GAME_Y / 2) + 10, shop_button_1, 1)
+        self.shop_button_2 = Button((self.game.GAME_X / 2), (self.game.GAME_Y / 2) + 37, shop_button_2, 1)
+        self.shop_button_3 = Button((self.game.GAME_X / 2), (self.game.GAME_Y / 2) + 64, shop_button_3, 1)
         #(Assign buttons for avaliable music, avaliable characters, avaliable colours, confirm and decline purchases)
       
   

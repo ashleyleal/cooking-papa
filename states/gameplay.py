@@ -134,6 +134,18 @@ class Kitchen(State):
         self.burger_patty_pos = 0
         self.stop_button_posx, self.stop_button_posy = self.game.GAME_X / 4, self.game.GAME_Y / 5
         self.stop_button_velx, self.stop_button_vely = 1,1
+        self.tomato_time_limit = 1500
+        
+        self.tomato_slice = {
+            
+            1: False,
+            2: False,
+            3: False,
+            4: False,
+            5: False,
+            6: False
+
+            }
         
         # Controls which step the user is currently on
         self.step_1 = True
@@ -310,7 +322,46 @@ class Kitchen(State):
                 stop_button = Button(self.game.GAME_X, 80, flip_button, 1)
                 self.game.draw_image(whole_tomato, 1, surface, self.game.GAME_X / 4, 135)
 
-                slice_1_button = Button(self.game.GAME_X, 150, slice_icon, 1)
+
+                button_12_pos_x = self.game.GAME_X / 4 - 20
+                button_34_pos_x = self.game.GAME_X / 4
+                button_56_pos_x = self.game.GAME_X / 4 + 20
+
+                topbutton_pos_y = 105
+                bottombutton_pos_y = 165
+
+                # IN PROGRESSSSSSSS
+                slice_1_button = Button(button_12_pos_x, bottombutton_pos_y, slice_icon, 1)
+                slice_2_button = Button(button_12_pos_x, topbutton_pos_y, slice_icon, 1)
+                slice_3_button = Button(button_34_pos_x, 165, slice_icon, 1)
+                slice_4_button = Button(button_34_pos_x, 105, slice_icon, 1)
+                slice_5_button = Button(button_56_pos_x, 165, slice_icon, 1)
+                slice_6_button = Button(button_56_pos_x, 105, slice_icon, 1)
+
+                if slice_1_button.draw(surface):
+                    self.tomato_slice[1] = True
+
+                if self.tomato_slice[1] == True:
+                    if slice_2_button.draw(surface):
+                        self.tomato_slice[2] = True
+                        
+                if self.tomato_slice[2] == True:    
+                    if slice_3_button.draw(surface):
+                        self.tomato_slice[3] = True
+                            
+                if self.tomato_slice[3] == True:
+                    if slice_4_button.draw(surface):
+                        self.tomato_slice[4] = True
+                                
+                if self.tomato_slice[4] == True:
+                    if slice_5_button.draw(surface):
+                        self.tomato_slice[5] = True
+                                    
+                if self.tomato_slice[5] == True:
+                    if slice_6_button.draw(surface):
+                        self.tomato_slice[6] = True
+                        self.cooking_done = True
+                        self.completed_time = pygame.time.get_ticks()
 
                 if self.rating_triggered:
                     self.rating_screen(surface, green_background, "SLICE TOMATO")
