@@ -96,12 +96,9 @@ class Restaurant(State):
         
         if self.selected_recipe == "Burger":
             self.game.draw_image(burger_icon, 1, surface, icon_position[0], icon_position[1])
-
-        elif self.selected_recipe == "Pizza":
-            self.game.draw_image(pizza_icon, 1, surface, icon_position[0], icon_position[1])
         
-        #elif self.selected_recipe == "Stew":
-            #self.game.draw_image(stew_icon, 1, surface, icon_position[0], icon_position[1])
+        elif self.selected_recipe == "Stew":
+            self.game.draw_image(stew_icon, 1, surface, icon_position[0], icon_position[1])
 
         elif self.selected_recipe == "Fried Chicken":
             self.game.draw_image(chicken_icon, 1, surface, icon_position[0], icon_position[1])
@@ -134,6 +131,7 @@ class Kitchen(State):
         self.burger_patty_pos = 0
         self.stop_button_posx, self.stop_button_posy = self.game.GAME_X / 4, self.game.GAME_Y / 5
         self.stop_button_velx, self.stop_button_vely = 1,1
+        
         self.tomato_time_limit = 1500
         
         self.tomato_slice = {
@@ -195,10 +193,8 @@ class Kitchen(State):
         # Run the appropriate cooking process depending on the current customer order
         if self.current_recipe == "Burger":
             self.cook_burger(surface)
-        elif self.current_recipe == "Pizza":
-            self.cook_pizza(surface) 
-        #elif self.current_recipe == "Stew":
-            #self.cook_stew(surface)
+        elif self.current_recipe == "Stew":
+            self.cook_stew(surface)
         elif self.current_recipe == "Fried Chicken":
             self.cook_chicken(surface)
 
@@ -313,7 +309,7 @@ class Kitchen(State):
 
                 self.total_rating += self.ingredient_rating
     
-            self.game.draw_image(cooking_bar, 1, surface, self.game.GAME_X / 2 + self.game.GAME_X / 4, self.game.GAME_Y / 4)
+            self.game.draw_image(time_bar, 1, surface, self.game.GAME_X / 2 + self.game.GAME_X / 4, self.game.GAME_Y / 4)
 
             self.trigger_countdown(surface)
 
@@ -322,7 +318,6 @@ class Kitchen(State):
                 stop_button = Button(self.game.GAME_X, 80, flip_button, 1)
                 self.game.draw_image(whole_tomato, 1, surface, self.game.GAME_X / 4, 135)
 
-
                 button_12_pos_x = self.game.GAME_X / 4 - 20
                 button_34_pos_x = self.game.GAME_X / 4
                 button_56_pos_x = self.game.GAME_X / 4 + 20
@@ -330,7 +325,6 @@ class Kitchen(State):
                 topbutton_pos_y = 105
                 bottombutton_pos_y = 165
 
-                # IN PROGRESSSSSSSS
                 slice_1_button = Button(button_12_pos_x, bottombutton_pos_y, slice_icon, 1)
                 slice_2_button = Button(button_12_pos_x, topbutton_pos_y, slice_icon, 1)
                 slice_3_button = Button(button_34_pos_x, bottombutton_pos_y, slice_icon, 1)
@@ -340,28 +334,38 @@ class Kitchen(State):
 
                 if slice_1_button.draw(surface):
                     self.tomato_slice[1] = True
+                    start_time = pygame.time.get_ticks()
 
-                if self.tomato_slice[1] == True:
+                if self.tomato_slice[1]:
                     if slice_2_button.draw(surface):
                         self.tomato_slice[2] = True
                         
-                if self.tomato_slice[2] == True:    
+                if self.tomato_slice[2]:    
                     if slice_3_button.draw(surface):
                         self.tomato_slice[3] = True
                             
-                if self.tomato_slice[3] == True:
+                if self.tomato_slice[3]:
                     if slice_4_button.draw(surface):
                         self.tomato_slice[4] = True
                                 
-                if self.tomato_slice[4] == True:
+                if self.tomato_slice[4]:
                     if slice_5_button.draw(surface):
                         self.tomato_slice[5] = True
                                     
-                if self.tomato_slice[5] == True:
+                if self.tomato_slice[5]:
                     if slice_6_button.draw(surface):
                         self.tomato_slice[6] = True
                         self.cooking_done = True
                         self.completed_time = pygame.time.get_ticks()
+
+                if self.tomato_slice[1] and self.tomato_slice[2]:
+                    pygame.draw.line(surface, MARBLE_WHITE, (button_12_pos_x, bottombutton_pos_y),(button_12_pos_x, topbutton_pos_y))
+                
+                if self.tomato_slice[3] and self.tomato_slice[4]:
+                    pygame.draw.line(surface, MARBLE_WHITE, (button_34_pos_x, bottombutton_pos_y),(button_34_pos_x, topbutton_pos_y))
+
+                if self.tomato_slice[5] and self.tomato_slice[6]:
+                    pygame.draw.line(surface, MARBLE_WHITE, (button_56_pos_x, bottombutton_pos_y),(button_56_pos_x, topbutton_pos_y))
 
                 if self.rating_triggered:
                     self.rating_screen(surface, green_background, "SLICE TOMATO")
@@ -381,27 +385,7 @@ class Kitchen(State):
             cut_tomato(surface)
         elif self.step_3:
             assemble_burger(surface)
-        
-    def cook_pizza(self, surface):
 
-        def roll_dough(surface):
-            self.draw_cooking_background(surface, pink_instruction_panel, cutting_board)
-
-        def add_sauce(surface):
-            pass
-
-        def add_toppings(surface):
-            pass
-
-        surface.fill(CARNATION_ROSE)
-        if self.step_1:
-            roll_dough(surface)
-        elif self.step_2:
-            add_sauce(surface)
-        elif self.step_3:
-            add_toppings(surface)
-
-    """
     def cook_stew(self, surface):
 
         def step_1(surface):
@@ -417,7 +401,6 @@ class Kitchen(State):
         step_1(surface)
         step_2(surface)
         step_3(surface)
-    """
 
     def cook_chicken(self, surface):
 
