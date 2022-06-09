@@ -109,26 +109,5 @@ class music(State):
 
 
 
-
-
-
-
-
-
-  
-        #if self.game.actions["characters"] == True:
-          #pass
-          #draw all images for characters menu
-          #draw all buttons for characters menu
-      
-        #elif self.game.action["colours"] == True:
-          #pass
-         #draw all images for colours menu
-         #draw all buttons for colours menu
-
-        #elif self.game.actions["music"] == True:
-          #pass
-        #draw all images for music menu
-        #draw all buttons for music menu 
           
           
