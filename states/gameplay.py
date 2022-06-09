@@ -334,7 +334,7 @@ class Kitchen(State):
                 slice_1_button = Button(button_12_pos_x, bottombutton_pos_y, slice_icon, 1)
                 slice_2_button = Button(button_12_pos_x, topbutton_pos_y, slice_icon, 1)
                 slice_3_button = Button(button_34_pos_x, bottombutton_pos_y, slice_icon, 1)
-                slice_4_button = Button(button_34_pos_x, topbotton_pos_y, slice_icon, 1)
+                slice_4_button = Button(button_34_pos_x, topbutton_pos_y, slice_icon, 1)
                 slice_5_button = Button(button_56_pos_x, bottombutton_pos_y, slice_icon, 1)
                 slice_6_button = Button(button_56_pos_x, topbutton_pos_y, slice_icon, 1)
 

@@ -19,9 +19,9 @@ class Shop_Menu(State):
         if actions["characters"]:
           new_state = characters(self.game)
           new_state.enter_state()
-        #if actions["colours"]:
-          #new_state = colours(self.game)
-          #new_state.enter_state()
+        if actions["colours"]:
+          new_state = colours(self.game)
+          new_state.enter_state()
         if actions["music"]:
           new_state = music(self.game)
           new_state.enter_state()
