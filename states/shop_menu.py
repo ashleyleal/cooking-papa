@@ -17,13 +17,13 @@ class Shop_Menu(State):
             main_menu = self.game.state_stack[0]
             main_menu.enter_state()
         if actions["characters"]:
-          new_state = characters(self.game)
+          new_state = Characters(self.game)
           new_state.enter_state()
         if actions["colours"]:
-          new_state = colours(self.game)
+          new_state = Colours(self.game)
           new_state.enter_state()
         if actions["music"]:
-          new_state = music(self.game)
+          new_state = Music(self.game)
           new_state.enter_state()
 
 
@@ -106,3 +106,10 @@ class Music(State):
 
       if return_button.draw(surface):
         self.game.actions["shop"] = True
+
+
+ #make a dictionary of all purchasable items and their prices (dictonary for each class for the items and prices in said class)
+ #when player clicks button that corresponds to purchasing the item, call the spend gold function, check return value 
+ #(if spend_gold = "insufficent funds" draw the image) 
+  
+  
