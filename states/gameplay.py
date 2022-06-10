@@ -26,7 +26,7 @@ class Restaurant(State):
                 "Slice Tomato": "Click two points to make a slice.",
                 "Assemble Burger": "Put the ingredients of the burger together by pressing the right button at the right time"
             },
-            "Pizza": {
+            "Stew": {
                 "Roll Dough": "Scroll your mouse to move the rolling pin back and forth until the dough is rolled.",
                 "Add Toppings": "Drag the toppings to the pizza.",
                 "Place in Oven": "Put the pizza in the oven"
@@ -132,7 +132,9 @@ class Kitchen(State):
         self.stop_button_posx, self.stop_button_posy = self.game.GAME_X / 4, self.game.GAME_Y / 5
         self.stop_button_velx, self.stop_button_vely = 1,1
         
-        self.tomato_time_limit = 1500
+        self.burger_tomato_speed = 0.20
+        self.burger_tomato_pos = 0
+
         
         self.tomato_slice = {
             
@@ -265,6 +267,10 @@ class Kitchen(State):
                 if self.burger_patty_pos >= 135:
                     self.burger_patty_speed, self.stop_button_velx, self.stop_button_vely = 0, 0, 0
 
+                    if skip_button.draw(surface):
+                        self.cooking_done = True
+                        self.completed_time = pygame.time.get_ticks()
+
                 # Draw the appropriate patty depending on the cooking arrow position
                 elif self.burger_patty_pos >= 0 and self.burger_patty_pos <= 40:
                     self.game.draw_image(raw_patty, 1, surface, self.game.GAME_X / 4, 135)
@@ -287,22 +293,22 @@ class Kitchen(State):
 
             if not self.cooking_done:
                 
-                self.game.draw_text(surface, "SLICE AT THE", MINIMAL_FONT, NOBLE_BLACK, 275, 95)
-                self.game.draw_text(surface, "RIGHT TIME!", MINIMAL_FONT, NOBLE_BLACK, 275, 110)
+                self.game.draw_text(surface, "SLICE AS FAST", MINIMAL_FONT, NOBLE_BLACK, 275, 95)
+                self.game.draw_text(surface, "AS YOU CAN!", MINIMAL_FONT, NOBLE_BLACK, 275, 110)
 
             if self.cooking_done:
 
-                if (self.burger_patty_pos >= 0 and self.burger_patty_pos <= 40) or self.burger_patty_pos > 90:
+                if self.burger_tomato_pos >= 100:
                     self.game.draw_text(surface, "TRY BETTER", MINIMAL_FONT, NOBLE_BLACK, 275, 95)
                     self.game.draw_text(surface, "NEXT TIME!", MINIMAL_FONT, NOBLE_BLACK, 275, 110)
                     self.ingredient_rating = 1
 
-                elif (self.burger_patty_pos > 40 and self.burger_patty_pos <= 50) or (self.burger_patty_pos > 80 and self.burger_patty_pos <= 90):
+                elif self.burger_tomato_pos > 50 and self.burger_tomato_pos < 100:
                     self.game.draw_text(surface, "GOOD JOB!", MINIMAL_FONT, NOBLE_BLACK, 275, 95)
                     self.game.draw_text(surface, "DOING GREAT!", MINIMAL_FONT, NOBLE_BLACK, 275, 110)
                     self.ingredient_rating = 2
 
-                elif self.burger_patty_pos > 50 and self.burger_patty_pos <= 80:
+                elif self.burger_tomato_pos <= 50:
                     self.game.draw_text(surface, "PERFECT!", MINIMAL_FONT, NOBLE_BLACK, 275, 95)
                     self.game.draw_text(surface, "EXCELLENT JOB", MINIMAL_FONT, NOBLE_BLACK, 276, 110)
                     self.ingredient_rating = 3
@@ -324,6 +330,15 @@ class Kitchen(State):
 
                 topbutton_pos_y = 105
                 bottombutton_pos_y = 165
+
+                self.game.draw_image(cooking_arrow, 1, surface, self.game.GAME_X / 2 + self.game.GAME_X / 4 - 65 + self.burger_tomato_pos, self.game.GAME_Y / 4 + 10)
+                self.burger_tomato_pos += self.burger_tomato_speed
+
+                if self.burger_tomato_pos >= 135:
+                    self.burger_tomato_speed = 0
+                    if skip_button.draw(surface):
+                        self.cooking_done = True
+                        self.completed_time = pygame.time.get_ticks()
 
                 slice_1_button = Button(button_12_pos_x, bottombutton_pos_y, slice_icon, 1)
                 slice_2_button = Button(button_12_pos_x, topbutton_pos_y, slice_icon, 1)
@@ -355,6 +370,7 @@ class Kitchen(State):
                 if self.tomato_slice[5]:
                     if slice_6_button.draw(surface):
                         self.tomato_slice[6] = True
+                        self.burger_tomato_speed = 0
                         self.cooking_done = True
                         self.completed_time = pygame.time.get_ticks()
 
@@ -375,7 +391,7 @@ class Kitchen(State):
 
         # Define function to assemble burger
         def assemble_burger(surface):
-            self.draw_cooking_background(surface, green_instruction_panel, cutting_board)
+            self.draw_cooking_background(surface, green_instruction_panel, kitchen_counter)
 
         surface.fill(FANCY_MOSS)
         

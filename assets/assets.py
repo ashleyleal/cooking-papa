@@ -60,6 +60,7 @@ music_button = pygame.image.load("assets/images/images/music_button.png")
 
 placeholder_button = pygame.image.load("assets/images/icons/buttonPlaceholder.png")
 return_arrow = pygame.image.load("assets/images/icons/return_button.png")
+skip_arrow = pygame.image.load("assets/images/icons/skip_button.png")
 gold_icon = pygame.image.load("assets/images/icons/coin.png")
 check_mark = pygame.image.load("assets/images/icons/check_mark.png")
 red_cross = pygame.image.load("assets/images/icons/red_cross.png")
@@ -74,6 +75,8 @@ customer_3 = pygame.image.load("assets/images/images/customer_3.png")
 restaurant_counter = pygame.image.load("assets/images/images/restaurant_counter.png")
 kitchen_grill = pygame.image.load("assets/images/images/kitchen_grill.png")
 cutting_board = pygame.image.load("assets/images/images/kitchen_cutting_board.png")
+kitchen_counter = pygame.image.load("assets/images/images/kitchen_counter.png")
+plate = pygame.image.load("assets/images/images/plate.png")
 
 pink_instruction_panel = pygame.image.load("assets/images/images/papas_background_pink.png")
 green_instruction_panel = pygame.image.load("assets/images/images/papas_background_green.png")
@@ -111,6 +114,7 @@ plate = pygame.image.load("assets/images/images/plate.png")
 
 # Reocurring buttons
 return_button = Button(20, 20, return_arrow, 1)
+skip_button = Button(300, 160, skip_arrow, 1)
 confirm_order_button = Button(300, 160, check_mark, 1)
 decline_order_button = Button(25, 160, red_cross, 1)
 
