@@ -110,4 +110,8 @@ class music(State):
 
 
           
-          
+ """ 
+ make a dictionary of all purchasable items and their prices (dictonary for each class for the items and prices in said class)
+ when player clicks button that corresponds to purchasing the item, call the spend gold function, check return value 
+ (if spend_gold = "insufficent funds" draw the image) 
+ """     
