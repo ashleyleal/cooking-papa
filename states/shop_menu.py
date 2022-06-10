@@ -56,7 +56,7 @@ class Shop_Menu(State):
         if self.music_button.draw(surface):
           self.game.actions["music"] = True
 
-class characters(State):
+class Characters(State):
   # Inherit init method from State class 
     def __init__(self, game):
         State.__init__(self, game)
@@ -73,7 +73,7 @@ class characters(State):
       if return_button.draw(surface):
         self.game.actions["shop"] = True
 
-class colours(State):
+class Colours(State):
   # Inherit init method from State class 
     def __init__(self, game):
         State.__init__(self, game)
@@ -90,7 +90,7 @@ class colours(State):
       if return_button.draw(surface):
         self.game.actions["shop"] = True
 
-class music(State):
+class Music(State):
   # Inherit init method from State class 
     def __init__(self, game):
         State.__init__(self, game)
@@ -106,6 +106,7 @@ class music(State):
 
       if return_button.draw(surface):
         self.game.actions["shop"] = True
+<<<<<<< HEAD
 
 
 
@@ -115,3 +116,5 @@ class music(State):
  when player clicks button that corresponds to purchasing the item, call the spend gold function, check return value 
  (if spend_gold = "insufficent funds" draw the image) 
  """     
+=======
+>>>>>>> 1011077932c284de194678682096701a4dd54028
