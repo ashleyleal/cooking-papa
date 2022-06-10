@@ -331,7 +331,7 @@ class Kitchen(State):
                 topbutton_pos_y = 105
                 bottombutton_pos_y = 165
 
-                self.game.draw_image(cooking_arrow, 1, surface, self.game.GAME_X / 2 + self.game.GAME_X / 4 - 65 + self.burger_tomato_pos, self.game.GAME_Y / 4 + 10)
+                self.game.draw_image(cooking_arrow, 1, surface, self.game.GAME_X / 2 + self.game.GAME_X / 4 - 60 + self.burger_tomato_pos, self.game.GAME_Y / 4 + 10)
                 self.burger_tomato_pos += self.burger_tomato_speed
 
                 if self.burger_tomato_pos >= 135:
@@ -391,8 +391,11 @@ class Kitchen(State):
 
         # Define function to assemble burger
         def assemble_burger(surface):
+            
             self.draw_cooking_background(surface, green_instruction_panel, kitchen_counter)
+            self.game.draw_image(plate, 1, surface, self.game.GAME_X / 4, self.game.GAME_Y / 2 + 35)
 
+            
         surface.fill(FANCY_MOSS)
         
         if self.step_1:

@@ -84,7 +84,7 @@ green_instruction_panel = pygame.image.load("assets/images/images/papas_backgrou
 green_background = pygame.image.load("assets/images/images/papas_background_green_full.png")
 
 cooking_bar = pygame.image.load("assets/images/images/cooking_bar.png")
-#time_bar = pygame.image.load("assets/images/images/time_bar.png")
+time_bar = pygame.image.load("assets/images/images/time_bar.png")
 cooking_arrow = pygame.image.load("assets/images/icons/cooking_arrow.png")
 flip_button = pygame.image.load("assets/images/icons/flip_button.png")
 speech_bubble = pygame.image.load("assets/images/icons/speech_bubble.png")
@@ -124,3 +124,8 @@ menu_music = "assets/sounds/menu_music.mp3"
 countdown_3 = pygame.image.load("assets/images/images/number_3.png")
 countdown_2 = pygame.image.load("assets/images/images/number_2.png")
 countdown_1 = pygame.image.load("assets/images/images/number_1.png")
+
+up_arrow = pygame.image.load("assets/images/icons/orange_up.png")
+right_arrow = pygame.image.load("assets/images/icons/green_right.png")
+left_arrow = pygame.image.load("assets/images/icons/pink_left.png")
+down_arrow = pygame.image.load("assets/images/icons/blue_down.png")

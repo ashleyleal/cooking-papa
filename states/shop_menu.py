@@ -57,7 +57,7 @@ class Shop_Menu(State):
           self.game.actions["music"] = True
 
 class characters(State):
-  # Inherit init method from State class 
+      # Inherit init method from State class 
     def __init__(self, game):
         State.__init__(self, game)
 
@@ -159,18 +159,8 @@ class music(State):
         self.game.actions["shop"] = True
 
 
-<<<<<<< HEAD
-
-          
- 
- #make a dictionary of all purchasable items and their prices (dictonary for each class for the items and prices in said class)
- #when player clicks button that corresponds to purchasing the item, call the spend gold function, check return value 
- #(if spend_gold = "insufficent funds" draw the image) 
-     
-=======
  #make a dictionary of all purchasable items and their prices (dictonary for each class for the items and prices in said class)
  #when player clicks button that corresponds to purchasing the item, call the spend gold function, check return value 
  #(if spend_gold = "insufficent funds" draw the image) 
   
   
->>>>>>> 5bd15626341d51ee3bb3c010a785a629ed7bbccf
