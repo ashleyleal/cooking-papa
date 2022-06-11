@@ -146,6 +146,8 @@ class Kitchen(State):
             6: False
 
             }
+
+        self.burger_assembled_properly = 0
         
         # Controls which step the user is currently on
         self.step_1 = True
@@ -393,8 +395,20 @@ class Kitchen(State):
         def assemble_burger(surface):
             
             self.draw_cooking_background(surface, green_instruction_panel, kitchen_counter)
+            self.game.draw_image(burger_assembly, 1, surface, self.game.GAME_X / 2 + self.game.GAME_X / 4, self.game.GAME_Y / 4)
             self.game.draw_image(plate, 1, surface, self.game.GAME_X / 4, self.game.GAME_Y / 2 + 35)
+            self.game.draw_image(bottom_bun, 1, surface, self.game.GAME_X / 4, self.game.GAME_Y / 2 + 30)
 
+            burger_positions = {
+
+                1: self.game.GAME_Y / 2 + 25,
+                2: self.game.GAME_Y / 2 + 20,
+                3: self.game.GAME_Y / 2 + 15,
+                4: self.game.GAME_Y / 2 + 10
+
+            }
+
+            
             
         surface.fill(FANCY_MOSS)
         

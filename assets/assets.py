@@ -107,6 +107,7 @@ whole_tomato = pygame.image.load("assets/images/images/burger_whole_tomato.png")
 lettuce = pygame.image.load("assets/images/images/burger_lettuce.png")
 cheese = pygame.image.load("assets/images/images/burger_cheese.png")
 slice_icon = pygame.image.load("assets/images/icons/slice_thing.png")
+burger_assembly = pygame.image.load("assets/images/icons/burger_assembly.png")
 
 # Pizza
 rolling_pin = pygame.image.load("assets/images/images/pizza_rolling_pin.png")
