@@ -53,7 +53,7 @@ class Game:
         
         # Set state of game
         self.running, self.playing = True, True
-        self.actions = {"menu": False, "start": False, "shop": False, "quit": False, "recipe": False, "fade": False, "cooking": False, "music": False, "characters": False, "colours": False}
+        self.actions = {"menu": False, "start": False, "shop": False, "quit": False, "recipe": False, "fade": False, "cooking": False, "music": False, "characters": False, "colours": False, "arrowup": False, "arrowdown": False, "arrowright": False, "arrowleft": False}
         self.state_stack = []
         self.load_states()
         
@@ -73,6 +73,21 @@ class Game:
             if event.type == pygame.QUIT or self.actions["quit"]:
                 self.running = False
                 self.playing = False
+
+            elif event.type == pygame.KEYUP:
+                
+                if event.key == pygame.K_UP:
+                    self.actions["arrowup"] = True
+                    print("up")
+                elif event.key == pygame.K_DOWN:
+                    self.actions["arrowdown"] = True
+                    print("down")
+                elif event.key == pygame.K_RIGHT:
+                    self.actions["arrowright"] = True
+                    print("right")
+                elif event.key == pygame.K_LEFT:
+                    self.actions["arrowleft"] = True
+                    print("left")
 
     # Update state and resets actions (events)
     def update(self):

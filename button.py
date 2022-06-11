@@ -24,7 +24,7 @@ class Button():
         # Check mouseover and clicked conditions
         if new_rect.collidepoint(mouse_pos):
             if pygame.mouse.get_pressed()[0] == 1 and self.clicked == False:
-                    pygame.time.delay(250)
+                    pygame.time.delay(175)
                     self.clicked = True
                     action = True
 
