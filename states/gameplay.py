@@ -421,13 +421,13 @@ class Kitchen(State):
                         self.completed_time = pygame.time.get_ticks()
 
                 if self.tomato_slice[1] and self.tomato_slice[2]:
-                    pygame.draw.line(surface, MARBLE_WHITE, (button_12_pos_x, bottombutton_pos_y),(button_12_pos_x, topbutton_pos_y))
+                    pygame.draw.line(surface, WARM_CROISSANT, (button_12_pos_x, bottombutton_pos_y),(button_12_pos_x, topbutton_pos_y))
                 
                 if self.tomato_slice[3] and self.tomato_slice[4]:
-                    pygame.draw.line(surface, MARBLE_WHITE, (button_34_pos_x, bottombutton_pos_y),(button_34_pos_x, topbutton_pos_y))
+                    pygame.draw.line(surface, WARM_CROISSANT, (button_34_pos_x, bottombutton_pos_y),(button_34_pos_x, topbutton_pos_y))
 
                 if self.tomato_slice[5] and self.tomato_slice[6]:
-                    pygame.draw.line(surface, MARBLE_WHITE, (button_56_pos_x, bottombutton_pos_y),(button_56_pos_x, topbutton_pos_y))
+                    pygame.draw.line(surface, WARM_CROISSANT, (button_56_pos_x, bottombutton_pos_y),(button_56_pos_x, topbutton_pos_y))
 
                 if self.rating_triggered:
                     self.rating_screen(surface, green_background, "SLICE TOMATO")
@@ -575,6 +575,7 @@ class Kitchen(State):
         elif self.ingredient_rating == 1:
             self.game.draw_text(surface, "TRY HARDER", MINIMAL_FONT, NOBLE_BLACK, 275, 95)
             self.game.draw_text(surface, "NEXT TIME!", MINIMAL_FONT, NOBLE_BLACK, 275, 110)
+
 
 
 
