@@ -120,6 +120,9 @@ burger_sign = pygame.image.load("assets/images/images/burger_sign.png")
 
 chicken_breast = pygame.image.load("assets/images/images/chicken_breast.png")
 chicken_coating = pygame.image.load("assets/images/images/chicken_coating.png")
+raw_chicken_1 = pygame.image.load("assets/images/images/raw_chicken1.png")
+raw_chicken_2 = pygame.image.load("assets/images/images/raw_chicken2.png")
+raw_chicken_3 = pygame.image.load("assets/images/images/raw_chicken3.png")
 
 # Pizza
 rolling_pin = pygame.image.load("assets/images/images/pizza_rolling_pin.png")

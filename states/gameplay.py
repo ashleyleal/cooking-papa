@@ -153,7 +153,12 @@ class Kitchen(State):
             2: [False, "", self.game.GAME_Y / 2 + 40],
             3: [False, "", self.game.GAME_Y / 2 + 35],
             4: [False, "", self.game.GAME_Y / 2 + 30],
-            "done": False
+            "done": False,
+
+            "cheese": False,
+            "patty": False,
+            "lettuce": False,
+            "tomato": False
 
             }
 
@@ -178,6 +183,7 @@ class Kitchen(State):
         self.step_1 = True
         self.step_2 = False
         self.step_3 = False
+        self.evaluation = False
 
         # Says whether a cooking step is completed 
         self.cooking_done = False
@@ -188,6 +194,9 @@ class Kitchen(State):
         if actions["menu"]:
             main_menu = self.game.state_stack[0]
             main_menu.enter_state()
+
+        if actions["add_score"]:
+            self.ingredient_rating += self.total_rating
 
         # If countdown_triggered find the current time and compare it to the time when the countdown is triggered to set which numbers are shown on the screen
         if self.countdown_triggered:
@@ -210,7 +219,8 @@ class Kitchen(State):
                 self.countdown_completed = True
 
         if self.current_recipe == "Burger" and self.step_3:
-            if self.burger_assembly_progress == 4:
+            
+            def get_rating():
                 self.burger_positions["done"] = True
                 if self.burger_positions[1][1] == sliced_tomato:
                     self.burger_assembled_properly += 1
@@ -232,24 +242,41 @@ class Kitchen(State):
 
                 self.cooking_done = True
                 self.completed_time = pygame.time.get_ticks()
+                self.game.actions["add_score"] = True
 
             if not self.burger_positions["done"]:
                 if self.game.actions["arrowup"]:
-                    self.burger_assembly_progress += 1
-                    self.burger_positions[self.burger_assembly_progress][0] = True
-                    self.burger_positions[self.burger_assembly_progress][1] = cheese
+                    if self.burger_positions["cheese"] == False:
+                        self.burger_assembly_progress += 1
+                        self.burger_positions[self.burger_assembly_progress][0] = True
+                        self.burger_positions[self.burger_assembly_progress][1] = cheese
+                        self.burger_positions["cheese"] = True
+                        if self.burger_assembly_progress == 4:
+                            get_rating()    
                 if self.game.actions["arrowdown"]:
-                    self.burger_assembly_progress += 1
-                    self.burger_positions[self.burger_assembly_progress][0] = True
-                    self.burger_positions[self.burger_assembly_progress][1] = cooked_patty
+                    if self.burger_positions["patty"] == False:
+                        self.burger_assembly_progress += 1
+                        self.burger_positions[self.burger_assembly_progress][0] = True
+                        self.burger_positions[self.burger_assembly_progress][1] = cooked_patty
+                        self.burger_positions["patty"] = True
+                        if self.burger_assembly_progress == 4:
+                            get_rating()
                 if self.game.actions["arrowright"]:
-                    self.burger_assembly_progress += 1
-                    self.burger_positions[self.burger_assembly_progress][0] = True
-                    self.burger_positions[self.burger_assembly_progress][1] = lettuce
+                    if self.burger_positions["lettuce"] == False:
+                        self.burger_assembly_progress += 1
+                        self.burger_positions[self.burger_assembly_progress][0] = True
+                        self.burger_positions[self.burger_assembly_progress][1] = lettuce
+                        self.burger_positions["lettuce"] = True
+                        if self.burger_assembly_progress == 4:
+                            get_rating()
                 if self.game.actions["arrowleft"]:
-                    self.burger_assembly_progress += 1
-                    self.burger_positions[self.burger_assembly_progress][0] = True
-                    self.burger_positions[self.burger_assembly_progress][1] = sliced_tomato
+                    if self.burger_positions["tomato"] == False:
+                        self.burger_assembly_progress += 1
+                        self.burger_positions[self.burger_assembly_progress][0] = True
+                        self.burger_positions[self.burger_assembly_progress][1] = sliced_tomato
+                        self.burger_positions["tomato"] = True
+                        if self.burger_assembly_progress == 4:
+                            get_rating()
 
         # When one cooking step is completed wait some time and trigger the rating screen. Then wait some more time and switch to the next cooking step
         if self.cooking_done:
@@ -294,10 +321,7 @@ class Kitchen(State):
                 elif self.burger_patty_pos > 50 and self.burger_patty_pos <= 80:
                     self.ingredient_rating = 3
 
-                self.display_rating_message(surface)
-
-                # Add the ingredient rating to the total recipe rating
-                self.total_rating += self.ingredient_rating                
+                self.display_rating_message(surface)            
 
             # Draw the cooking bar that shows how cooked the patty is
             self.game.draw_image(cooking_bar, 1, surface, self.game.GAME_X / 2 + self.game.GAME_X / 4, self.game.GAME_Y / 4)
@@ -323,6 +347,7 @@ class Kitchen(State):
                     self.cooking_done = True
                     self.completed_time = pygame.time.get_ticks()
                     self.burger_patty_speed, self.stop_button_velx, self.stop_button_vely = 0, 0, 0
+                    self.game.actions["add_score"] = True
 
                 self.game.draw_image(cooking_arrow, 1, surface, self.game.GAME_X / 2 + self.game.GAME_X / 4 - 65 + self.burger_patty_pos, self.game.GAME_Y / 4 + 10)
                 
@@ -335,6 +360,7 @@ class Kitchen(State):
                     if skip_button.draw(surface):
                         self.cooking_done = True
                         self.completed_time = pygame.time.get_ticks()
+                        self.game.actions["add_score"] = True
 
                 # Draw the appropriate patty depending on the cooking arrow position
                 elif self.burger_patty_pos >= 0 and self.burger_patty_pos <= 40:
@@ -374,15 +400,12 @@ class Kitchen(State):
 
                 self.display_rating_message(surface)
 
-                self.total_rating += self.ingredient_rating
-    
             self.game.draw_image(time_bar, 1, surface, self.game.GAME_X / 2 + self.game.GAME_X / 4, self.game.GAME_Y / 4)
 
             self.trigger_countdown(surface)
 
-            if self.countdown_completed:
-                
-                stop_button = Button(self.game.GAME_X, 80, flip_button, 1)
+            if self.countdown_completed:     
+
                 self.game.draw_image(whole_tomato, 1, surface, self.game.GAME_X / 4, 135)
 
                 button_12_pos_x = self.game.GAME_X / 4 - 20
@@ -433,6 +456,7 @@ class Kitchen(State):
                         self.burger_tomato_speed = 0
                         self.cooking_done = True
                         self.completed_time = pygame.time.get_ticks()
+                        self.game.actions["add_score"] = True
 
                 if self.tomato_slice[1] and self.tomato_slice[2]:
                     pygame.draw.line(surface, WARM_CROISSANT, (button_12_pos_x, bottombutton_pos_y),(button_12_pos_x, topbutton_pos_y))
@@ -481,14 +505,18 @@ class Kitchen(State):
             if self.rating_triggered:
                 self.rating_screen(surface, green_background, "ASSEMBLE BURGER")
 
+                if self.next_step:
+                    self.reset_status(3)
+
         surface.fill(FANCY_MOSS)
-        
         if self.step_1:
             cook_patty(surface)
         elif self.step_2:
             cut_tomato(surface)
         elif self.step_3:
             assemble_burger(surface)
+        elif self.evaluation:
+            self.final_rating(surface, "Burger", green_background)
 
     def cook_stew(self, surface):
         
@@ -537,7 +565,6 @@ class Kitchen(State):
 
             if self.countdown_completed:
                 
-                stop_button = Button(self.game.GAME_X, 80, flip_button, 1)
                 self.game.draw_image(chicken_breast, 1, surface, self.game.GAME_X / 4, 135)
 
                 button_12_pos_x = self.game.GAME_X / 4 - 25
@@ -605,6 +632,7 @@ class Kitchen(State):
                         self.reset_status(1)
 
         def coat_chicken(surface):
+            
             self.draw_cooking_background(surface, pink_instruction_panel, cutting_board)
             self.game.draw_image(chicken_coating, 1, surface, self.game.GAME_X / 4, 130)
             
@@ -616,7 +644,8 @@ class Kitchen(State):
             self.trigger_countdown(surface)
 
             if self.countdown_completed:
-                pass
+                self.game.draw_image(raw_chicken_1, 1, surface, self.game.GAME_X / 4, 135)
+                
 
         def fry_chicken(surface):
             self.draw_cooking_background(surface, pink_instruction_panel, deep_fryer)
@@ -659,6 +688,7 @@ class Kitchen(State):
 
         elif current_step == 3:
             self.step_3 = False
+            self.evaluation = True
 
     # Draws a button that the player presses to trigger the countdown
     def trigger_countdown(self, surface):
@@ -698,6 +728,15 @@ class Kitchen(State):
         elif self.ingredient_rating == 1:
             self.game.draw_text(surface, "TRY HARDER", MINIMAL_FONT, NOBLE_BLACK, 275, 95)
             self.game.draw_text(surface, "NEXT TIME!", MINIMAL_FONT, NOBLE_BLACK, 275, 110)
+
+    def final_rating(self, surface, recipe, bg_image):
+        self.game.draw_image(bg_image, 1, surface, self.game.GAME_X / 2, self.game.GAME_Y / 2)
+
+        if recipe == "Burger":
+            self.game.draw_image(burger, 1, surface, self.game.GAME_X / 2, self.game.GAME_Y / 2)
+            self.game.draw_text(surface, str(self.total_rating), MINIMAL_FONT, NOBLE_BLACK, self.game.GAME_X / 2, (self.game.GAME_Y / 4) * 3)
+
+
 
 
 
