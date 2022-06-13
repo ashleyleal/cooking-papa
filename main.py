@@ -78,16 +78,12 @@ class Game:
                 
                 if event.key == pygame.K_UP:
                     self.actions["arrowup"] = True
-                    print("up")
                 elif event.key == pygame.K_DOWN:
                     self.actions["arrowdown"] = True
-                    print("down")
                 elif event.key == pygame.K_RIGHT:
                     self.actions["arrowright"] = True
-                    print("right")
                 elif event.key == pygame.K_LEFT:
                     self.actions["arrowleft"] = True
-                    print("left")
 
     # Update state and resets actions (events)
     def update(self):
