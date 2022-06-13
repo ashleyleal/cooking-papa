@@ -26,17 +26,13 @@ class Restaurant(State):
                 "Slice Tomato": "Click two points to make a slice.",
                 "Assemble Burger": "Put the ingredients of the burger together by pressing the right button at the right time"
             },
-            "Stew": {
-                "Roll Dough": "Scroll your mouse to move the rolling pin back and forth until the dough is rolled.",
-                "Add Toppings": "Drag the toppings to the pizza.",
-                "Place in Oven": "Put the pizza in the oven"
-            },
+            
             "Fried Chicken": {
                 "": "",
                 "": "",
                 "": "",
             }
-        }
+        } 
 
         self.set_order()
 
@@ -97,12 +93,14 @@ class Restaurant(State):
         if self.selected_recipe == "Burger":
             self.game.draw_image(burger_icon, 1, surface, icon_position[0], icon_position[1])
         
-        elif self.selected_recipe == "Stew":
-            self.game.draw_image(stew_icon, 1, surface, icon_position[0], icon_position[1])
-
         elif self.selected_recipe == "Fried Chicken":
             self.game.draw_image(chicken_icon, 1, surface, icon_position[0], icon_position[1])
-
+        
+        """
+        elif self.selected_recipe == "Stew":
+            self.game.draw_image(stew_icon, 1, surface, icon_position[0], icon_position[1])
+        """
+        
 # Kitchen state defines behaviour when the user is currently cooking
 class Kitchen(State):
 
@@ -306,10 +304,12 @@ class Kitchen(State):
         # Run the appropriate cooking process depending on the current customer order
         if self.current_recipe == "Burger":
             self.cook_burger(surface)
-        elif self.current_recipe == "Stew":
-            self.cook_stew(surface)
         elif self.current_recipe == "Fried Chicken":
             self.cook_chicken(surface)
+        """
+        elif self.current_recipe == "Stew":
+            self.cook_stew(surface)
+        """
 
     # Define method that cooks the burger
     def cook_burger(self, surface):
@@ -530,22 +530,6 @@ class Kitchen(State):
             assemble_burger(surface)
         elif self.evaluation:
             self.final_rating(surface, "Burger", green_background)
-
-    def cook_stew(self, surface):
-        
-        def step_1(surface):
-            pass
-
-        def step_2(surface):
-            pass
-
-        def step_3(surface):
-            pass
-
-        surface.fill(KASHMIR_PINK)
-        step_1(surface)
-        step_2(surface)
-        step_3(surface)
 
     def cook_chicken(self, surface):
 
