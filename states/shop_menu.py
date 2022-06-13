@@ -17,13 +17,13 @@ class Shop_Menu(State):
             main_menu = self.game.state_stack[0]
             main_menu.enter_state()
         if actions["characters"]:
-          new_state = Characters(self.game)
+          new_state = characters(self.game)
           new_state.enter_state()
         if actions["colours"]:
-          new_state = Colours(self.game)
+          new_state = colours(self.game)
           new_state.enter_state()
         if actions["music"]:
-          new_state = Music(self.game)
+          new_state = music(self.game)
           new_state.enter_state()
 
 
@@ -126,6 +126,11 @@ class colours(State):
   # Inherit init method from State class 
     def __init__(self, game):
         State.__init__(self, game)
+
+        self.prompt_confirm_purchase = False
+        self.owned_colour_1 = False
+        self.owned_colour_2 = False
+
     def update(self, actions):
         super().update(actions)
         if actions["shop"]:
@@ -134,12 +139,27 @@ class colours(State):
 
     def render(self, surface):
       self.game.draw_image(menu_bg, 1, surface, self.game.GAME_X / 2, self.game.GAME_Y / 2)
-      self.game.draw_image(recolour_button, 1, surface, self.game.GAME_X / 2, self.game.GAME_Y / 2)
-      #self.game.draw_image(recolour_option_1)
-      #self.game.draw_image(recolour_option_2)
+      self.game.draw_image(Wallpaper_title, 1, surface, self.game.GAME_X / 2, 38)
+      self.game.draw_image(Recolour_center_button, 1, surface, self.game.GAME_X /2, 120)
+      self.game.draw_image(Recolour_option_1, 1, surface, 80, 120)
+      self.game.draw_image(Recolour_option_2, 1, surface, 242, 120)
 
+      self.Recolour_option_1 = Button(80, 120, Recolour_option_1, 1)
+      self.Recolour_option_2 = Button(242, 120, Recolour_option_2, 1)
+      
       if return_button.draw(surface):
         self.game.actions["shop"] = True
+
+      if self.Recolour_option_1.draw(surface):
+        
+        self.game.draw_image(confirm_purchase_bg, 1, surface, self.game.GAME_X / 2, self.game.GAME_Y / 2 )
+        self.game.draw_image(red_cross, 1, surface, 124, 124)
+        self.game.draw_image(check_mark, 1, surface, 172, 124)
+
+        self.red_cross = Button(124, 124, red_cross, 1)
+        self.check_mark = Button(172, 124, check_mark, 1)
+
+
 
 class music(State):
   # Inherit init method from State class 

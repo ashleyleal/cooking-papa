@@ -77,7 +77,7 @@ class Restaurant(State):
         # Fills the background, draws the customer, counter, and speech bubble, and draws the selected recipe
         surface.fill(WHISTLES_GOLD)
         self.game.draw_image(self.selected_customer, 1, surface, self.game.GAME_X / 2, 100)
-        self.game.draw_image(restaurant_counter, 1, surface, self.game.GAME_X / 2, 105)
+        self.game.draw_image(restaurant_counter, 1, surface, self.game.GAME_X / 2, 146)
         self.game.draw_image(speech_bubble, 1, surface, self.game.GAME_X/ 2 + 60, self.game.GAME_Y / 2 - 50)
         self.show_order(surface)
 
