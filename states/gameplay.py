@@ -477,6 +477,7 @@ class Kitchen(State):
             assemble_burger(surface)
 
     def cook_stew(self, surface):
+        
 
         def step_1(surface):
             pass
@@ -494,19 +495,31 @@ class Kitchen(State):
 
     def cook_chicken(self, surface):
 
-        def step_1(surface):
-            pass
+        def cut_chicken(surface):
+            self.draw_cooking_background(surface, pink_instruction_panel, cutting_board)
 
-        def step_2(surface):
-            pass
+            if not self.cooking_done:
+                
+                self.game.draw_text(surface, "SLICE AS FAST", MINIMAL_FONT, NOBLE_BLACK, 275, 95)
+                self.game.draw_text(surface, "AS YOU CAN!", MINIMAL_FONT, NOBLE_BLACK, 275, 110)
 
-        def step_3(surface):
-            pass
+            self.trigger_countdown(surface)
+
+        def coat_chicken(surface):
+            self.draw_cooking_background(surface, pink_instruction_panel, cutting_board)
+
+        def fry_chicken(surface):
+            self.draw_cooking_background(surface, pink_instruction_panel, cutting_board)
+
 
         surface.fill(WARM_CROISSANT)
-        step_1(surface)
-        step_2(surface)
-        step_3(surface)
+
+        if self.step_1:
+            cut_chicken(surface)
+        elif self.step_2:
+            coat_chicken(surface)
+        elif self.step_3:
+            fry_chicken(surface)
 
     # Clears the screen and shows the user's rating after a ingredient cooking step
     def rating_screen(self, surface, background_image, step_name):
