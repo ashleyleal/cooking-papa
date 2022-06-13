@@ -18,7 +18,6 @@ To do
 - Cooking mechanics rating (requires time delay) (SOLVED)
 - Shop
 - Music and sound
-- Final rating screen for overall player recipe rating.
 - Saving data locally on player's game
 
 """
@@ -140,19 +139,25 @@ class Game:
 
     def customer_payment(self, amount):
         # Add amount to gold. Remove pass keyword after doing function; it is just there so the empty function doesn't error.
-        if self.total_rating >= 3 and self.total_rating < 6:
-            self.game.gold += 5
-        elif self.total_rating >=6 and self.total_rating < 9:
-            self.game.gold += 10
-        elif self.total_rating == 9:
-            self.game.gold += 15
+        try:
+            if self.total_rating >= 3 and self.total_rating < 6:
+                self.game.gold += 5
+            elif self.total_rating >=6 and self.total_rating < 9:
+                self.game.gold += 10
+            elif self.total_rating == 9:
+                self.game.gold += 15
+        except:
+            print("An error occurred in paying the player")
 
     def spend_gold(self, amount):
         # Subtract amount from gold but check if there is enough first and if there isn't enough return something to indicate that there isn't enough. Remove pass when done. 
-        if self.game.gold >= amount:
-            self.game.gold -= amount
-        elif self.game.gold < amount:
-           return "insufficient funds" 
+        try:
+            if self.game.gold >= amount:
+                self.game.gold -= amount
+            elif self.game.gold < amount:
+                return "insufficient funds" 
+        except:
+            print("An error occurred in spending gold")
 
 # Creates an instance of Game class and runs the game loop while the program is running            
 if __name__ == "__main__":
