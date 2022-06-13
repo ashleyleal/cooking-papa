@@ -31,7 +31,7 @@ from assets.assets import *
 class Game: 
     
     current_recipe = None
-    gold = 0 
+    gold = 110 
 
     # Define init method
     def __init__(self):

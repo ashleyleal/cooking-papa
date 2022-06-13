@@ -64,6 +64,7 @@ Recolour_center_button = pygame.image.load("assets/images/images/Recolour_center
 Recolour_option_1 = pygame.image.load("assets/images/images/Recolour_option_1.png")
 Recolour_option_2 = pygame.image.load("assets/images/images/recolour_option_2.png")
 Wallpaper_title = pygame.image.load("assets/images/titles/Wallpaper_title.png")
+purchased_bg = pygame.image.load("assets/images/images/Purchased_bg.png")
 
 placeholder_button = pygame.image.load("assets/images/icons/buttonPlaceholder.png")
 return_arrow = pygame.image.load("assets/images/icons/return_button.png")
