@@ -51,7 +51,7 @@ class Game:
         
         # Set state of game
         self.running, self.playing = True, True
-        self.actions = {"menu": False, "start": False, "shop": False, "quit": False, "recipe": False, "fade": False, "cooking": False, "music": False, "characters": False, "colours": False, "arrowup": False, "arrowdown": False, "arrowright": False, "arrowleft": False, "confirm_purchase": False}
+        self.actions = {"menu": False, "start": False, "shop": False, "quit": False, "recipe": False, "fade": False, "cooking": False, "music": False, "characters": False, "colours": False, "arrowup": False, "arrowdown": False, "arrowright": False, "arrowleft": False, "confirm_purchase": False, "add_score": False}
         self.state_stack = []
         self.load_states()
         
@@ -152,14 +152,13 @@ class Game:
     def spend_gold(self, amount):
         # Subtract amount from gold but check if there is enough first and if there isn't enough return something to indicate that there isn't enough. Remove pass when done. 
         try:
-            if self.game.gold >= amount:
-                self.game.gold -= amount
-            elif self.game.gold < amount:
+            if self.gold >= amount:
+                self.gold -= amount
+            elif self.gold < amount:
                 return "insufficient funds" 
         except:
             print("An error occurred in spending gold")
             
-
 # Creates an instance of Game class and runs the game loop while the program is running            
 if __name__ == "__main__":
     game = Game()
