@@ -79,7 +79,7 @@ customer_2 = pygame.image.load("assets/images/images/Jotaro.png")
 customer_3 = pygame.image.load("assets/images/images/customer_3.png")
 
 # Kitchen assets
-restaurant_counter = pygame.image.load("assets/images/images/Counter.png")
+restaurant_counter = pygame.image.load("assets/images/images/restaurant_counter.png")
 kitchen_grill = pygame.image.load("assets/images/images/kitchen_grill.png")
 cutting_board = pygame.image.load("assets/images/images/kitchen_cutting_board.png")
 kitchen_counter = pygame.image.load("assets/images/images/kitchen_counter.png")
