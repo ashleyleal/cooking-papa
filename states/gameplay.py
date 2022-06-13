@@ -78,7 +78,7 @@ class Restaurant(State):
         surface.fill(WHISTLES_GOLD)
         self.game.draw_image(self.selected_customer, 1, surface, self.game.GAME_X / 2, 100)
         self.game.draw_image(restaurant_counter, 1, surface, self.game.GAME_X / 2, 146)
-        self.game.draw_image(speech_bubble, 1, surface, self.game.GAME_X/ 2 + 60, self.game.GAME_Y / 2 - 50)
+        self.game.draw_image(speech_bubble, 1, surface, self.game.GAME_X/ 2 + 80, self.game.GAME_Y / 2 - 50)
         self.show_order(surface)
 
         # Draw buttons and trigger actions when buttons are pressed
@@ -92,7 +92,7 @@ class Restaurant(State):
     # Method that draws the selected recipe in the customer's speech bubble
     def show_order(self, surface):
         
-        icon_position = self.game.GAME_X/ 2 + 60, self.game.GAME_Y / 2 - 57
+        icon_position = self.game.GAME_X/ 2 + 80, self.game.GAME_Y / 2 - 57
         
         if self.selected_recipe == "Burger":
             self.game.draw_image(burger_icon, 1, surface, icon_position[0], icon_position[1])

@@ -74,7 +74,7 @@ red_cross = pygame.image.load("assets/images/icons/Cancel_button.png")
 start = pygame.image.load("assets/images/icons/start_button.png")
 
 # Customers
-customer_1 = pygame.image.load("assets/images/images/customer_1.png")
+customer_1 = pygame.image.load("assets/images/images/Dio.png")
 customer_2 = pygame.image.load("assets/images/images/Jotaro.png")
 customer_3 = pygame.image.load("assets/images/images/customer_3.png")
 
