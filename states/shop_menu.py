@@ -126,38 +126,62 @@ class colours(State):
   # Inherit init method from State class 
     def __init__(self, game):
         State.__init__(self, game)
-
-        self.prompt_confirm_purchase = False
-        self.owned_colour_1 = False
-        self.owned_colour_2 = False
-
+        self.buy = False
+        self.cry = False
+        
     def update(self, actions):
         super().update(actions)
         if actions["shop"]:
           new_state = Shop_Menu(self.game)
           new_state.enter_state()
+        if actions["colours"]:
+          new_state = colours(self.game)
+          new_state.enter_state()
+        
+
 
     def render(self, surface):
       self.game.draw_image(menu_bg, 1, surface, self.game.GAME_X / 2, self.game.GAME_Y / 2)
       self.game.draw_image(Wallpaper_title, 1, surface, self.game.GAME_X / 2, 38)
-      self.game.draw_image(Recolour_center_button, 1, surface, self.game.GAME_X /2, 120)
-      self.game.draw_image(Recolour_option_1, 1, surface, 80, 120)
+      self.game.draw_image(Recolour_center_button, 1, surface, self.game.GAME_X /2, 119)
+      self.game.draw_image(Recolour_option_1, 1, surface, 80, 119)
       self.game.draw_image(Recolour_option_2, 1, surface, 242, 120)
 
-      self.Recolour_option_1 = Button(80, 120, Recolour_option_1, 1)
+      self.Recolour_option_1 = Button(80, 119, Recolour_option_1, 1)
       self.Recolour_option_2 = Button(242, 120, Recolour_option_2, 1)
+
       
       if return_button.draw(surface):
         self.game.actions["shop"] = True
 
       if self.Recolour_option_1.draw(surface):
-        
+        self.buy = True
+      
+      if self.buy == True:
         self.game.draw_image(confirm_purchase_bg, 1, surface, self.game.GAME_X / 2, self.game.GAME_Y / 2 )
-        self.game.draw_image(red_cross, 1, surface, 124, 124)
-        self.game.draw_image(check_mark, 1, surface, 172, 124)
+        self.game.draw_image(red_cross, 1, surface, 130, 110)
+        self.game.draw_image(check_mark, 1, surface, 190, 110)
 
-        self.red_cross = Button(124, 124, red_cross, 1)
-        self.check_mark = Button(172, 124, check_mark, 1)
+        self.red_cross = Button(130, 110, red_cross, 1)
+        self.check_mark = Button(190, 110, check_mark, 1)
+
+        if self.red_cross.draw(surface):
+          self.game.actions["colours"] = True
+        if self.check_mark.draw(surface):
+          self.game.spend_gold(25)
+          self.cry = True
+        if self.cry == True:
+          self.game.draw_image(purchased_bg, 1, surface, self.game.GAME_X / 2, self.game.GAME_Y / 2)
+          self.game.draw_image(ok_button, 1, surface, self.game.GAME_X / 2, 115)
+          
+        if self.game.gold < 25:
+          self.game.draw_image(insuficent_funds_bg, 1, surface, self.game.GAME_X / 2, self.game.GAME_Y / 2)
+          self.game.draw_image(ok_button, 1, surface, self.game.GAME_X / 2, 115)
+          self.ok_button = Button(self.game.GAME_X / 2, 115, ok_button, 1)
+
+          if self.ok_button.draw(surface):
+            self.game.actions["colours"] = True
+
 
 
 

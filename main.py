@@ -31,7 +31,7 @@ from assets.assets import *
 class Game: 
     
     current_recipe = None
-    gold = 0 
+    gold = 110 
 
     # Define init method
     def __init__(self):
@@ -158,6 +158,7 @@ class Game:
                 return "insufficient funds" 
         except:
             print("An error occurred in spending gold")
+            
 
 # Creates an instance of Game class and runs the game loop while the program is running            
 if __name__ == "__main__":
