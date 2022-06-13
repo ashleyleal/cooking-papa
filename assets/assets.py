@@ -83,6 +83,7 @@ restaurant_counter = pygame.image.load("assets/images/images/restaurant_counter.
 kitchen_grill = pygame.image.load("assets/images/images/kitchen_grill.png")
 cutting_board = pygame.image.load("assets/images/images/kitchen_cutting_board.png")
 kitchen_counter = pygame.image.load("assets/images/images/kitchen_counter.png")
+deep_fryer = pygame.image.load("assets/images/images/kitchen_deep_fryer.png")
 plate = pygame.image.load("assets/images/images/plate.png")
 
 pink_instruction_panel = pygame.image.load("assets/images/images/papas_background_pink.png")
@@ -116,6 +117,9 @@ cheese = pygame.image.load("assets/images/images/burger_cheese.png")
 slice_icon = pygame.image.load("assets/images/icons/slice_thing.png")
 burger_assembly = pygame.image.load("assets/images/images/burger_assembly.png")
 burger_sign = pygame.image.load("assets/images/images/burger_sign.png")
+
+chicken_breast = pygame.image.load("assets/images/images/chicken_breast.png")
+chicken_coating = pygame.image.load("assets/images/images/chicken_coating.png")
 
 # Pizza
 rolling_pin = pygame.image.load("assets/images/images/pizza_rolling_pin.png")

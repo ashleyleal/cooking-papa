@@ -14,12 +14,11 @@ To do
 
 - Add transition screen between states (in progress)
 - Learn how to implement music
-- Burger cooking
-- Pizza cooking
 - Stew cooking
 - Cooking mechanics rating (requires time delay) (SOLVED)
 - Shop
 - Music and sound
+- Final rating screen for overall player recipe rating.
 - Saving data locally on player's game
 
 """
