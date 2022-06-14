@@ -173,7 +173,7 @@ class colours(State):
         if self.check_mark.draw(surface):
           self.game.spend_gold(25)
           self.cry = True
-          self.colour_one_owned = True
+          self.game.colour_one_owned = True
           print("money spent")
           
         if self.cry == True:
