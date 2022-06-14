@@ -387,7 +387,7 @@ class Kitchen(State):
                     self.game.draw_image(burned_patty, 1, surface, self.game.GAME_X / 4, 135)
 
                 if self.rating_triggered:
-                    self.rating_screen(surface, green_background, cook_patty)
+                    self.rating_screen(surface, green_background, cook_patty_a)
                     
                 if self.next_step:
                     self.reset_status(1)
@@ -403,13 +403,13 @@ class Kitchen(State):
 
             if self.cooking_done:
 
-                if self.burger_tomato_pos >= 100:
+                if self.burger_tomato_pos >= 104:
                     self.ingredient_rating["second"] = 1
 
-                elif self.burger_tomato_pos > 50 and self.burger_tomato_pos < 100:
+                elif self.burger_tomato_pos > 47 and self.burger_tomato_pos < 104:
                     self.ingredient_rating["second"] = 2
 
-                elif self.burger_tomato_pos <= 50:
+                elif self.burger_tomato_pos <= 47:
                     self.ingredient_rating["second"] = 3
 
                 self.display_rating_message(surface)
@@ -516,7 +516,7 @@ class Kitchen(State):
                 self.display_rating_message(surface)
 
             if self.rating_triggered:
-                self.rating_screen(surface, green_background, assemble_burger)
+                self.rating_screen(surface, green_background, assemble_burger_a)
 
                 if self.next_step:
                     self.reset_status(3)
@@ -543,13 +543,13 @@ class Kitchen(State):
 
             if self.cooking_done:
 
-                if self.chicken_slice_pos >= 100:
+                if self.chicken_slice_pos >= 104:
                     self.ingredient_rating["first"] = 1
 
-                elif self.chicken_slice_pos > 50 and self.chicken_slice_pos < 100:
+                elif self.chicken_slice_pos > 47 and self.chicken_slice_pos < 104:
                     self.ingredient_rating["first"] = 2
 
-                elif self.chicken_slice_pos <= 50:
+                elif self.chicken_slice_pos <= 47:
                     self.ingredient_rating["first"] = 3
 
                 self.display_rating_message(surface)
@@ -755,13 +755,12 @@ class Kitchen(State):
         self.game.draw_image(bg_image, 1, surface, self.game.GAME_X / 2, self.game.GAME_Y / 2)
 
         if recipe == "Burger":
-            self.game.draw_image(burger_text, 1, surface, self.game.GAME_X / 2, self.game.GAME_Y / 4)
+            self.game.draw_image(burger_text, 1, surface, self.game.GAME_X / 2, self.game.GAME_Y / 5)
             self.game.draw_image(burger, 1, surface, self.game.GAME_X / 2, self.game.GAME_Y / 2)
         elif recipe == "Fried Chicken":
             self.game.draw_image(cooked_chicken_1, 1, surface, self.game.GAME_X / 2, self.game.GAME_Y / 2)
             
         self.total_rating = self.ingredient_rating["first"] + self.ingredient_rating["second"] + self.ingredient_rating["third"]
-        print(self.total_rating)
         self.game.draw_text(surface, str(self.total_rating), MINIMAL_FONT, NOBLE_BLACK, self.game.GAME_X / 2, 160)
 
 

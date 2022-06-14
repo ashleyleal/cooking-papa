@@ -119,9 +119,9 @@ slice_icon = pygame.image.load("assets/images/icons/slice_thing.png")
 burger_assembly = pygame.image.load("assets/images/images/burger_assembly.png")
 burger_sign = pygame.image.load("assets/images/images/burger_sign.png")
 
-cook_patty = pygame.image.load("assets/images/images/cook_patty.png")
+cook_patty_a = pygame.image.load("assets/images/images/cook_patty.png")
 slice_tomato = pygame.image.load("assets/images/images/slice_tomato.png")
-assemble_burger = pygame.image.load("assets/images/images/assemble_burger.png")
+assemble_burger_a = pygame.image.load("assets/images/images/assemble_burger.png")
 burger_text = pygame.image.load("assets/images/images/burger_text.png")
 
 chicken_breast = pygame.image.load("assets/images/images/chicken_breast.png")
