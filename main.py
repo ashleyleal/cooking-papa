@@ -141,15 +141,15 @@ class Game:
             alpha_key += 1
             pygame.time.delay(1000)
 
-    def customer_payment(self, amount):
+    def customer_payment(self, total_rating):
         # Add amount to gold. Remove pass keyword after doing function; it is just there so the empty function doesn't error.
         try:
-            if self.total_rating >= 3 and self.total_rating < 6:
-                self.game.gold += 5
-            elif self.total_rating >=6 and self.total_rating < 9:
-                self.game.gold += 10
-            elif self.total_rating == 9:
-                self.game.gold += 15
+            if total_rating >= 3 and total_rating < 6:
+                self.gold += 5
+            elif total_rating >=6 and total_rating < 9:
+                self.gold += 10
+            elif total_rating == 9:
+                self.gold += 15
         except:
             print("An error occurred in paying the player")
 

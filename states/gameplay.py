@@ -627,9 +627,8 @@ class Kitchen(State):
                         self.reset_status(1)
 
         def coat_chicken(surface):
-
-            raw_chicken_button = Button(self.game.GAME_X / 4, 135, raw_chicken_1, 1)
             coated_chicken_button = Button(self.game.GAME_X / 4, 135, coated_chicken_1, 1)
+            raw_chicken_button = Button(self.game.GAME_X / 4, 135, raw_chicken_1, 1) 
             self.draw_cooking_background(surface, pink_instruction_panel, cutting_board)
             self.game.draw_image(chicken_coating, 1, surface, self.game.GAME_X / 4, 130)
             
@@ -641,13 +640,13 @@ class Kitchen(State):
             if self.cooking_done:
 
                 if self.chicken_coat_pos >= 104:
-                    self.ingredient_rating["first"] = 1
+                    self.ingredient_rating["second"] = 1
 
                 elif self.chicken_coat_pos > 35 and self.chicken_coat_pos < 104:
-                    self.ingredient_rating["first"] = 2
+                    self.ingredient_rating["second"] = 2
 
                 elif self.chicken_coat_pos <= 35:
-                    self.ingredient_rating["first"] = 3
+                    self.ingredient_rating["second"] = 3
 
                 self.display_rating_message(surface)
 
@@ -674,8 +673,10 @@ class Kitchen(State):
                 if self.chicken_coat_pos >= 135:
                     self.chicken_coat_speed = 0
                     if skip_button.draw(surface):
+                        print(self.cooking_done)
                         self.cooking_done = True
                         self.completed_time = pygame.time.get_ticks()
+                        print(self.cooking_done)
     
                 if self.rating_triggered:
                     self.rating_screen(surface, pink_background, coat_chicken_a)
@@ -695,17 +696,16 @@ class Kitchen(State):
             if self.cooking_done: 
                 
                 if (self.burger_patty_pos >= 0 and self.burger_patty_pos <= 40) or self.burger_patty_pos > 90:
-                    self.ingredient_rating["first"] = 1
+                    self.ingredient_rating["third"] = 1
 
                 elif (self.burger_patty_pos > 40 and self.burger_patty_pos <= 50) or (self.burger_patty_pos > 80 and self.burger_patty_pos <= 90):
-                    self.ingredient_rating["first"] = 2
+                    self.ingredient_rating["third"] = 2
 
                 elif self.burger_patty_pos > 50 and self.burger_patty_pos <= 80:
-                    self.ingredient_rating["first"] = 3
+                    self.ingredient_rating["third"] = 3
 
                 self.display_rating_message(surface) 
                           
-
             # Draw the cooking bar that shows how cooked the patty is
             self.game.draw_image(cooking_bar, 1, surface, self.game.GAME_X / 2 + self.game.GAME_X / 4, self.game.GAME_Y / 4)
 
@@ -758,7 +758,6 @@ class Kitchen(State):
                     
                 if self.next_step:
                     self.reset_status(3)
-
 
         surface.fill(CARNATION_ROSE)
 
@@ -880,6 +879,7 @@ class Kitchen(State):
 
         if skip_button.draw(surface):
             self.game.actions["start"] = True
+            self.game.customer_payment(self.total_rating)
 
 
 
