@@ -66,6 +66,10 @@ Recolour_option_2 = pygame.image.load("assets/images/images/recolour_option_2.pn
 Wallpaper_title = pygame.image.load("assets/images/titles/Wallpaper_title.png")
 purchased_bg = pygame.image.load("assets/images/images/Purchased_bg.png")
 recolour_1 = pygame.image.load("assets/images/images/recolour_1.png")
+character_title = pygame.image.load("assets/images/titles/character_title.png")
+speedwagon_buy = pygame.image.load("assets/images/images/speedwagon_buy.png")
+speedwagon_buy_button = pygame.image.load("assets/images/images/speedwagon_buy_button.png")
+speedwagon = pygame.image.load("assets/images/images/speedwagon.png")
 
 placeholder_button = pygame.image.load("assets/images/icons/buttonPlaceholder.png")
 return_arrow = pygame.image.load("assets/images/icons/return_button.png")
@@ -79,6 +83,7 @@ start = pygame.image.load("assets/images/icons/start_button.png")
 customer_1 = pygame.image.load("assets/images/images/Dio.png")
 customer_2 = pygame.image.load("assets/images/images/Jotaro.png")
 customer_3 = pygame.image.load("assets/images/images/funny_valentine.png")
+customer_4 = pygame.image.load("assets/images/images/speedwagon.png")
 
 # Kitchen assets
 restaurant_counter = pygame.image.load("assets/images/images/restaurant_counter.png")

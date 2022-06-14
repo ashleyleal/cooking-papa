@@ -74,14 +74,11 @@ class characters(State):
      
     def render(self, surface):
       self.game.draw_image(menu_bg, 1, surface, self.game.GAME_X / 2, self.game.GAME_Y / 2)
-      self.game.draw_image(characters_button, 1, surface, self.game.GAME_X / 2, self.game.GAME_Y / 2)
-      #self.game.draw_image(character_option_1)
-      #self.game.draw_image(character_option_2)
-      #self.game.draw_image(character_option_3)
+      self.game.draw_image(character_title, 1, surface, self.game.GAME_X / 2, 32)
+      self.game.draw_image(speedwagon_buy, 1, surface,self.game.GAME_X / 2 - 60, 120)
+      self.game.draw_image(speedwagon_buy_button, 1, surface, self.game.GAME_X / 2 + 60, self.game.GAME_Y / 2 + 30 )
 
-      #self.character_option_1 = Button()
-      #self.character_option_2 = Button()
-      #self.character_option_3 = Button()
+      self.speedwagon_buy_button = Button(self.game.GAME_X / 2 + 60, self.game.GAME_Y / 2 + 30 )
 
       if return_button.draw(surface):
         self.game.actions["shop"] = True
