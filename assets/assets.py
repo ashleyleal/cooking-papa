@@ -126,6 +126,7 @@ slice_tomato = pygame.image.load("assets/images/images/slice_tomato.png")
 assemble_burger_a = pygame.image.load("assets/images/images/assemble_burger.png")
 burger_text = pygame.image.load("assets/images/images/burger_text.png")
 
+chicken = pygame.image.load("assets/images/images/chicken.png")
 chicken_breast = pygame.image.load("assets/images/images/chicken_breast.png")
 chicken_coating = pygame.image.load("assets/images/images/chicken_coating.png")
 raw_chicken_1 = pygame.image.load("assets/images/images/raw_chicken1.png")
@@ -140,6 +141,11 @@ cooked_chicken_3 = pygame.image.load("assets/images/images/cooked_chicken3.png")
 burned_chicken_1 = pygame.image.load("assets/images/images/burned_chicken1.png")
 burned_chicken_2 = pygame.image.load("assets/images/images/burned_chicken2.png")
 burned_chicken_3 = pygame.image.load("assets/images/images/burned_chicken3.png")
+
+coat_chicken_a = pygame.image.load("assets/images/images/coat_chicken.png")
+slice_chicken_a = pygame.image.load("assets/images/images/slice_chicken.png")
+fry_chicken_a = pygame.image.load("assets/images/images/fry_chicken.png")
+chicken_text = pygame.image.load("assets/images/images/fried_chicken.png")
 
 # Pizza
 rolling_pin = pygame.image.load("assets/images/images/pizza_rolling_pin.png")
