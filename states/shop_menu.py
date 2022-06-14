@@ -122,12 +122,14 @@ class characters(State):
             #self.game.actions["characters"] = True
 
 
+
 class colours(State):
   # Inherit init method from State class 
     def __init__(self, game):
         State.__init__(self, game)
         self.buy = False
         self.cry = False
+        
         
     def update(self, actions):
         super().update(actions)
@@ -167,12 +169,19 @@ class colours(State):
 
         if self.red_cross.draw(surface):
           self.game.actions["colours"] = True
+
         if self.check_mark.draw(surface):
           self.game.spend_gold(25)
           self.cry = True
+          self.colour_one_owned = True
+          print("money spent")
+          
         if self.cry == True:
           self.game.draw_image(purchased_bg, 1, surface, self.game.GAME_X / 2, self.game.GAME_Y / 2)
           self.game.draw_image(ok_button, 1, surface, self.game.GAME_X / 2, 115)
+          self.ok_button = Button(self.game.GAME_X / 2, 115, ok_button, 1)
+          if self.ok_button.draw(surface):
+            self.game.actions["colours"] = True
           
         if self.game.gold < 25:
           self.game.draw_image(insuficent_funds_bg, 1, surface, self.game.GAME_X / 2, self.game.GAME_Y / 2)
@@ -181,6 +190,9 @@ class colours(State):
 
           if self.ok_button.draw(surface):
             self.game.actions["colours"] = True
+
+          
+
 
 
 

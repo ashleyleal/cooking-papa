@@ -65,6 +65,7 @@ Recolour_option_1 = pygame.image.load("assets/images/images/Recolour_option_1.pn
 Recolour_option_2 = pygame.image.load("assets/images/images/recolour_option_2.png")
 Wallpaper_title = pygame.image.load("assets/images/titles/Wallpaper_title.png")
 purchased_bg = pygame.image.load("assets/images/images/Purchased_bg.png")
+recolour_1 = pygame.image.load("assets/images/images/recolour_1.png")
 
 placeholder_button = pygame.image.load("assets/images/icons/buttonPlaceholder.png")
 return_arrow = pygame.image.load("assets/images/icons/return_button.png")
@@ -77,7 +78,7 @@ start = pygame.image.load("assets/images/icons/start_button.png")
 # Customers
 customer_1 = pygame.image.load("assets/images/images/Dio.png")
 customer_2 = pygame.image.load("assets/images/images/Jotaro.png")
-customer_3 = pygame.image.load("assets/images/images/customer_3.png")
+customer_3 = pygame.image.load("assets/images/images/funny_valentine.png")
 
 # Kitchen assets
 restaurant_counter = pygame.image.load("assets/images/images/restaurant_counter.png")
