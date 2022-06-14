@@ -18,7 +18,6 @@ class Restaurant(State):
     # Inherits from game and State class
     def __init__(self, game):
         State.__init__(self, game)
-        self.colour_one_owned = False
         # Nested dictionary of all possible recipes, the steps, and descriptions for each step
         self.possible_recipes =  {
             
@@ -72,7 +71,7 @@ class Restaurant(State):
     def render(self, surface):
 
         # Fills the background, draws the customer, counter, and speech bubble, and draws the selected recipe
-        if self.colour_one_owned == True:
+        if self.game.colour_one_owned == True:
             self.game.draw_image(recolour_1, 1, surface, self.game.GAME_X / 2, self.game.GAME_Y / 2)
         else:
             surface.fill(WHISTLES_GOLD)
@@ -869,6 +868,7 @@ class Kitchen(State):
             self.game.draw_image(chicken, 1, surface, self.game.GAME_X / 2, self.game.GAME_Y / 2)
             
         self.total_rating = self.ingredient_rating["first"] + self.ingredient_rating["second"] + self.ingredient_rating["third"]
+        # REMOVE BEFORE SUBMIT
         self.game.draw_text(surface, str(self.total_rating), MINIMAL_FONT, NOBLE_BLACK, self.game.GAME_X / 2, 160)
 
         if self.total_rating >= 3 and self.total_rating < 6:
