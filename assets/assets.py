@@ -160,3 +160,7 @@ up_arrow = pygame.image.load("assets/images/icons/orange_up.png")
 right_arrow = pygame.image.load("assets/images/icons/green_right.png")
 left_arrow = pygame.image.load("assets/images/icons/pink_left.png")
 down_arrow = pygame.image.load("assets/images/icons/blue_down.png")
+
+one_star = pygame.image.load("assets/images/icons/one_star.png")
+two_stars = pygame.image.load("assets/images/icons/two_stars.png")
+three_stars = pygame.image.load("assets/images/icons/three_stars.png")

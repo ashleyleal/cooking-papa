@@ -679,10 +679,12 @@ class Kitchen(State):
         elif self.step_3:
             ingredient_rating = self.ingredient_rating["third"]
 
-        self.game.draw_text(surface, str(ingredient_rating), MARIO_FONT, NOBLE_BLACK, self.game.GAME_X / 2, self.game.GAME_Y / 2)
-        
-        # Change text to number of stars by drawing with offsets in for loop. Fionna do this pls
-        # FIONNA
+        if ingredient_rating == 3:
+            self.game.draw_image(three_stars, 1, surface, self.game.GAME_X / 2, self.game.GAME_Y / 2 + self.game.GAME_Y / 3)
+        elif ingredient_rating == 2:
+            self.game.draw_image(two_stars, 1, surface, self.game.GAME_X / 2, self.game.GAME_Y / 2 + self.game.GAME_Y / 3)
+        elif ingredient_rating == 1:
+            self.game.draw_image(one_star, 1, surface, self.game.GAME_X / 2, self.game.GAME_Y / 2 + self.game.GAME_Y / 3)
 
     # Resets the status for cooking processes
     def reset_status(self, current_step):
@@ -762,6 +764,13 @@ class Kitchen(State):
             
         self.total_rating = self.ingredient_rating["first"] + self.ingredient_rating["second"] + self.ingredient_rating["third"]
         self.game.draw_text(surface, str(self.total_rating), MINIMAL_FONT, NOBLE_BLACK, self.game.GAME_X / 2, 160)
+
+        if self.total_rating >= 3 and self.total_rating < 6:
+            self.game.draw_image(one_star, 1, surface, self.game.GAME_X / 2, self.game.GAME_Y / 2 + self.game.GAME_Y / 3)
+        elif self.total_rating >=6 and self.total_rating < 9:
+            self.game.draw_image(two_stars, 1, surface, self.game.GAME_X / 2, self.game.GAME_Y / 2 + self.game.GAME_Y / 3)
+        elif self.total_rating == 9:
+            self.game.draw_image(three_stars, 1, surface, self.game.GAME_X / 2, self.game.GAME_Y / 2 + self.game.GAME_Y / 3)
 
 
 
