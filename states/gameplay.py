@@ -27,17 +27,13 @@ class Restaurant(State):
                 "Slice Tomato": "Click two points to make a slice.",
                 "Assemble Burger": "Put the ingredients of the burger together by pressing the right button at the right time"
             },
-            "Stew": {
-                "Roll Dough": "Scroll your mouse to move the rolling pin back and forth until the dough is rolled.",
-                "Add Toppings": "Drag the toppings to the pizza.",
-                "Place in Oven": "Put the pizza in the oven"
-            },
+            
             "Fried Chicken": {
                 "": "",
                 "": "",
                 "": "",
             }
-        }
+        } 
 
         self.set_order()
 
@@ -102,12 +98,14 @@ class Restaurant(State):
         if self.selected_recipe == "Burger":
             self.game.draw_image(burger_icon, 1, surface, icon_position[0], icon_position[1])
         
-        elif self.selected_recipe == "Stew":
-            self.game.draw_image(stew_icon, 1, surface, icon_position[0], icon_position[1])
-
         elif self.selected_recipe == "Fried Chicken":
             self.game.draw_image(chicken_icon, 1, surface, icon_position[0], icon_position[1])
-
+        
+        """
+        elif self.selected_recipe == "Stew":
+            self.game.draw_image(stew_icon, 1, surface, icon_position[0], icon_position[1])
+        """
+        
 # Kitchen state defines behaviour when the user is currently cooking
 class Kitchen(State):
 
@@ -218,6 +216,9 @@ class Kitchen(State):
         if actions["menu"]:
             main_menu = self.game.state_stack[0]
             main_menu.enter_state()
+        if actions["start"]:
+            new_state = Restaurant(self.game)
+            new_state.enter_state()
 
         # If countdown_triggered find the current time and compare it to the time when the countdown is triggered to set which numbers are shown on the screen
         if self.countdown_triggered:
@@ -311,10 +312,12 @@ class Kitchen(State):
         # Run the appropriate cooking process depending on the current customer order
         if self.current_recipe == "Burger":
             self.cook_burger(surface)
-        elif self.current_recipe == "Stew":
-            self.cook_stew(surface)
         elif self.current_recipe == "Fried Chicken":
             self.cook_chicken(surface)
+        """
+        elif self.current_recipe == "Stew":
+            self.cook_stew(surface)
+        """
 
     # Define method that cooks the burger
     def cook_burger(self, surface):
@@ -392,7 +395,7 @@ class Kitchen(State):
                     self.game.draw_image(burned_patty, 1, surface, self.game.GAME_X / 4, 135)
 
                 if self.rating_triggered:
-                    self.rating_screen(surface, green_background, "COOK PATTY")
+                    self.rating_screen(surface, green_background, cook_patty_a)
                     
                 if self.next_step:
                     self.reset_status(1)
@@ -408,13 +411,13 @@ class Kitchen(State):
 
             if self.cooking_done:
 
-                if self.burger_tomato_pos >= 100:
+                if self.burger_tomato_pos >= 104:
                     self.ingredient_rating["second"] = 1
 
-                elif self.burger_tomato_pos > 50 and self.burger_tomato_pos < 100:
+                elif self.burger_tomato_pos > 35 and self.burger_tomato_pos < 104:
                     self.ingredient_rating["second"] = 2
 
-                elif self.burger_tomato_pos <= 50:
+                elif self.burger_tomato_pos <= 35:
                     self.ingredient_rating["second"] = 3
 
                 self.display_rating_message(surface)
@@ -486,7 +489,7 @@ class Kitchen(State):
                     pygame.draw.line(surface, WARM_CROISSANT, (button_56_pos_x, bottombutton_pos_y),(button_56_pos_x, topbutton_pos_y))
 
                 if self.rating_triggered:
-                    self.rating_screen(surface, green_background, "SLICE TOMATO")
+                    self.rating_screen(surface, green_background, slice_tomato)
                     
                     if self.next_step:
                         self.reset_status(2)
@@ -521,7 +524,7 @@ class Kitchen(State):
                 self.display_rating_message(surface)
 
             if self.rating_triggered:
-                self.rating_screen(surface, green_background, "ASSEMBLE BURGER")
+                self.rating_screen(surface, green_background, assemble_burger_a)
 
                 if self.next_step:
                     self.reset_status(3)
@@ -536,22 +539,6 @@ class Kitchen(State):
         elif self.evaluation:
             self.final_rating(surface, "Burger", green_background)
 
-    def cook_stew(self, surface):
-        
-        def step_1(surface):
-            pass
-
-        def step_2(surface):
-            pass
-
-        def step_3(surface):
-            pass
-
-        surface.fill(KASHMIR_PINK)
-        step_1(surface)
-        step_2(surface)
-        step_3(surface)
-
     def cook_chicken(self, surface):
 
         def cut_chicken(surface):
@@ -564,13 +551,13 @@ class Kitchen(State):
 
             if self.cooking_done:
 
-                if self.chicken_slice_pos >= 100:
+                if self.chicken_slice_pos >= 104:
                     self.ingredient_rating["first"] = 1
 
-                elif self.chicken_slice_pos > 50 and self.chicken_slice_pos < 100:
+                elif self.chicken_slice_pos > 35 and self.chicken_slice_pos < 104:
                     self.ingredient_rating["first"] = 2
 
-                elif self.chicken_slice_pos <= 50:
+                elif self.chicken_slice_pos <= 35:
                     self.ingredient_rating["first"] = 3
 
                 self.display_rating_message(surface)
@@ -642,7 +629,7 @@ class Kitchen(State):
                     pygame.draw.line(surface, WARM_CROISSANT, (button_56_pos_x, bottombutton_pos_y),(button_56_pos_x, topbutton_pos_y))
 
                 if self.rating_triggered:
-                    self.rating_screen(surface, green_background, "SLICE CHICKEN")
+                    self.rating_screen(surface, green_background, slice_tomato)
                     
                     if self.next_step:
                         self.reset_status(1)
@@ -673,11 +660,8 @@ class Kitchen(State):
                     if skip_button.draw(surface):
                         self.cooking_done = True
                         self.completed_time = pygame.time.get_ticks()
-
-                i
                 
                 
-
         def fry_chicken(surface):
             self.draw_cooking_background(surface, pink_instruction_panel, deep_fryer)
 
@@ -692,9 +676,9 @@ class Kitchen(State):
             fry_chicken(surface)
 
     # Clears the screen and shows the user's rating after a ingredient cooking step
-    def rating_screen(self, surface, background_image, step_name):
+    def rating_screen(self, surface, background_image, step_text_image):
         self.game.draw_image(background_image, 1, surface, self.game.GAME_X / 2, self.game.GAME_Y / 2)
-        self.game.draw_text(surface, str(step_name), MARIO_FONT, NOBLE_BLACK, self.game.GAME_X / 2, self.game.GAME_Y / 4)
+        self.game.draw_image(step_text_image, 1, surface, self.game.GAME_X / 2, self.game.GAME_Y / 4)
         
         if self.step_1:
             ingredient_rating = self.ingredient_rating["first"]
@@ -703,10 +687,12 @@ class Kitchen(State):
         elif self.step_3:
             ingredient_rating = self.ingredient_rating["third"]
 
-        self.game.draw_text(surface, str(ingredient_rating), MARIO_FONT, NOBLE_BLACK, self.game.GAME_X / 2, self.game.GAME_Y / 2)
-        
-        # Change text to number of stars by drawing with offsets in for loop. Fionna do this pls
-        # FIONNA
+        if ingredient_rating == 3:
+            self.game.draw_image(three_stars, 1, surface, self.game.GAME_X / 2, self.game.GAME_Y / 2)
+        elif ingredient_rating == 2:
+            self.game.draw_image(two_stars, 1, surface, self.game.GAME_X / 2, self.game.GAME_Y / 2)
+        elif ingredient_rating == 1:
+            self.game.draw_image(one_star, 1, surface, self.game.GAME_X / 2, self.game.GAME_Y / 2)
 
     # Resets the status for cooking processes
     def reset_status(self, current_step):
@@ -779,16 +765,23 @@ class Kitchen(State):
         self.game.draw_image(bg_image, 1, surface, self.game.GAME_X / 2, self.game.GAME_Y / 2)
 
         if recipe == "Burger":
+            self.game.draw_image(burger_text, 1, surface, self.game.GAME_X / 2, self.game.GAME_Y / 5)
             self.game.draw_image(burger, 1, surface, self.game.GAME_X / 2, self.game.GAME_Y / 2)
         elif recipe == "Fried Chicken":
             self.game.draw_image(cooked_chicken_1, 1, surface, self.game.GAME_X / 2, self.game.GAME_Y / 2)
-        elif recipe == "Stew":
-            self.game.draw_image(burger, 1, surface, self.game.GAME_X / 2, self.game.GAME_Y / 2)
             
-    
         self.total_rating = self.ingredient_rating["first"] + self.ingredient_rating["second"] + self.ingredient_rating["third"]
-        print(self.total_rating)
         self.game.draw_text(surface, str(self.total_rating), MINIMAL_FONT, NOBLE_BLACK, self.game.GAME_X / 2, 160)
+
+        if self.total_rating >= 3 and self.total_rating < 6:
+            self.game.draw_image(one_star, 1, surface, self.game.GAME_X / 2, self.game.GAME_Y / 2 + self.game.GAME_Y / 3)
+        elif self.total_rating >=6 and self.total_rating < 9:
+            self.game.draw_image(two_stars, 1, surface, self.game.GAME_X / 2, self.game.GAME_Y / 2 + self.game.GAME_Y / 3)
+        elif self.total_rating == 9:
+            self.game.draw_image(three_stars, 1, surface, self.game.GAME_X / 2, self.game.GAME_Y / 2 + self.game.GAME_Y / 3)
+
+        if skip_button.draw(surface):
+            self.game.actions["start"] = True
 
 
 
