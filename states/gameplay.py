@@ -79,6 +79,7 @@ class Restaurant(State):
         self.game.draw_image(self.selected_customer, 1, surface, self.game.GAME_X / 2, 100)
         self.game.draw_image(restaurant_counter, 1, surface, self.game.GAME_X / 2, 115)
         self.game.draw_image(speech_bubble, 1, surface, self.game.GAME_X/ 2 + 80, self.game.GAME_Y / 2 - 50)
+        self.game.draw_gold(surface, self.game.GAME_X / 2, 170, NOBLE_BLACK)
         self.show_order(surface)
 
         # Draw buttons and trigger actions when buttons are pressed
@@ -867,8 +868,6 @@ class Kitchen(State):
             self.game.draw_image(chicken, 1, surface, self.game.GAME_X / 2, self.game.GAME_Y / 2)
             
         self.total_rating = self.ingredient_rating["first"] + self.ingredient_rating["second"] + self.ingredient_rating["third"]
-        # REMOVE BEFORE SUBMIT
-        self.game.draw_text(surface, str(self.total_rating), MINIMAL_FONT, NOBLE_BLACK, self.game.GAME_X / 2, 160)
 
         if self.total_rating >= 3 and self.total_rating < 6:
             self.game.draw_image(one_star, 1, surface, self.game.GAME_X / 2, self.game.GAME_Y / 2 + self.game.GAME_Y / 3)

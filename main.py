@@ -31,7 +31,7 @@ from assets.assets import *
 class Game: 
     
     current_recipe = None
-    gold = 110
+    gold = 0
     colour_one_owned = False
 
     # Define init method
@@ -162,13 +162,16 @@ class Game:
                 return "insufficient funds" 
         except:
             print("An error occurred in spending gold")
+
+    def draw_gold(self, surface, px, py, colour):
+        self.draw_image(gold_icon, 1, surface, px - 10, py)
+        self.draw_text(surface, str(self.gold), MINIMAL_FONT, colour, px + 15, py)
             
 # Creates an instance of Game class and runs the game loop while the program is running            
 if __name__ == "__main__":
     game = Game()
     while game.running:
         game.game_loop()
-
 
 
 

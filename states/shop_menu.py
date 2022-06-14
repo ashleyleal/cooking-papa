@@ -30,6 +30,7 @@ class Shop_Menu(State):
     # Render loop that continously updates screen based on current conditions
     def render(self, surface):
         self.game.draw_image(menu_bg, 1, surface, self.game.GAME_X / 2, self.game.GAME_Y / 2)
+        self.game.draw_gold(surface, self.game.GAME_X - 35, 15, MARBLE_WHITE)
         self.game.draw_image(shop_title, 1, surface, self.game.GAME_X / 2, 38)
         self.game.draw_image(characters_button, 1, surface, 80, 120)
         self.game.draw_image(recolour_button, 1, surface, self.game.GAME_X / 2, 120)
@@ -74,6 +75,7 @@ class characters(State):
      
     def render(self, surface):
       self.game.draw_image(menu_bg, 1, surface, self.game.GAME_X / 2, self.game.GAME_Y / 2)
+      self.game.draw_gold(surface, self.game.GAME_X - 35, 15, MARBLE_WHITE)
       self.game.draw_image(character_title, 1, surface, self.game.GAME_X / 2, 32)
       self.game.draw_image(speedwagon_buy, 1, surface,self.game.GAME_X / 2 - 60, 120)
       self.game.draw_image(speedwagon_buy_button, 1, surface, self.game.GAME_X / 2 + 60, self.game.GAME_Y / 2 + 30 )
@@ -141,6 +143,7 @@ class colours(State):
 
     def render(self, surface):
       self.game.draw_image(menu_bg, 1, surface, self.game.GAME_X / 2, self.game.GAME_Y / 2)
+      self.game.draw_gold(surface, self.game.GAME_X - 35, 15, MARBLE_WHITE)
       self.game.draw_image(Wallpaper_title, 1, surface, self.game.GAME_X / 2, 38)
       self.game.draw_image(Recolour_center_button, 1, surface, self.game.GAME_X /2, 119)
       self.game.draw_image(Recolour_option_1, 1, surface, 80, 119)
@@ -206,6 +209,7 @@ class music(State):
      
     def render(self, surface):
       self.game.draw_image(menu_bg, 1, surface, self.game.GAME_X / 2, self.game.GAME_Y / 2)
+      self.game.draw_gold(surface, self.game.GAME_X - 35, 15, MARBLE_WHITE)
       self.game.draw_image(music_button, 1, surface, self.game.GAME_X / 2, self.game.GAME_Y / 2)
 
       if return_button.draw(surface):
