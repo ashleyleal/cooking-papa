@@ -186,15 +186,8 @@ class Kitchen(State):
         self.chicken_coat_speed = 0.30
         self.chicken_coat_pos = 0
 
-        self.chicken_coat_clicks = 0
-
-        self.chicken_images = {
-
-            1: [raw_chicken_1, coated_chicken_1],
-            2: [raw_chicken_1, coated_chicken_1],
-            3: [raw_chicken_1, coated_chicken_1]
-
-        }
+        self.chicken_coat_clicks = 20
+        self.current_chicken = raw_chicken_1
 
         # Controls which step the user is currently on
         self.step_1 = True
@@ -293,7 +286,7 @@ class Kitchen(State):
                         self.burger_positions["tomato"] = True
                         if self.burger_assembly_progress == 4:
                             get_rating()
-
+        
         # When one cooking step is completed wait some time and trigger the rating screen. Then wait some more time and switch to the next cooking step
         if self.cooking_done:
             if pygame.time.get_ticks() > self.completed_time + 3000:
@@ -624,13 +617,14 @@ class Kitchen(State):
                     pygame.draw.line(surface, WARM_CROISSANT, (button_56_pos_x, bottombutton_pos_y),(button_56_pos_x, topbutton_pos_y))
 
                 if self.rating_triggered:
-                    self.rating_screen(surface, green_background, slice_tomato)
+                    self.rating_screen(surface, pink_background, slice_tomato)
                     
                     if self.next_step:
                         self.reset_status(1)
 
         def coat_chicken(surface):
-            
+
+            chicken_button = Button(self.game.GAME_X / 4, 135, self.current_chicken, 1)
             self.draw_cooking_background(surface, pink_instruction_panel, cutting_board)
             self.game.draw_image(chicken_coating, 1, surface, self.game.GAME_X / 4, 130)
             
@@ -645,16 +639,36 @@ class Kitchen(State):
 
             if self.countdown_completed:
 
-                self.game.draw_image(raw_chicken_1, 1, surface, self.game.GAME_X / 4, 135)
-
-                self.game.draw_image(cooking_arrow, 1, surface, self.game.GAME_X / 2 + self.game.GAME_X / 4 - 65 + self.chicken_slice_pos, self.game.GAME_Y / 4 + 10)
+                self.game.draw_image(cooking_arrow, 1, surface, self.game.GAME_X / 2 + self.game.GAME_X / 4 - 65 + self.chicken_coat_pos, self.game.GAME_Y / 4 + 10)
                 self.chicken_coat_pos += self.chicken_coat_speed
+
+                self.game.draw_text(surface, str(self.chicken_coat_clicks), MINIMAL_FONT, NOBLE_BLACK, self.game.GAME_X / 4, 50)
+
+                if self.chicken_coat_clicks < 10:
+                    self.current_chicken = coated_chicken_1
+
+                if chicken_button.draw(surface) and self.chicken_coat_clicks >= 1:
+                    self.chicken_coat_clicks -=1
+
+                elif chicken_button.draw(surface) and self.chicken_coat_clicks == 0:
+                    print("should be done now")
+                    self.cooking_done = True
+                    self.self.completed_time = pygame.time.get_ticks()
+
+                if self.chicken_coat_clicks == 0:
+                    self.chicken_coat_speed = 0
 
                 if self.chicken_coat_pos >= 135:
                     self.chicken_coat_speed = 0
                     if skip_button.draw(surface):
                         self.cooking_done = True
                         self.completed_time = pygame.time.get_ticks()
+    
+                    if self.rating_triggered:
+                        self.rating_screen(surface, pink_background, slice_tomato)
+                    
+                    if self.next_step:
+                        self.reset_status(2)
                 
                 
         def fry_chicken(surface):

@@ -51,7 +51,7 @@ class Game:
         
         # Set state of game
         self.running, self.playing = True, True
-        self.actions = {"menu": False, "start": False, "shop": False, "quit": False, "recipe": False, "fade": False, "cooking": False, "music": False, "characters": False, "colours": False, "arrowup": False, "arrowdown": False, "arrowright": False, "arrowleft": False, "confirm_purchase": False,}
+        self.actions = {"click": False, "menu": False, "start": False, "shop": False, "quit": False, "recipe": False, "fade": False, "cooking": False, "music": False, "characters": False, "colours": False, "arrowup": False, "arrowdown": False, "arrowright": False, "arrowleft": False, "confirm_purchase": False}
         self.state_stack = []
         self.load_states()
         
@@ -71,6 +71,9 @@ class Game:
             if event.type == pygame.QUIT or self.actions["quit"]:
                 self.running = False
                 self.playing = False
+
+            elif event.type == pygame.MOUSEBUTTONUP:
+                self.actions["click"] = True
 
             elif event.type == pygame.KEYUP:
                 
