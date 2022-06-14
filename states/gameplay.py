@@ -7,6 +7,7 @@ To do list:
 
 #  Import required modules and classes
 import random
+from states.shop_menu import colours
 from states.state import State
 from button import Button
 from assets.assets import * 
@@ -17,7 +18,7 @@ class Restaurant(State):
     # Inherits from game and State class
     def __init__(self, game):
         State.__init__(self, game)
-        
+        self.colour_one_owned = False
         # Nested dictionary of all possible recipes, the steps, and descriptions for each step
         self.possible_recipes =  {
             
@@ -75,7 +76,11 @@ class Restaurant(State):
     def render(self, surface):
 
         # Fills the background, draws the customer, counter, and speech bubble, and draws the selected recipe
-        surface.fill(WHISTLES_GOLD)
+        if self.colour_one_owned == True:
+            self.game.draw_image(recolour_1, 1, surface, self.game.GAME_X / 2, self.game.GAME_Y / 2)
+        else:
+            surface.fill(WHISTLES_GOLD)
+        
         self.game.draw_image(self.selected_customer, 1, surface, self.game.GAME_X / 2, 100)
         self.game.draw_image(restaurant_counter, 1, surface, self.game.GAME_X / 2, 115)
         self.game.draw_image(speech_bubble, 1, surface, self.game.GAME_X/ 2 + 80, self.game.GAME_Y / 2 - 50)
