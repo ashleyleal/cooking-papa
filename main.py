@@ -17,7 +17,8 @@ class Game:
         
         pygame.init()
 
-        pygame.mixer.music.play(1)
+        pygame.mixer.music.play(-1)
+        pygame.mixer.music.set_volume(0.25)
 
         # Configure window
         self.GAME_X, self.GAME_Y = 320, 180
