@@ -454,7 +454,7 @@ class Kitchen(State):
 
             if self.cooking_done:
 
-                pygame.mixer.Sound.stop(slice_sound)
+                #pygame.mixer.Sound.stop(slice_sound)
 
                 if self.burger_tomato_pos >= 104:
                     self.ingredient_rating["second"] = 1
@@ -527,17 +527,23 @@ class Kitchen(State):
                 if self.tomato_slice[1] and self.tomato_slice[2]:
                     pygame.draw.line(surface, WARM_CROISSANT, (button_12_pos_x, bottombutton_pos_y),(button_12_pos_x, topbutton_pos_y))
                     pygame.mixer.Sound.play(slice_sound)
+                    pygame.mixer.stop()
+                    
                 
                 if self.tomato_slice[3] and self.tomato_slice[4]:
                     pygame.draw.line(surface, WARM_CROISSANT, (button_34_pos_x, bottombutton_pos_y),(button_34_pos_x, topbutton_pos_y))
                     pygame.mixer.Sound.play(slice_sound)
+                    pygame.mixer.stop(slice_sound)
+                    
 
                 if self.tomato_slice[5] and self.tomato_slice[6]:
                     pygame.draw.line(surface, WARM_CROISSANT, (button_56_pos_x, bottombutton_pos_y),(button_56_pos_x, topbutton_pos_y))
                     pygame.mixer.Sound.play(slice_sound)
+                    pygame.mixer.stop()
+                    
 
                 if self.rating_triggered:
-                    pygame.mixer.Sound.stop(slice_sound)
+                    #pygame.mixer.Sound.stop(slice_sound)
                     self.rating_screen(surface, green_background, slice_tomato)
                     
                     if self.next_step:
@@ -1193,7 +1199,8 @@ class Kitchen(State):
 
     def final_rating(self, surface, recipe, bg_image):
         pygame.mixer.music.pause()
-        pygame.mixer.Sound.play(victory_sound, 1, 1000)
+        pygame.mixer.Sound.play(victory_sound)
+        pygame.mixer.Sound.stop(victory_sound)
         self.game.draw_image(bg_image, 1, surface, self.game.GAME_X / 2, self.game.GAME_Y / 2)
 
         if recipe == "Burger":
@@ -1218,13 +1225,13 @@ class Kitchen(State):
         if skip_button.draw(surface):
             self.game.actions["start"] = True
             self.game.customer_payment(self.total_rating)
-            pygame.mixer.Sound.stop(victory_sound)
+
             if self.game.music == True:
                 pygame.mixer.music.unpause()
                 #pygame.mixer.music.unload()
                 #pygame.mixer.music.load("assets/sounds/jojo.mp3")
             else:
-                pygame.mixer.music.play(-1)
+                pygame.mixer.music.unpause()
 
 
 
