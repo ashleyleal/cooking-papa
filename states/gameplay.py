@@ -591,7 +591,7 @@ class Kitchen(State):
     def cook_chicken(self, surface):
 
         def cut_chicken(surface):
-            self.draw_cooking_background(surface, pink_instruction_panel, cutting_board)
+            self.draw_cooking_background(surface, blue_instruction_panel, cutting_board)
 
             if not self.cooking_done:
                 
@@ -684,7 +684,7 @@ class Kitchen(State):
 
                 if self.rating_triggered:
                     pygame.mixer.Sound.stop(slice_sound)
-                    self.rating_screen(surface, pink_background, slice_chicken_a)
+                    self.rating_screen(surface, blue_background, slice_chicken_a)
                     
                     if self.next_step:
                         self.reset_status(1)
@@ -692,7 +692,7 @@ class Kitchen(State):
         def coat_chicken(surface):
             coated_chicken_button = Button(self.game.GAME_X / 4, 135, coated_chicken_1, 1)
             raw_chicken_button = Button(self.game.GAME_X / 4, 135, raw_chicken_1, 1) 
-            self.draw_cooking_background(surface, pink_instruction_panel, cutting_board)
+            self.draw_cooking_background(surface, blue_instruction_panel, cutting_board)
             self.game.draw_image(chicken_coating, 1, surface, self.game.GAME_X / 4, 130)
             
             if not self.cooking_done:
@@ -742,14 +742,14 @@ class Kitchen(State):
                         print(self.cooking_done)
     
                 if self.rating_triggered:
-                    self.rating_screen(surface, pink_background, coat_chicken_a)
+                    self.rating_screen(surface, blue_background, coat_chicken_a)
                     
                 if self.next_step:
                     self.reset_status(2)
                 
                 
         def fry_chicken(surface):
-            self.draw_cooking_background(surface, pink_instruction_panel, deep_fryer)
+            self.draw_cooking_background(surface, blue_instruction_panel, deep_fryer)
 
             if not self.cooking_done:
                 
@@ -831,12 +831,12 @@ class Kitchen(State):
         elif self.step_3:
             fry_chicken(surface)
         elif self.evaluation:
-            self.final_rating(surface, "Fried Chicken", pink_background)
+            self.final_rating(surface, "Fried Chicken", blue_background)
 
     def cook_stew(self, surface):
 
         def cut_carrot(surface):
-            self.draw_cooking_background(surface, pink_instruction_panel, cutting_board)
+            self.draw_cooking_background(surface, blue_instruction_panel, cutting_board)
 
             if not self.cooking_done:
                 
@@ -923,13 +923,13 @@ class Kitchen(State):
                     pygame.draw.line(surface, WARM_CROISSANT, (button_56_pos_x, bottombutton_pos_y),(button_56_pos_x, topbutton_pos_y))
 
                 if self.rating_triggered:
-                    self.rating_screen(surface, pink_background, slice_carrot_placeholder)
+                    self.rating_screen(surface, blue_background, slice_carrot_placeholder)
                     
                     if self.next_step:
                         self.reset_status(1)
         
         def cut_beef(surface):
-            self.draw_cooking_background(surface, pink_instruction_panel, cutting_board)
+            self.draw_cooking_background(surface, blue_instruction_panel, cutting_board)
 
             if not self.cooking_done:
                 
@@ -1016,13 +1016,13 @@ class Kitchen(State):
                     pygame.draw.line(surface, WARM_CROISSANT, (button_56_pos_x, bottombutton_pos_y),(button_56_pos_x, topbutton_pos_y))
 
                 if self.rating_triggered:
-                    self.rating_screen(surface, pink_background, slice_beef_placeholder)
+                    self.rating_screen(surface, blue_background, slice_beef_placeholder)
                     
                     if self.next_step:
                         self.reset_status(2)
 
         def make_stew(surface):
-            self.draw_cooking_background(surface, pink_instruction_panel, kitchen_grill)
+            self.draw_cooking_background(surface, blue_instruction_panel, kitchen_grill)
             if not self.cooking_done:
                 
                 self.game.draw_text(surface, "CLICK AT THE", MINIMAL_FONT, NOBLE_BLACK, 275, 95)
@@ -1088,12 +1088,12 @@ class Kitchen(State):
                     self.game.draw_image(pot_smoke, 1, surface, self.game.GAME_X / 4 + 7, 110)
 
                 if self.rating_triggered:
-                    self.rating_screen(surface, pink_background, stew_placeholder)
+                    self.rating_screen(surface, blue_background, stew_placeholder)
                     
                 if self.next_step:
                     self.reset_status(3)
 
-        surface.fill(CARNATION_ROSE)
+        surface.fill(YUCCA_CREAM)
 
         if self.step_1:
             cut_carrot(surface)
@@ -1102,7 +1102,7 @@ class Kitchen(State):
         elif self.step_3:
             make_stew(surface)
         elif self.evaluation:
-            self.final_rating(surface, "Stew", pink_background)
+            self.final_rating(surface, "Stew", blue_background)
 
 
     # Clears the screen and shows the user's rating after a ingredient cooking step

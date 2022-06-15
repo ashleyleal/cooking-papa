@@ -116,9 +116,11 @@ pot_smoke = pygame.image.load("assets/images/images/pot_smoke.png")
 
 pink_instruction_panel = pygame.image.load("assets/images/images/papas_background_pink.png")
 green_instruction_panel = pygame.image.load("assets/images/images/papas_background_green.png")
+blue_instruction_panel = pygame.image.load("assets/images/images/papas_background_blue.png")
 
 green_background = pygame.image.load("assets/images/images/papas_background_green_full.png")
 pink_background = pygame.image.load("assets/images/images/papas_background_pink_full.png")
+blue_background = pygame.image.load("assets/images/images/papas_background_blue_full.png")
 
 cooking_bar = pygame.image.load("assets/images/images/cooking_bar.png")
 time_bar = pygame.image.load("assets/images/images/time_bar.png")
