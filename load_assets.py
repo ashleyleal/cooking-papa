@@ -76,6 +76,9 @@ equip_button = pygame.image.load("assets/images/icons/equip_button.png")
 active_button = pygame.image.load("assets/images/icons/active_button.png")
 recolour_pink = pygame.image.load("assets/images/images/recolour_11.png")
 recolour_green = pygame.image.load("assets/images/images/recolour_22.png")
+music_buy = pygame.image.load("assets/images/images/part_5_music.png")
+music_title = pygame.image.load("assets/images/titles/music_title.png")
+menu_music_button = pygame.image.load("assets/images/images/menu_music_button.png")
 
 placeholder_button = pygame.image.load("assets/images/icons/buttonPlaceholder.png")
 return_arrow = pygame.image.load("assets/images/icons/return_button.png")
@@ -186,6 +189,7 @@ slice_sound = pygame.mixer.Sound("assets/sounds/slice.wav")
 victory_sound = pygame.mixer.Sound("assets/sounds/victory.wav")
 
 pygame.mixer.music.load("assets/sounds/menu_music.mp3")
+#jojo = pygame.mixer.Sound("assets/sounds/jojo.mo3")
 
 # Countdown
 countdown_3 = pygame.image.load("assets/images/images/number_3.png")

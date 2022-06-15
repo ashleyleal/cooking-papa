@@ -1192,7 +1192,7 @@ class Kitchen(State):
             self.game.draw_text(surface, "NEXT TIME!", MINIMAL_FONT, NOBLE_BLACK, 275, 110)
 
     def final_rating(self, surface, recipe, bg_image):
-        pygame.mixer.music.stop()
+        pygame.mixer.music.pause()
         pygame.mixer.Sound.play(victory_sound, 1, 1000)
         self.game.draw_image(bg_image, 1, surface, self.game.GAME_X / 2, self.game.GAME_Y / 2)
 
@@ -1219,7 +1219,12 @@ class Kitchen(State):
             self.game.actions["start"] = True
             self.game.customer_payment(self.total_rating)
             pygame.mixer.Sound.stop(victory_sound)
-            pygame.mixer.music.play(-1)
+            if self.game.music == True:
+                pygame.mixer.music.unpause()
+                #pygame.mixer.music.unload()
+                #pygame.mixer.music.load("assets/sounds/jojo.mp3")
+            else:
+                pygame.mixer.music.play(-1)
 
 
 

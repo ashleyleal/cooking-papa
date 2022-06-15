@@ -234,32 +234,79 @@ class colours(State):
         
 
         
-
-
-
-
-
 class music(State):
   # Inherit init method from State class 
     def __init__(self, game):
         State.__init__(self, game)
+        self.buy = False
+        self.ok = False
+
     def update(self, actions):
         super().update(actions)
         if actions["shop"]:
           new_state = Shop_Menu(self.game)
           new_state.enter_state()
+        if actions["music"]:
+          new_state = music(self.game)
+          new_state.enter_state()
      
     def render(self, surface):
       self.game.draw_image(menu_bg, 1, surface, self.game.GAME_X / 2, self.game.GAME_Y / 2)
       self.game.draw_gold(surface, self.game.GAME_X - 35, 15, MARBLE_WHITE)
-      self.game.draw_image(music_button, 1, surface, self.game.GAME_X / 2, self.game.GAME_Y / 2)
+      self.game.draw_image(music_title, 1, surface, self.game.GAME_X / 2, 35)
+      self.game.draw_image(music_buy, 1, surface, self.game.GAME_X - 90, self.game.GAME_Y -58)
+      self.game.draw_image(speedwagon_buy_button, 1, surface, self.game.GAME_X / 2 - 60, self.game.GAME_Y / 2 - 5 )
+      self.game.draw_image(menu_music_button, 1, surface, self.game.GAME_X / 2 - 60, self.game.GAME_Y / 2 + 50)
+
+      self.speedwagon_buy_button = Button(self.game.GAME_X / 2 - 60, self.game.GAME_Y / 2 - 5, speedwagon_buy_button, 1)
+      self.menu_music_button = Button(self.game.GAME_X / 2 - 60, self.game.GAME_Y / 2 + 50, menu_music_button, 1)
 
       if return_button.draw(surface):
         self.game.actions["shop"] = True
+      
+      if self.menu_music_button.draw(surface):
+        pygame.mixer.music.unload()
+        pygame.mixer.music.load("assets/sounds/menu_music.mp3")
+        pygame.mixer.music.play()
 
+      if self.speedwagon_buy_button.draw(surface):
+        self.buy= True
 
- #make a dictionary of all purchasable items and their prices (dictonary for each class for the items and prices in said class)
- #when player clicks button that corresponds to purchasing the item, call the spend gold function, check return value 
- #(if spend_gold = "insufficent funds" draw the image) 
+      if self.buy == True:
+        self.game.draw_image(confirm_purchase_bg, 1, surface, self.game.GAME_X / 2, self.game.GAME_Y / 2)
+        self.game.draw_image(red_cross, 1, surface, 130, 110)
+        self.game.draw_image(check_mark, 1, surface, 190, 110)
+
+        self.red_cross = Button(130, 110, red_cross, 1)
+        self.check_mark = Button(190, 110, check_mark, 1)
+
+        if self.red_cross.draw(surface):
+          self.game.actions["music"] = True
+
+        if self.check_mark.draw(surface):
+          self.game.spend_gold(45)
+          self.ok = True
+          self.game.music = True
+          pygame.mixer.music.unload()
+          pygame.mixer.music.load("assets/sounds/jojo.mp3")
+          pygame.mixer.music.play()
+          print("money spent")
+        
+        if self.ok == True:
+          self.game.draw_image(purchased_bg, 1, surface, self.game.GAME_X / 2, self.game.GAME_Y / 2)
+          self.game.draw_image(ok_button, 1, surface, self.game.GAME_X / 2, 115)
+
+          self.ok_button = Button(self.game.GAME_X / 2, 115, ok_button, 1)
+
+          if self.ok_button.draw(surface):
+            self.game.actions["music"] = True
+          
+        if self.game.gold < 45:
+          self.game.draw_image(insuficent_funds_bg, 1, surface, self.game.GAME_X / 2, self.game.GAME_Y / 2)
+          self.game.draw_image(ok_button, 1, surface, self.game.GAME_X / 2, 115)
+          self.ok_button = Button(self.game.GAME_X / 2, 115, ok_button, 1)
+
+          if self.ok_button.draw(surface):
+            self.game.actions["music"] = True
   
   
