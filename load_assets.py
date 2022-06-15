@@ -162,7 +162,7 @@ skip_button = Button(300, 160, skip_arrow, 1)
 confirm_order_button = Button(300, 160, check_mark, 1)
 decline_order_button = Button(25, 160, red_cross, 1)
 
-menu_music = "assets/sounds/menu_music.mp3"
+pygame.mixer.music.load("assets/sounds/menu_music.mp3")
 
 # Countdown
 countdown_3 = pygame.image.load("assets/images/images/number_3.png")

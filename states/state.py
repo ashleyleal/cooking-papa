@@ -1,6 +1,6 @@
 # Purpose: creates new State class that determines behavior for each state
 
-from assets.assets import *
+from load_assets import *
 
 class State:
 

@@ -25,6 +25,8 @@ class Button():
         if new_rect.collidepoint(mouse_pos):
             if pygame.mouse.get_pressed()[0] == 1 and self.clicked == False:
                 pygame.time.delay(225)
+                beep_sound = pygame.mixer.Sound("assets/sounds/beep.mp3")
+                pygame.mixer.Sound.play(beep_sound)
                 self.clicked = True
                 action = True
 

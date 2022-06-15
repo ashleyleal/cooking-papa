@@ -10,7 +10,7 @@ import random
 from states.shop_menu import colours
 from states.state import State
 from button import Button
-from assets.assets import * 
+from load_assets import * 
 
 # Restaurant state define behaviour inside of restaurant when serving customers
 class Restaurant(State):
