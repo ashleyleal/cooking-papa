@@ -165,7 +165,7 @@ class Game:
 
     def draw_gold(self, surface, px, py, colour):
         self.draw_image(gold_icon, 1, surface, px - 10, py)
-        self.draw_text(surface, str(self.gold), MINIMAL_FONT, colour, px + 15, py)
+        self.draw_text(surface, str(self.gold), MINIMAL_FONT, colour, px + 10, py)
             
 # Creates an instance of Game class and runs the game loop while the program is running            
 if __name__ == "__main__":
