@@ -473,13 +473,13 @@ class Kitchen(State):
     def cook_chicken(self, surface):
 
         def cut_chicken(surface):
-            self.draw_cooking_background(surface, blue_instruction_panel, cutting_board)
+            self.draw_cooking_background(surface, pink_instruction_panel, cutting_board)
 
             self.slice(surface, self.slice_speed, self.slice_pos, chicken_breast, self.slice_statuses, 105, 165, 25, "first")
 
             if self.rating_triggered:
                 pygame.mixer.Sound.stop(slice_sound)
-                self.rating_screen(surface, blue_background, slice_chicken_a)
+                self.rating_screen(surface, pink_background, slice_chicken_a)
                 
                 if self.next_step:
                     self.reset_status(1)
@@ -487,7 +487,7 @@ class Kitchen(State):
         def coat_chicken(surface):
             coated_chicken_button = Button(self.game.GAME_X / 4, 135, coated_chicken_1, 1)
             raw_chicken_button = Button(self.game.GAME_X / 4, 135, raw_chicken_1, 1) 
-            self.draw_cooking_background(surface, blue_instruction_panel, cutting_board)
+            self.draw_cooking_background(surface, pink_instruction_panel, cutting_board)
             self.game.draw_image(chicken_coating, 1, surface, self.game.GAME_X / 4, 130)
             
             if not self.cooking_done:
@@ -537,14 +537,13 @@ class Kitchen(State):
                         print(self.cooking_done)
     
                 if self.rating_triggered:
-                    self.rating_screen(surface, blue_background, coat_chicken_a)
+                    self.rating_screen(surface, pink_background, coat_chicken_a)
                     
                 if self.next_step:
                     self.reset_status(2)
                 
-                
         def fry_chicken(surface):
-            self.draw_cooking_background(surface, blue_instruction_panel, deep_fryer)
+            self.draw_cooking_background(surface, pink_instruction_panel, deep_fryer)
 
             if not self.cooking_done:
                 
@@ -626,7 +625,7 @@ class Kitchen(State):
         elif self.step_3:
             fry_chicken(surface)
         elif self.evaluation:
-            self.final_rating(surface, "Fried Chicken", blue_background)
+            self.final_rating(surface, "Fried Chicken", pink_background)
 
     def cook_stew(self, surface):
 
@@ -735,6 +734,105 @@ class Kitchen(State):
         elif self.evaluation:
             self.final_rating(surface, "Stew", blue_background)
 
+    def slice(self, surface, speed, arrow_pos, image, slice_status, top_pos, bottom_pos, x_offset, step):
+
+            if not self.cooking_done:
+                
+                self.game.draw_text(surface, "SLICE AS FAST", MINIMAL_FONT, NOBLE_BLACK, 275, 95)
+                self.game.draw_text(surface, "AS YOU CAN!", MINIMAL_FONT, NOBLE_BLACK, 275, 110)
+
+            if self.cooking_done:
+
+                pygame.mixer.Sound.stop(slice_sound)
+
+                if arrow_pos[0] >= 104:
+                    self.ingredient_rating[step] = 1
+
+                elif arrow_pos[0] > 35 and arrow_pos[0] < 104:
+                    self.ingredient_rating[step] = 2
+
+                elif arrow_pos[0] <= 35:
+                    self.ingredient_rating[step] = 3
+
+                self.display_rating_message(surface)
+
+                for i in range(len(slice_status)):
+                    slice_status[i] = False
+
+            self.game.draw_image(time_bar, 1, surface, self.game.GAME_X / 2 + self.game.GAME_X / 4, self.game.GAME_Y / 4)
+
+            self.trigger_countdown(surface)
+
+            if self.countdown_completed:     
+
+                self.game.draw_image(image, 1, surface, self.game.GAME_X / 4, 135)
+
+                button_12_pos_x = self.game.GAME_X / 4 - x_offset
+                button_34_pos_x = self.game.GAME_X / 4
+                button_56_pos_x = self.game.GAME_X / 4 + x_offset
+
+                topbutton_pos_y = top_pos
+                bottombutton_pos_y = bottom_pos
+
+                self.game.draw_image(cooking_arrow, 1, surface, self.game.GAME_X / 2 + self.game.GAME_X / 4 - 65 + arrow_pos[0], self.game.GAME_Y / 4 + 10)
+                
+                if not self.cooking_done and not arrow_pos[0] >= 135:
+                    arrow_pos.append(speed)
+                    print(arrow_pos)
+                    arrow_pos[0] += arrow_pos[1]
+                    print(arrow_pos)
+                    arrow_pos.pop()
+                    print(arrow_pos)
+
+                if arrow_pos[0] >= 135:
+                    if skip_button.draw(surface):
+                        self.cooking_done = True
+                        self.completed_time = pygame.time.get_ticks()
+
+                slice_1_button = Button(button_12_pos_x, bottombutton_pos_y, slice_icon, 1)
+                slice_2_button = Button(button_12_pos_x, topbutton_pos_y, slice_icon, 1)
+                slice_3_button = Button(button_34_pos_x, bottombutton_pos_y, slice_icon, 1)
+                slice_4_button = Button(button_34_pos_x, topbutton_pos_y, slice_icon, 1)
+                slice_5_button = Button(button_56_pos_x, bottombutton_pos_y, slice_icon, 1)
+                slice_6_button = Button(button_56_pos_x, topbutton_pos_y, slice_icon, 1)
+
+                if slice_1_button.draw(surface):
+                    slice_status[1] = True
+
+                if slice_status[1]:
+                    if slice_2_button.draw(surface):
+                        slice_status[2] = True
+                        
+                if slice_status[2]:    
+                    if slice_3_button.draw(surface):
+                        pygame.mixer.Channel(1).play(pygame.mixer.Sound(slice_sound))    
+                        slice_status[3] = True
+                            
+                if slice_status[3]:
+                    if slice_4_button.draw(surface):
+                        slice_status[4] = True
+                                
+                if slice_status[4]:
+                    if slice_5_button.draw(surface):
+                        pygame.mixer.Channel(1).play(pygame.mixer.Sound(slice_sound))
+                        slice_status[5] = True  
+                                    
+                if slice_status[5]:
+                    if slice_6_button.draw(surface):
+                        pygame.mixer.Channel(1).play(pygame.mixer.Sound(slice_sound))
+                        slice_status[6] = True
+                        self.cooking_done = True
+                        self.completed_time = pygame.time.get_ticks()
+
+                if slice_status[1] and slice_status[2]:
+                    pygame.draw.line(surface, WARM_CROISSANT, (button_12_pos_x, bottombutton_pos_y),(button_12_pos_x, topbutton_pos_y))
+                
+                if slice_status[3] and slice_status[4]:
+                    pygame.draw.line(surface, WARM_CROISSANT, (button_34_pos_x, bottombutton_pos_y),(button_34_pos_x, topbutton_pos_y))
+
+                if slice_status[5] and slice_status[6]:
+                    pygame.draw.line(surface, WARM_CROISSANT, (button_56_pos_x, bottombutton_pos_y),(button_56_pos_x, topbutton_pos_y))
+                    
     # Clears the screen and shows the user's rating after a ingredient cooking step
     def rating_screen(self, surface, background_image, step_text_image):
         self.game.draw_image(background_image, 1, surface, self.game.GAME_X / 2, self.game.GAME_Y / 2)
@@ -799,7 +897,6 @@ class Kitchen(State):
         self.game.draw_image(cooking_papa, 1, surface, 215, 128)
         self.game.draw_image(papa_speech, 1, surface, 275, 110)
 
-
     def display_rating_message(self, surface):
         
         if self.step_1:
@@ -822,8 +919,10 @@ class Kitchen(State):
             self.game.draw_text(surface, "NEXT TIME!", MINIMAL_FONT, NOBLE_BLACK, 275, 110)
 
     def final_rating(self, surface, recipe, bg_image):
-        pygame.mixer.music.pause()
-        pygame.mixer.Sound.play(victory_sound, 1, 1000)
+        pygame.mixer.music.unload()
+        pygame.mixer.music.load("assets/sounds/victory_song.mp3")
+        pygame.mixer.music.play(-1)
+        
         self.game.draw_image(bg_image, 1, surface, self.game.GAME_X / 2, self.game.GAME_Y / 2)
 
         if recipe == "Burger":
@@ -848,115 +947,10 @@ class Kitchen(State):
         if skip_button.draw(surface):
             self.game.actions["start"] = True
             self.game.customer_payment(self.total_rating)
-            pygame.mixer.Sound.stop(victory_sound)
-            if self.game.music == True:
-                pygame.mixer.music.unpause()
-                #pygame.mixer.music.unload()
-                #pygame.mixer.music.load("assets/sounds/jojo.mp3")
-            else:
-                pygame.mixer.music.play(-1)
-
-
-    def slice(self, surface, speed, arrow_pos, image, slice_status, top_pos, bottom_pos, x_offset, step):
-
-        if not self.cooking_done:
-            
-            self.game.draw_text(surface, "SLICE AS FAST", MINIMAL_FONT, NOBLE_BLACK, 275, 95)
-            self.game.draw_text(surface, "AS YOU CAN!", MINIMAL_FONT, NOBLE_BLACK, 275, 110)
-
-        if self.cooking_done:
-
-            pygame.mixer.Sound.stop(slice_sound)
-
-            if arrow_pos[0] >= 104:
-                self.ingredient_rating[step] = 1
-
-            elif arrow_pos[0] > 35 and arrow_pos[0] < 104:
-                self.ingredient_rating[step] = 2
-
-            elif arrow_pos[0] <= 35:
-                self.ingredient_rating[step] = 3
-
-            self.display_rating_message(surface)
-
-            for i in range(len(slice_status)):
-                slice_status[i] = False
-
-        self.game.draw_image(time_bar, 1, surface, self.game.GAME_X / 2 + self.game.GAME_X / 4, self.game.GAME_Y / 4)
-
-        self.trigger_countdown(surface)
-
-        if self.countdown_completed:     
-
-            self.game.draw_image(image, 1, surface, self.game.GAME_X / 4, 135)
-
-            button_12_pos_x = self.game.GAME_X / 4 - x_offset
-            button_34_pos_x = self.game.GAME_X / 4
-            button_56_pos_x = self.game.GAME_X / 4 + x_offset
-
-            topbutton_pos_y = top_pos
-            bottombutton_pos_y = bottom_pos
-
-            self.game.draw_image(cooking_arrow, 1, surface, self.game.GAME_X / 2 + self.game.GAME_X / 4 - 65 + arrow_pos[0], self.game.GAME_Y / 4 + 10)
-            
-            if not self.cooking_done and not arrow_pos[0] >= 135:
-                arrow_pos.append(speed)
-                print(arrow_pos)
-                arrow_pos[0] += arrow_pos[1]
-                print(arrow_pos)
-                arrow_pos.pop()
-                print(arrow_pos)
-
-            if arrow_pos[0] >= 135:
-                if skip_button.draw(surface):
-                    self.cooking_done = True
-                    self.completed_time = pygame.time.get_ticks()
-
-            slice_1_button = Button(button_12_pos_x, bottombutton_pos_y, slice_icon, 1)
-            slice_2_button = Button(button_12_pos_x, topbutton_pos_y, slice_icon, 1)
-            slice_3_button = Button(button_34_pos_x, bottombutton_pos_y, slice_icon, 1)
-            slice_4_button = Button(button_34_pos_x, topbutton_pos_y, slice_icon, 1)
-            slice_5_button = Button(button_56_pos_x, bottombutton_pos_y, slice_icon, 1)
-            slice_6_button = Button(button_56_pos_x, topbutton_pos_y, slice_icon, 1)
-
-            if slice_1_button.draw(surface):
-                slice_status[1] = True
-
-            if slice_status[1]:
-                if slice_2_button.draw(surface):
-                    slice_status[2] = True
-                    
-            if slice_status[2]:    
-                if slice_3_button.draw(surface):
-                    slice_status[3] = True
-                        
-            if slice_status[3]:
-                if slice_4_button.draw(surface):
-                    slice_status[4] = True
-                            
-            if slice_status[4]:
-                if slice_5_button.draw(surface):
-                    slice_status[5] = True
-                                
-            if slice_status[5]:
-                if slice_6_button.draw(surface):
-                    slice_status[6] = True
-                    self.cooking_done = True
-                    self.completed_time = pygame.time.get_ticks()
-
-            if slice_status[1] and slice_status[2]:
-                pygame.draw.line(surface, WARM_CROISSANT, (button_12_pos_x, bottombutton_pos_y),(button_12_pos_x, topbutton_pos_y))
-                pygame.mixer.Sound.play(slice_sound)
-            
-            if slice_status[3] and slice_status[4]:
-                pygame.draw.line(surface, WARM_CROISSANT, (button_34_pos_x, bottombutton_pos_y),(button_34_pos_x, topbutton_pos_y))
-                pygame.mixer.Sound.play(slice_sound)
-
-            if slice_status[5] and slice_status[6]:
-                pygame.draw.line(surface, WARM_CROISSANT, (button_56_pos_x, bottombutton_pos_y),(button_56_pos_x, topbutton_pos_y))
-                pygame.mixer.Sound.play(slice_sound)
-
-
+            pygame.mixer.music.unload()
+            pygame.mixer.music.load("assets/sounds/menu_music.mp3")
+            pygame.mixer.music.play(-1)
+    
 
 
 

@@ -188,7 +188,6 @@ decline_order_button = Button(25, 160, red_cross, 1)
 countdown_sound = pygame.mixer.Sound("assets/sounds/countdown.wav")
 sizzling_sound = pygame.mixer.Sound("assets/sounds/sizzling.wav")
 slice_sound = pygame.mixer.Sound("assets/sounds/slice.wav")
-victory_sound = pygame.mixer.Sound("assets/sounds/victory.wav")
 
 pygame.mixer.music.load("assets/sounds/menu_music.mp3")
 #jojo = pygame.mixer.Sound("assets/sounds/jojo.mo3")
