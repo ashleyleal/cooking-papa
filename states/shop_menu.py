@@ -57,7 +57,7 @@ class Shop_Menu(State):
         if self.music_button.draw(surface):
           self.game.actions["music"] = True
 
-class characters(State):
+class Characters(State):
       # Inherit init method from State class 
     def __init__(self, game):
         State.__init__(self, game)
@@ -71,7 +71,7 @@ class characters(State):
           new_state = Shop_Menu(self.game)
           new_state.enter_state()
         if actions["characters"]:
-          new_state = characters(self.game)
+          new_state = Characters(self.game)
           new_state.enter_state()
      
     def render(self, surface):
@@ -122,7 +122,7 @@ class characters(State):
             self.game.actions["characters"] = True
 
               
-class colours(State):
+class Colours(State):
   # Inherit init method from State class 
     def __init__(self, game):
         State.__init__(self, game)
@@ -130,19 +130,15 @@ class colours(State):
         self.buy2 = False
         self.cry = False
         
-        
-        
     def update(self, actions):
         super().update(actions)
         if actions["shop"]:
           new_state = Shop_Menu(self.game)
           new_state.enter_state()
         if actions["colours"]:
-          new_state = colours(self.game)
+          new_state = Colours(self.game)
           new_state.enter_state()
         
-
-
     def render(self, surface):
       self.game.draw_image(menu_bg, 1, surface, self.game.GAME_X / 2, self.game.GAME_Y / 2)
       self.game.draw_gold(surface, self.game.GAME_X - 35, 15, MARBLE_WHITE)
@@ -215,7 +211,6 @@ class colours(State):
           self.game.colour_two_owned = True
           self.game.colour_one_owned = False
           
-          
         if self.cry == True:
           self.game.draw_image(purchased_bg, 1, surface, self.game.GAME_X / 2, self.game.GAME_Y / 2)
           self.game.draw_image(ok_button, 1, surface, self.game.GAME_X / 2, 115)
@@ -231,10 +226,8 @@ class colours(State):
           if self.ok_button.draw(surface):
             self.game.actions["colours"] = True
       
-        
-
-        
-class music(State):
+         
+class Music(State):
   # Inherit init method from State class 
     def __init__(self, game):
         State.__init__(self, game)
@@ -247,7 +240,7 @@ class music(State):
           new_state = Shop_Menu(self.game)
           new_state.enter_state()
         if actions["music"]:
-          new_state = music(self.game)
+          new_state = Music(self.game)
           new_state.enter_state()
      
     def render(self, surface):
@@ -270,7 +263,7 @@ class music(State):
         pygame.mixer.music.play()
 
       if self.speedwagon_buy_button.draw(surface):
-        self.buy= True
+        self.buy = True
 
       if self.buy == True:
         self.game.draw_image(confirm_purchase_bg, 1, surface, self.game.GAME_X / 2, self.game.GAME_Y / 2)
