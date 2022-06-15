@@ -50,6 +50,8 @@ class Restaurant(State):
     # Method that selects and returns a customer image
     def generate_customer(self):
         possible_customers = [customer_1, customer_2, customer_3]
+        if self.game.owned_character_1 == True:
+            possible_customers.append(speedwagon)
         return random.choice(possible_customers) 
 
     # Method that sets the returned recipes and customers and passes them to the game class variable current_recipe
@@ -79,6 +81,9 @@ class Restaurant(State):
         # Fills the background, draws the customer, counter, and speech bubble, and draws the selected recipe
         if self.game.colour_one_owned == True:
             self.game.draw_image(recolour_1, 1, surface, self.game.GAME_X / 2, self.game.GAME_Y / 2)
+
+        elif self.game.colour_two_owned == True:
+            self.game.draw_image(recolour_2, 1, surface, self.game.GAME_X / 2, self.game.GAME_Y / 2)
         else:
             surface.fill(WHISTLES_GOLD)
         
@@ -1074,7 +1079,7 @@ class Kitchen(State):
                         self.completed_time = pygame.time.get_ticks()
                 
                 elif self.stew_pos >= 0 and self.stew_pos <= 40:
-                    self.game.draw_image(pot, 1, surface, self.game.GAME_X / 4 + 7, 120)
+                    self.game.draw_image(pot, 1, surface, self.game.GAME_X / 4 + 7, 125)
 
                 elif self.stew_pos > 40 and self.stew_pos <= 90:
                     self.game.draw_image(pot_smoke, 1, surface, self.game.GAME_X / 4 + 7, 110)
@@ -1087,8 +1092,6 @@ class Kitchen(State):
                     
                 if self.next_step:
                     self.reset_status(3)
-
-
 
         surface.fill(CARNATION_ROSE)
 

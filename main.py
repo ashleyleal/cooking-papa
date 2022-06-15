@@ -9,8 +9,10 @@ from load_assets import *
 class Game: 
     
     current_recipe = None
-    gold = 0
+    gold = 100
     colour_one_owned = False
+    colour_two_owned = False
+    owned_character_1 = False
 
     # Define init method
     def __init__(self):
