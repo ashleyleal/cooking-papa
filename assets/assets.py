@@ -93,6 +93,18 @@ kitchen_counter = pygame.image.load("assets/images/images/kitchen_counter.png")
 deep_fryer = pygame.image.load("assets/images/images/kitchen_deep_fryer.png")
 plate = pygame.image.load("assets/images/images/plate.png")
 
+#stew
+carrot = pygame.image.load("assets/images/images/carrot.png")
+beef = pygame.image.load("assets/images/images/beef.png")
+stew_final = pygame.image.load("assets/images/images/stew_final.png")
+pot = pygame.image.load("assets/images/images/pot.png")
+slice_carrot_placeholder = pygame.image.load("assets/images/titles/slice_carrot_title.png")
+slice_beef_placeholder = pygame.image.load("assets/images/titles/slice_beef_title.png")
+cook_stew_placeholder = pygame.image.load("assets/images/titles/cook_stew_title.png")
+stew_placeholder = pygame.image.load("assets/images/titles/stew_title.png")
+click_button = pygame.image.load("assets/images/icons/click_button.png")
+pot_smoke = pygame.image.load("assets/images/images/pot_smoke.png")
+
 pink_instruction_panel = pygame.image.load("assets/images/images/papas_background_pink.png")
 green_instruction_panel = pygame.image.load("assets/images/images/papas_background_green.png")
 

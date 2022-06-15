@@ -31,6 +31,12 @@ class Restaurant(State):
                 "": "",
                 "": "",
                 "": "",
+            },
+
+            "Stew": {
+                "": "",
+                "": "",
+                "": "",
             }
         } 
 
@@ -101,10 +107,10 @@ class Restaurant(State):
         elif self.selected_recipe == "Fried Chicken":
             self.game.draw_image(chicken_icon, 1, surface, icon_position[0], icon_position[1])
         
-        """
+        
         elif self.selected_recipe == "Stew":
             self.game.draw_image(stew_icon, 1, surface, icon_position[0], icon_position[1])
-        """
+        
         
 # Kitchen state defines behaviour when the user is currently cooking
 class Kitchen(State):
@@ -138,6 +144,8 @@ class Kitchen(State):
         # Variables for burger cooking
         self.burger_patty_speed = 0.15
         self.burger_patty_pos = 0
+        self.stew_speed = 0.15
+        self.stew_pos = 0
         self.stop_button_posx, self.stop_button_posy = self.game.GAME_X / 4, self.game.GAME_Y / 5
         self.stop_button_velx, self.stop_button_vely = 1,1
         
@@ -173,6 +181,34 @@ class Kitchen(State):
 
         self.burger_assembly_progress = 0
         self.burger_assembled_properly = 0
+
+        self.carrot_slice = {
+            
+            1: False,
+            2: False,
+            3: False,
+            4: False,
+            5: False,
+            6: False
+
+            }
+        
+        self.carrot_slice_speed = 0.25
+        self.carrot_slice_pos = 0
+
+        self.beef_slice = {
+            
+            1: False,
+            2: False,
+            3: False,
+            4: False,
+            5: False,
+            6: False
+
+            }
+        
+        self.beef_slice_speed = 0.25
+        self.beef_slice_pos = 0 
 
         self.chicken_slice = {
             
@@ -307,10 +343,9 @@ class Kitchen(State):
             self.cook_burger(surface)
         elif self.current_recipe == "Fried Chicken":
             self.cook_chicken(surface)
-        """
         elif self.current_recipe == "Stew":
             self.cook_stew(surface)
-        """
+        
 
     # Define method that cooks the burger
     def cook_burger(self, surface):
@@ -771,6 +806,280 @@ class Kitchen(State):
         elif self.evaluation:
             self.final_rating(surface, "Fried Chicken", pink_background)
 
+    def cook_stew(self, surface):
+
+        def cut_carrot(surface):
+            self.draw_cooking_background(surface, pink_instruction_panel, cutting_board)
+
+            if not self.cooking_done:
+                
+                self.game.draw_text(surface, "SLICE AS FAST", MINIMAL_FONT, NOBLE_BLACK, 275, 95)
+                self.game.draw_text(surface, "AS YOU CAN!", MINIMAL_FONT, NOBLE_BLACK, 275, 110)
+
+            if self.cooking_done:
+
+                if self.carrot_slice_pos >= 104:
+                    self.ingredient_rating["first"] = 1
+
+                elif self.carrot_slice_pos > 35 and self.carrot_slice_pos < 104:
+                    self.ingredient_rating["first"] = 2
+
+                elif self.carrot_slice_pos <= 35:
+                    self.ingredient_rating["first"] = 3
+
+                self.display_rating_message(surface)
+    
+            self.game.draw_image(time_bar, 1, surface, self.game.GAME_X / 2 + self.game.GAME_X / 4, self.game.GAME_Y / 4)
+
+            self.trigger_countdown(surface)
+
+            if self.countdown_completed:
+                
+                self.game.draw_image(carrot, 1, surface, self.game.GAME_X  / 4, 135)
+
+                button_12_pos_x = self.game.GAME_X / 4 - 20
+                button_34_pos_x = self.game.GAME_X / 4 - 5
+                button_56_pos_x = self.game.GAME_X / 4 + 10
+
+                topbutton_pos_y = 130
+                bottombutton_pos_y = 150
+
+                self.game.draw_image(cooking_arrow, 1, surface, self.game.GAME_X / 2 + self.game.GAME_X / 4 - 65 + self.carrot_slice_pos, self.game.GAME_Y / 4 + 10)
+                self.carrot_slice_pos += self.carrot_slice_speed
+
+                if self.carrot_slice_pos >= 135:
+                    self.carrot_slice_speed = 0
+                    if skip_button.draw(surface):
+                        self.cooking_done = True
+                        self.completed_time = pygame.time.get_ticks()
+
+                slice_1_button = Button(button_12_pos_x, bottombutton_pos_y, slice_icon, 1)
+                slice_2_button = Button(button_12_pos_x, topbutton_pos_y, slice_icon, 1)
+                slice_3_button = Button(button_34_pos_x, bottombutton_pos_y, slice_icon, 1)
+                slice_4_button = Button(button_34_pos_x, topbutton_pos_y, slice_icon, 1)
+                slice_5_button = Button(button_56_pos_x, bottombutton_pos_y, slice_icon, 1)
+                slice_6_button = Button(button_56_pos_x, topbutton_pos_y, slice_icon, 1)
+
+                if slice_1_button.draw(surface):
+                    self.carrot_slice[1] = True
+
+                if self.carrot_slice[1]:
+                    if slice_2_button.draw(surface):
+                        self.carrot_slice[2] = True
+                        
+                if self.carrot_slice[2]:    
+                    if slice_3_button.draw(surface):
+                        self.carrot_slice[3] = True
+                            
+                if self.carrot_slice[3]:
+                    if slice_4_button.draw(surface):
+                        self.carrot_slice[4] = True
+                                
+                if self.carrot_slice[4]:
+                    if slice_5_button.draw(surface):
+                        self.carrot_slice[5] = True
+                                    
+                if self.carrot_slice[5]:
+                    if slice_6_button.draw(surface):
+                        self.carrot_slice[6] = True
+                        self.carrot_slice_speed = 0
+                        self.cooking_done = True
+                        self.completed_time = pygame.time.get_ticks()
+
+                if self.carrot_slice[1] and self.carrot_slice[2]:
+                    pygame.draw.line(surface, WARM_CROISSANT, (button_12_pos_x, bottombutton_pos_y),(button_12_pos_x, topbutton_pos_y))
+                
+                if self.carrot_slice[3] and self.carrot_slice[4]:
+                    pygame.draw.line(surface, WARM_CROISSANT, (button_34_pos_x, bottombutton_pos_y),(button_34_pos_x, topbutton_pos_y))
+
+                if self.carrot_slice[5] and self.carrot_slice[6]:
+                    pygame.draw.line(surface, WARM_CROISSANT, (button_56_pos_x, bottombutton_pos_y),(button_56_pos_x, topbutton_pos_y))
+
+                if self.rating_triggered:
+                    self.rating_screen(surface, pink_background, slice_carrot_placeholder)
+                    
+                    if self.next_step:
+                        self.reset_status(1)
+        
+        def cut_beef(surface):
+            self.draw_cooking_background(surface, pink_instruction_panel, cutting_board)
+
+            if not self.cooking_done:
+                
+                self.game.draw_text(surface, "SLICE AS FAST", MINIMAL_FONT, NOBLE_BLACK, 275, 95)
+                self.game.draw_text(surface, "AS YOU CAN!", MINIMAL_FONT, NOBLE_BLACK, 275, 110)
+
+            if self.cooking_done:
+
+                if self.beef_slice_pos >= 104:
+                    self.ingredient_rating["second"] = 1
+
+                elif self.beef_slice_pos > 35 and self.beef_slice_pos < 104:
+                    self.ingredient_rating["second"] = 2
+
+                elif self.beef_slice_pos <= 35:
+                    self.ingredient_rating["second"] = 3
+
+                self.display_rating_message(surface)
+    
+            self.game.draw_image(time_bar, 1, surface, self.game.GAME_X / 2 + self.game.GAME_X / 4, self.game.GAME_Y / 4)
+
+            self.trigger_countdown(surface)
+
+            if self.countdown_completed:
+                
+                self.game.draw_image(beef, 1, surface, self.game.GAME_X / 4, 135)
+
+                button_12_pos_x = self.game.GAME_X / 4 - 25
+                button_34_pos_x = self.game.GAME_X / 4
+                button_56_pos_x = self.game.GAME_X / 4 + 25
+
+                topbutton_pos_y = 105
+                bottombutton_pos_y = 165
+
+                self.game.draw_image(cooking_arrow, 1, surface, self.game.GAME_X / 2 + self.game.GAME_X / 4 - 65 + self.beef_slice_pos, self.game.GAME_Y / 4 + 10)
+                self.beef_slice_pos += self.beef_slice_speed
+
+                if self.beef_slice_pos >= 135:
+                    self.beef_slice_speed = 0
+                    if skip_button.draw(surface):
+                        self.cooking_done = True
+                        self.completed_time = pygame.time.get_ticks()
+
+                slice_1_button = Button(button_12_pos_x, bottombutton_pos_y, slice_icon, 1)
+                slice_2_button = Button(button_12_pos_x, topbutton_pos_y, slice_icon, 1)
+                slice_3_button = Button(button_34_pos_x, bottombutton_pos_y, slice_icon, 1)
+                slice_4_button = Button(button_34_pos_x, topbutton_pos_y, slice_icon, 1)
+                slice_5_button = Button(button_56_pos_x, bottombutton_pos_y, slice_icon, 1)
+                slice_6_button = Button(button_56_pos_x, topbutton_pos_y, slice_icon, 1)
+
+                if slice_1_button.draw(surface):
+                    self.beef_slice[1] = True
+
+                if self.beef_slice[1]:
+                    if slice_2_button.draw(surface):
+                        self.beef_slice[2] = True
+                        
+                if self.beef_slice[2]:    
+                    if slice_3_button.draw(surface):
+                        self.beef_slice[3] = True
+                            
+                if self.beef_slice[3]:
+                    if slice_4_button.draw(surface):
+                        self.beef_slice[4] = True
+                                
+                if self.beef_slice[4]:
+                    if slice_5_button.draw(surface):
+                        self.beef_slice[5] = True
+                                    
+                if self.beef_slice[5]:
+                    if slice_6_button.draw(surface):
+                        self.beef_slice[6] = True
+                        self.beef_slice_speed = 0
+                        self.cooking_done = True
+                        self.completed_time = pygame.time.get_ticks()
+
+                if self.beef_slice[1] and self.beef_slice[2]:
+                    pygame.draw.line(surface, WARM_CROISSANT, (button_12_pos_x, bottombutton_pos_y),(button_12_pos_x, topbutton_pos_y))
+                
+                if self.beef_slice[3] and self.beef_slice[4]:
+                    pygame.draw.line(surface, WARM_CROISSANT, (button_34_pos_x, bottombutton_pos_y),(button_34_pos_x, topbutton_pos_y))
+
+                if self.beef_slice[5] and self.beef_slice[6]:
+                    pygame.draw.line(surface, WARM_CROISSANT, (button_56_pos_x, bottombutton_pos_y),(button_56_pos_x, topbutton_pos_y))
+
+                if self.rating_triggered:
+                    self.rating_screen(surface, pink_background, slice_beef_placeholder)
+                    
+                    if self.next_step:
+                        self.reset_status(2)
+
+        def make_stew(surface):
+            self.draw_cooking_background(surface, pink_instruction_panel, kitchen_grill)
+            if not self.cooking_done:
+                
+                self.game.draw_text(surface, "CLICK AT THE", MINIMAL_FONT, NOBLE_BLACK, 275, 95)
+                self.game.draw_text(surface, "RIGHT TIME!", MINIMAL_FONT, NOBLE_BLACK, 275, 110)
+
+            if self.cooking_done: 
+                
+                if (self.stew_pos >= 0 and self.stew_pos <= 40) or self.stew_pos > 90:
+                    self.ingredient_rating["third"] = 1
+
+                elif (self.stew_pos > 40 and self.stew_pos <= 50) or (self.stew_pos > 80 and self.stew_pos <= 90):
+                    self.ingredient_rating["third"] = 2
+
+                elif self.stew_pos > 50 and self.stew_pos <= 80:
+                    self.ingredient_rating["third"] = 3
+
+                self.display_rating_message(surface) 
+                          
+            # Draw the cooking bar that shows how cooked the patty is
+            self.game.draw_image(cooking_bar, 1, surface, self.game.GAME_X / 2 + self.game.GAME_X / 4, self.game.GAME_Y / 4)
+
+            # Prompt countdown
+            self.trigger_countdown(surface)
+
+            # Start cooking process when countdown is completed
+            if self.countdown_completed:
+                
+                stop_button = Button(self.stop_button_posx, self.stop_button_posy, click_button, 1)
+
+                self.stop_button_posx += self.stop_button_velx
+                self.stop_button_posy += self.stop_button_vely
+
+                if self.stop_button_posx >= self.game.GAME_X / 2 - 9 or self.stop_button_posx <= 9:
+                    self.stop_button_velx *= -1
+
+                if self.stop_button_posy >= self.game.GAME_Y / 2 - 28 or self.stop_button_posy <= 5:
+                    self.stop_button_vely *= -1
+
+                if stop_button.draw(surface):
+                    self.cooking_done = True
+                    self.completed_time = pygame.time.get_ticks()
+                    self.stew_speed, self.stop_button_velx, self.stop_button_vely = 0, 0, 0
+
+                self.game.draw_image(cooking_arrow, 1, surface, self.game.GAME_X / 2 + self.game.GAME_X / 4 - 65 + self.stew_pos, self.game.GAME_Y / 4 + 10)
+                
+                self.stew_pos += self.stew_speed
+
+                # Stops the cooking arrow when it reaches the end of the bar
+                if self.stew_pos >= 135:
+                    self.stew_speed, self.stop_button_velx, self.stop_button_vely = 0, 0, 0
+
+                    if skip_button.draw(surface):
+                        self.cooking_done = True
+                        self.completed_time = pygame.time.get_ticks()
+                
+                elif self.stew_pos >= 0 and self.stew_pos <= 40:
+                    self.game.draw_image(pot, 1, surface, self.game.GAME_X / 4 + 7, 120)
+
+                elif self.stew_pos > 40 and self.stew_pos <= 90:
+                    self.game.draw_image(pot_smoke, 1, surface, self.game.GAME_X / 4 + 7, 110)
+
+                elif self.stew_pos > 90:
+                    self.game.draw_image(pot_smoke, 1, surface, self.game.GAME_X / 4 + 7, 110)
+
+                if self.rating_triggered:
+                    self.rating_screen(surface, pink_background, stew_placeholder)
+                    
+                if self.next_step:
+                    self.reset_status(3)
+
+
+
+        surface.fill(CARNATION_ROSE)
+
+        if self.step_1:
+            cut_carrot(surface)
+        elif self.step_2:
+            cut_beef(surface)
+        elif self.step_3:
+            make_stew(surface)
+        elif self.evaluation:
+            self.final_rating(surface, "Stew", pink_background)
+
+
     # Clears the screen and shows the user's rating after a ingredient cooking step
     def rating_screen(self, surface, background_image, step_text_image):
         self.game.draw_image(background_image, 1, surface, self.game.GAME_X / 2, self.game.GAME_Y / 2)
@@ -866,6 +1175,9 @@ class Kitchen(State):
         elif recipe == "Fried Chicken":
             self.game.draw_image(chicken_text, 1, surface, self.game.GAME_X / 2, self.game.GAME_Y / 5)
             self.game.draw_image(chicken, 1, surface, self.game.GAME_X / 2, self.game.GAME_Y / 2)
+        elif recipe == "Stew":
+            self.game.draw_image(stew_placeholder, 1, surface, self.game.GAME_X / 2, self.game.GAME_Y / 5)
+            self.game.draw_image(stew_final, 1, surface, self.game.GAME_X / 2, self.game.GAME_Y / 2)
             
         self.total_rating = self.ingredient_rating["first"] + self.ingredient_rating["second"] + self.ingredient_rating["third"]
 
