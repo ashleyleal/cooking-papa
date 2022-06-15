@@ -1,31 +1,9 @@
 # Purpose: the main file that runs the framework of the program
 
-"""
-Known issues
-
-- Buttons don't lose functionality after screen is cleared (SOLVED)
-- Don't know how to implement time delays (SOLVED)
-    - time delays must be added outside of the game loops
-
-"""
-
-"""
-To do
-
-- Add transition screen between states (in progress)
-- Learn how to implement music
-- Stew cooking
-- Cooking mechanics rating (requires time delay) (SOLVED)
-- Shop
-- Music and sound
-- Saving data locally on player's game
-
-"""
-
-import pygame, math, time
+import pygame
 
 from states.main_menu import Main_Menu
-from assets.assets import *
+from load_assets import *
 
 # Define Game class
 class Game: 
@@ -39,9 +17,8 @@ class Game:
         
         pygame.init()
 
-        # Music causing error
-        pygame.mixer.music.load(menu_music)
-        pygame.mixer.music.play(1)
+        pygame.mixer.music.play(-1)
+        pygame.mixer.music.set_volume(0.25)
 
         # Configure window
         self.GAME_X, self.GAME_Y = 320, 180

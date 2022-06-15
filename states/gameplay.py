@@ -10,7 +10,7 @@ import random
 from states.shop_menu import colours
 from states.state import State
 from button import Button
-from assets.assets import * 
+from load_assets import * 
 
 # Restaurant state define behaviour inside of restaurant when serving customers
 class Restaurant(State):
@@ -251,8 +251,8 @@ class Kitchen(State):
 
         # If countdown_triggered find the current time and compare it to the time when the countdown is triggered to set which numbers are shown on the screen
         if self.countdown_triggered:
+            pygame.mixer.Sound.play(countdown_sound)
             current_time = pygame.time.get_ticks()
-            
             if current_time - self.button_time >= 100 and current_time - self.button_time < 1100:
                 self.countdown[3] = True
             if current_time - self.button_time >= 1100 and current_time - self.button_time < 2100:
@@ -263,11 +263,14 @@ class Kitchen(State):
                 self.countdown[1] = True
             if current_time - self.button_time >= 3100 and current_time - self.button_time < 4100:
                 self.countdown[1] = False
+                pygame.mixer.Sound.stop(countdown_sound)
             if current_time - self.button_time >= 4100 and current_time - self.button_time < 5100:
-                
+              
                 # Reset countdown variable and set completed to true
+                pygame.mixer.Sound.stop(countdown_sound)
                 self.countdown_triggered = False
                 self.countdown_completed = True
+                
 
         if self.current_recipe == "Burger" and self.step_3:
             
@@ -334,6 +337,13 @@ class Kitchen(State):
                 self.rating_triggered = True
                 if pygame.time.get_ticks() > self.completed_time + 6000:
                     self.next_step = True
+
+        if self.countdown_completed:
+            if (self.current_recipe == "Burger" and self.step_1) or (self.current_recipe == "Fried Chicken" and self.step_3):
+                    pygame.mixer.Sound.play(sizzling_sound)
+                    if self.cooking_done:
+                        pygame.mixer.Sound.stop(sizzling_sound)
+                    
 
     # Render loop that continously updates screen based on current conditions 
     def render(self, surface):
@@ -439,6 +449,8 @@ class Kitchen(State):
 
             if self.cooking_done:
 
+                pygame.mixer.Sound.stop(slice_sound)
+
                 if self.burger_tomato_pos >= 104:
                     self.ingredient_rating["second"] = 1
 
@@ -509,14 +521,18 @@ class Kitchen(State):
 
                 if self.tomato_slice[1] and self.tomato_slice[2]:
                     pygame.draw.line(surface, WARM_CROISSANT, (button_12_pos_x, bottombutton_pos_y),(button_12_pos_x, topbutton_pos_y))
+                    pygame.mixer.Sound.play(slice_sound)
                 
                 if self.tomato_slice[3] and self.tomato_slice[4]:
                     pygame.draw.line(surface, WARM_CROISSANT, (button_34_pos_x, bottombutton_pos_y),(button_34_pos_x, topbutton_pos_y))
+                    pygame.mixer.Sound.play(slice_sound)
 
                 if self.tomato_slice[5] and self.tomato_slice[6]:
                     pygame.draw.line(surface, WARM_CROISSANT, (button_56_pos_x, bottombutton_pos_y),(button_56_pos_x, topbutton_pos_y))
+                    pygame.mixer.Sound.play(slice_sound)
 
                 if self.rating_triggered:
+                    pygame.mixer.Sound.stop(slice_sound)
                     self.rating_screen(surface, green_background, slice_tomato)
                     
                     if self.next_step:
@@ -578,6 +594,8 @@ class Kitchen(State):
                 self.game.draw_text(surface, "AS YOU CAN!", MINIMAL_FONT, NOBLE_BLACK, 275, 110)
 
             if self.cooking_done:
+
+                pygame.mixer.Sound.stop(slice_sound)
 
                 if self.chicken_slice_pos >= 104:
                     self.ingredient_rating["first"] = 1
@@ -649,14 +667,18 @@ class Kitchen(State):
 
                 if self.chicken_slice[1] and self.chicken_slice[2]:
                     pygame.draw.line(surface, WARM_CROISSANT, (button_12_pos_x, bottombutton_pos_y),(button_12_pos_x, topbutton_pos_y))
+                    pygame.mixer.Sound.play(slice_sound)
                 
                 if self.chicken_slice[3] and self.chicken_slice[4]:
                     pygame.draw.line(surface, WARM_CROISSANT, (button_34_pos_x, bottombutton_pos_y),(button_34_pos_x, topbutton_pos_y))
+                    pygame.mixer.Sound.play(slice_sound)
 
                 if self.chicken_slice[5] and self.chicken_slice[6]:
                     pygame.draw.line(surface, WARM_CROISSANT, (button_56_pos_x, bottombutton_pos_y),(button_56_pos_x, topbutton_pos_y))
+                    pygame.mixer.Sound.play(slice_sound)
 
                 if self.rating_triggered:
+                    pygame.mixer.Sound.stop(slice_sound)
                     self.rating_screen(surface, pink_background, slice_chicken_a)
                     
                     if self.next_step:
@@ -1167,6 +1189,8 @@ class Kitchen(State):
             self.game.draw_text(surface, "NEXT TIME!", MINIMAL_FONT, NOBLE_BLACK, 275, 110)
 
     def final_rating(self, surface, recipe, bg_image):
+        pygame.mixer.music.stop()
+        pygame.mixer.Sound.play(victory_sound, 1, 1000)
         self.game.draw_image(bg_image, 1, surface, self.game.GAME_X / 2, self.game.GAME_Y / 2)
 
         if recipe == "Burger":
@@ -1191,6 +1215,8 @@ class Kitchen(State):
         if skip_button.draw(surface):
             self.game.actions["start"] = True
             self.game.customer_payment(self.total_rating)
+            pygame.mixer.Sound.stop(victory_sound)
+            pygame.mixer.music.play(-1)
 
 
 

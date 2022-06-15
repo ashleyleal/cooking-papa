@@ -3,7 +3,7 @@
 # Import required modules and classes
 from states.state import State
 from button import Button
-from assets.assets import *
+from load_assets import *
 
 from states.shop_menu import Shop_Menu
 from states.gameplay import Restaurant

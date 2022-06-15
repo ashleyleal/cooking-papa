@@ -2,7 +2,7 @@
 
 from states.state import State
 from button import Button
-from assets.assets import *
+from load_assets import *
 
 class Shop_Menu(State):
 

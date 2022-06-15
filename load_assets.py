@@ -4,7 +4,7 @@ import pygame
 from button import Button
 
 pygame.font.init()
-pygame.mixer.init()
+pygame.mixer.init(48000, -16, 1, 1024)
 
 MARBLE_WHITE = (242, 240, 229)
 SILVER_BULLET = (184, 181, 185)
@@ -174,7 +174,12 @@ skip_button = Button(300, 160, skip_arrow, 1)
 confirm_order_button = Button(300, 160, check_mark, 1)
 decline_order_button = Button(25, 160, red_cross, 1)
 
-menu_music = "assets/sounds/menu_music.mp3"
+countdown_sound = pygame.mixer.Sound("assets/sounds/countdown.wav")
+sizzling_sound = pygame.mixer.Sound("assets/sounds/sizzling.wav")
+slice_sound = pygame.mixer.Sound("assets/sounds/slice.wav")
+victory_sound = pygame.mixer.Sound("assets/sounds/victory.wav")
+
+pygame.mixer.music.load("assets/sounds/menu_music.mp3")
 
 # Countdown
 countdown_3 = pygame.image.load("assets/images/images/number_3.png")
