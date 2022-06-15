@@ -778,11 +778,8 @@ class Kitchen(State):
                 
                 if not self.cooking_done and not arrow_pos[0] >= 135:
                     arrow_pos.append(speed)
-                    print(arrow_pos)
                     arrow_pos[0] += arrow_pos[1]
-                    print(arrow_pos)
                     arrow_pos.pop()
-                    print(arrow_pos)
 
                 if arrow_pos[0] >= 135:
                     if skip_button.draw(surface):
