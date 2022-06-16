@@ -945,9 +945,18 @@ class Kitchen(State):
         if skip_button.draw(surface):
             self.game.actions["start"] = True
             self.game.customer_payment(self.total_rating)
-            pygame.mixer.music.unload()
-            pygame.mixer.music.load("assets/sounds/menu_music.mp3")
-            pygame.mixer.music.play(-1)
+            if self.game.music == True:
+                pygame.mixer.music.unload()
+                pygame.mixer.music.load("assets/sounds/jojo_theme.mp3")
+                pygame.mixer.music.rewind()
+                pygame.mixer.music.play(-1, 225)
+            else:
+                pygame.mixer.music.unload()
+                pygame.mixer.music.load("assets/sounds/menu_music.mp3")
+                pygame.mixer.music.play(-1)
+                pygame.mixer.music.unload()
+                pygame.mixer.music.load("assets/sounds/menu_music.mp3")
+                pygame.mixer.music.play(-1)
     
 
 
