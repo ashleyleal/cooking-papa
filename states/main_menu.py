@@ -14,6 +14,10 @@ class Main_Menu(State):
     # Inherit init method from State class 
     def __init__(self, game):
         State.__init__(self, game)
+        
+        pygame.mixer.music.load(self.game.current_song)
+        pygame.mixer.music.play(-1)
+        pygame.mixer.music.set_volume(0.25)
 
     # Updates events based on action triggers
     def update(self, actions):
@@ -44,5 +48,8 @@ class Main_Menu(State):
             self.game.actions["start"] = True
         if self.shop_button.draw(surface):
             self.game.actions["shop"] = True
+            pygame.mixer.music.unload()
+            pygame.mixer.music.load(alishas_song)
+            pygame.mixer.music.play()
         if self.quit_button.draw(surface):
             self.game.actions["quit"] = True
