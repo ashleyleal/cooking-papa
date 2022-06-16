@@ -111,7 +111,7 @@ kitchen_counter = pygame.image.load("assets/images/images/kitchen_counter.png")
 deep_fryer = pygame.image.load("assets/images/images/kitchen_deep_fryer.png")
 plate = pygame.image.load("assets/images/images/plate.png")
 
-#stew
+# Stew
 carrot = pygame.image.load("assets/images/images/carrot.png")
 beef = pygame.image.load("assets/images/images/beef.png")
 stew_final = pygame.image.load("assets/images/images/stew_final.png")
@@ -123,19 +123,27 @@ stew_placeholder = pygame.image.load("assets/images/titles/stew_title.png")
 click_button = pygame.image.load("assets/images/icons/click_button.png")
 pot_smoke = pygame.image.load("assets/images/images/pot_smoke.png")
 
+# Instruction panels
 pink_instruction_panel = pygame.image.load("assets/images/images/papas_background_pink.png")
 green_instruction_panel = pygame.image.load("assets/images/images/papas_background_green.png")
 blue_instruction_panel = pygame.image.load("assets/images/images/papas_background_blue.png")
 
+# Solid backgrounds
 green_background = pygame.image.load("assets/images/images/papas_background_green_full.png")
 pink_background = pygame.image.load("assets/images/images/papas_background_pink_full.png")
 blue_background = pygame.image.load("assets/images/images/papas_background_blue_full.png")
 
+# Cooking assets
 cooking_bar = pygame.image.load("assets/images/images/cooking_bar.png")
 time_bar = pygame.image.load("assets/images/images/time_bar.png")
 cooking_arrow = pygame.image.load("assets/images/icons/cooking_arrow.png")
 flip_button = pygame.image.load("assets/images/icons/flip_button.png")
 speech_bubble = pygame.image.load("assets/images/icons/speech_bubble.png")
+up_arrow = pygame.image.load("assets/images/icons/orange_up.png")
+right_arrow = pygame.image.load("assets/images/icons/green_right.png")
+left_arrow = pygame.image.load("assets/images/icons/pink_left.png")
+down_arrow = pygame.image.load("assets/images/icons/blue_down.png")
+
 
 # Order icons
 burger_icon = pygame.image.load("assets/images/icons/burger_icon.png")
@@ -163,6 +171,7 @@ slice_tomato = pygame.image.load("assets/images/images/slice_tomato.png")
 assemble_burger_a = pygame.image.load("assets/images/images/assemble_burger.png")
 burger_text = pygame.image.load("assets/images/images/burger_text.png")
 
+# Chicken
 chicken = pygame.image.load("assets/images/images/chicken.png")
 chicken_breast = pygame.image.load("assets/images/images/chicken_breast.png")
 chicken_coating = pygame.image.load("assets/images/images/chicken_coating.png")
@@ -184,20 +193,18 @@ slice_chicken_a = pygame.image.load("assets/images/images/slice_chicken.png")
 fry_chicken_a = pygame.image.load("assets/images/images/fry_chicken.png")
 chicken_text = pygame.image.load("assets/images/images/fried_chicken.png")
 
-# Pizza
-rolling_pin = pygame.image.load("assets/images/images/pizza_rolling_pin.png")
-plate = pygame.image.load("assets/images/images/plate.png")
-
 # Reocurring buttons
 return_button = Button(20, 20, return_arrow, 1)
 skip_button = Button(300, 160, skip_arrow, 1)
 confirm_order_button = Button(300, 160, check_mark, 1)
 decline_order_button = Button(25, 160, red_cross, 1)
 
+# Sounds
 countdown_sound = pygame.mixer.Sound("assets/sounds/countdown.wav")
 sizzling_sound = pygame.mixer.Sound("assets/sounds/sizzling.wav")
 slice_sound = pygame.mixer.Sound("assets/sounds/slice.wav")
 
+# Music
 default_music = "assets/sounds/menu_music.mp3"
 jojo_music = "assets/sounds/jojo_theme.mp3"
 alishas_song = "assets/sounds/lil_cafe_beat.wav"
@@ -208,13 +215,10 @@ countdown_3 = pygame.image.load("assets/images/images/number_3.png")
 countdown_2 = pygame.image.load("assets/images/images/number_2.png")
 countdown_1 = pygame.image.load("assets/images/images/number_1.png")
 
-up_arrow = pygame.image.load("assets/images/icons/orange_up.png")
-right_arrow = pygame.image.load("assets/images/icons/green_right.png")
-left_arrow = pygame.image.load("assets/images/icons/pink_left.png")
-down_arrow = pygame.image.load("assets/images/icons/blue_down.png")
-
+# Star assets
 one_star = pygame.image.load("assets/images/images/one_star.png")
 two_stars = pygame.image.load("assets/images/images/two_stars.png")
 three_stars = pygame.image.load("assets/images/images/three_stars.png")
 
+# Save file
 gold_save_data = "gold_data.txt"
