@@ -150,7 +150,6 @@ class Characters(State):
 
           if self.ok_button.draw(surface):
             self.game.actions["characters"] = True
-
            
 class Colours(State):
   # Inherit init method from State class 
@@ -181,6 +180,7 @@ class Colours(State):
       self.game.draw_image(Recolour_center_button, 1, surface, self.game.GAME_X /2, 119)
       self.game.draw_image(recolour_option_1, 1, surface, 78, 120)
       self.game.draw_image(recolour_option_2, 1, surface, 242, 119)
+      
       # Initialize button
       self.Recolour_option_1 = Button(78, 120, recolour_option_1, 1)
       self.Recolour_option_2 = Button(242, 119, recolour_option_2, 1)
