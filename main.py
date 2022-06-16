@@ -9,7 +9,6 @@ Created:  29/04/2022
 ------------------------------------------------------------------------------
 '''
 
-
 import pygame
 
 from states.main_menu import Main_Menu
@@ -40,7 +39,7 @@ class Game:
         
         # Set state of game
         self.running, self.playing = True, True
-        self.actions = {"click": False, "menu": False, "start": False, "shop": False, "quit": False, "recipe": False, "fade": False, "cooking": False, "music": False, "characters": False, "colours": False, "arrowup": False, "arrowdown": False, "arrowright": False, "arrowleft": False, "confirm_purchase": False}
+        self.actions = {"click": False, "menu": False, "start": False, "shop": False, "quit": False, "recipe": False, "cooking": False, "music": False, "characters": False, "colours": False, "arrowup": False, "arrowdown": False, "arrowright": False, "arrowleft": False, "confirm_purchase": False}
         self.state_stack = []
         self.load_states()
         
@@ -118,16 +117,6 @@ class Game:
     def reset_keys(self):
         for action in self.actions:
             self.actions[action] = False
-
-    # Defines method that creates a fade out white transition between scenes (work in progress)
-    def fade_screen(self, surface):
-        fade = pygame.Surface((self.GAME_X, self.GAME_Y))
-        fade.fill((0,0,0,1))
-        alpha_key = 1
-        while alpha_key <= 255:
-            self.surface.blit(fade, self.surface.get_rect())
-            alpha_key += 1
-            pygame.time.delay(1000)
 
     def customer_payment(self, total_rating):
         # Add amount to gold. Remove pass keyword after doing function; it is just there so the empty function doesn't error.

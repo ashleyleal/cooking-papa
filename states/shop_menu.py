@@ -9,6 +9,7 @@ Created:  01/05/2022
 ------------------------------------------------------------------------------
 '''
 
+# Import required modules
 from states.state import State
 from button import Button
 from load_assets import *
@@ -183,7 +184,6 @@ class Colours(State):
           self.game.colour_one_owned = True
           self.game.colour_two_owned = False
          
-          
         if self.cry == True:
           self.game.draw_image(purchased_bg, 1, surface, self.game.GAME_X / 2, self.game.GAME_Y / 2)
           self.game.draw_image(ok_button, 1, surface, self.game.GAME_X / 2, 115)
@@ -191,7 +191,6 @@ class Colours(State):
           if self.ok_button.draw(surface):
             self.game.actions["colours"] = True
             
-          
         if self.game.gold < 25:
           self.game.draw_image(insuficent_funds_bg, 1, surface, self.game.GAME_X / 2, self.game.GAME_Y / 2)
           self.game.draw_image(ok_button, 1, surface, self.game.GAME_X / 2, 115)
