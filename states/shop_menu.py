@@ -57,7 +57,6 @@ class Shop_Menu(State):
         self.characters_button = Button(80, 120, characters_button, 1)
         self.recolour_button = Button((self.game.GAME_X / 2), 120, recolour_button, 1)
         self.music_button = Button(242, 120, music_button, 1)
-        
        
         # Draw buttons and trigger actions when buttons are pressed
         if return_button.draw(surface):
@@ -112,7 +111,7 @@ class Characters(State):
         self.game.actions["shop"] = True
 
       if self.speedwagon_buy_button.draw(surface):
-        self.buy= True
+        self.buy = True
 
       if self.buy == True:
         self.game.draw_image(confirm_purchase_bg, 1, surface, self.game.GAME_X / 2, self.game.GAME_Y / 2)
@@ -152,7 +151,7 @@ class Characters(State):
           if self.ok_button.draw(surface):
             self.game.actions["characters"] = True
 
-              
+           
 class Colours(State):
   # Inherit init method from State class 
     def __init__(self, game):

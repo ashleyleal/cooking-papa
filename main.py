@@ -21,6 +21,7 @@ class Game:
         gold = json.load(f)
         print("gold data loaded")
 
+    # Initializes variables for owned items from the shop
     current_recipe = None
     current_song = default_music
     colour_one_owned = False
@@ -121,16 +122,6 @@ class Game:
         for action in self.actions:
             self.actions[action] = False
 
-    # Defines method that creates a fade out white transition between scenes (work in progress)
-    def fade_screen(self, surface):
-        fade = pygame.Surface((self.GAME_X, self.GAME_Y))
-        fade.fill((0,0,0,1))
-        alpha_key = 1
-        while alpha_key <= 255:
-            self.surface.blit(fade, self.surface.get_rect())
-            alpha_key += 1
-            pygame.time.delay(1000)
-
     # Defines method that pays the player gold by increasing the amount of gold
     def customer_payment(self, total_rating):
         # Add amount to gold depending on player's rating. Use try and except to prevent the program from crashing during an error.
@@ -152,8 +143,9 @@ class Game:
             if self.gold >= amount:
                 self.gold -= amount
                 self.update_save_data()
+                return True
             elif self.gold < amount:
-                return "insufficient funds" 
+                return False
         except:
             print("An error occurred in spending gold")
 
