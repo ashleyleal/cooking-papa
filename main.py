@@ -9,7 +9,7 @@ from load_assets import *
 class Game: 
     
     current_recipe = None
-    gold = 100
+    gold = 0
     colour_one_owned = False
     colour_two_owned = False
     owned_character_1 = False
