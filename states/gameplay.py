@@ -320,7 +320,7 @@ class Kitchen(State):
     # Define method that cooks the burger
     def cook_burger(self, surface):
 
-        # Define method for cooking the burger patty
+        # Define function for cooking the burger patty
         def cook_patty(surface):
             self.draw_cooking_background(surface, green_instruction_panel, kitchen_grill)
 
@@ -333,6 +333,7 @@ class Kitchen(State):
 
             if self.cooking_done: 
                 
+                # Generate a rating
                 if (self.burger_patty_pos >= 0 and self.burger_patty_pos <= 40) or self.burger_patty_pos > 90:
                     self.ingredient_rating["first"] = 1
 
@@ -342,8 +343,7 @@ class Kitchen(State):
                 elif self.burger_patty_pos > 50 and self.burger_patty_pos <= 80:
                     self.ingredient_rating["first"] = 3
 
-                self.display_rating_message(surface) 
-                          
+                self.display_rating_message(surface)   
 
             # Draw the cooking bar that shows how cooked the patty is
             self.game.draw_image(cooking_bar, 1, surface, self.game.GAME_X / 2 + self.game.GAME_X / 4, self.game.GAME_Y / 4)
@@ -356,6 +356,7 @@ class Kitchen(State):
                 
                 stop_button = Button(self.stop_button_posx, self.stop_button_posy, flip_button, 1)
 
+                # Move stop button and make it look like its bouncing off the sides
                 self.stop_button_posx += self.stop_button_velx
                 self.stop_button_posy += self.stop_button_vely
 
@@ -365,6 +366,7 @@ class Kitchen(State):
                 if self.stop_button_posy >= self.game.GAME_Y / 2 - 28 or self.stop_button_posy <= 5:
                     self.stop_button_vely *= -1
 
+                # Stop cooking when button is pressed
                 if stop_button.draw(surface):
                     self.cooking_done = True
                     self.completed_time = pygame.time.get_ticks()
@@ -374,7 +376,7 @@ class Kitchen(State):
                 
                 self.burger_patty_pos += self.burger_patty_speed
 
-                # Stops the cooking arrow when it reaches the end of the bar
+                # Stops the cooking arrow when it reaches the end of the bar, draw a skip button that lets the player move on to the next step
                 if self.burger_patty_pos >= 135:
                     self.burger_patty_speed, self.stop_button_velx, self.stop_button_vely = 0, 0, 0
 
@@ -398,7 +400,7 @@ class Kitchen(State):
                 if self.next_step:
                     self.reset_status(1)
 
-        # Define method for cutting the tomato
+        # Define function for cutting the tomato
         def cut_tomato(surface):
             self.draw_cooking_background(surface, green_instruction_panel, cutting_board)
 
@@ -425,6 +427,7 @@ class Kitchen(State):
             self.game.draw_image(plate, 1, surface, self.game.GAME_X / 4, self.game.GAME_Y / 2 + 55)
             self.game.draw_image(bottom_bun, 1, surface, self.game.GAME_X / 4, self.game.GAME_Y / 2 + 50)
 
+            # Draw the ingredients with the corresponding positions in the order speficied by the user
             if self.burger_positions[1][0] == True:
                self.game.draw_image(self.burger_positions[1][1], 1, surface, self.game.GAME_X / 4, self.burger_positions[1][2])
             if self.burger_positions[2][0] == True:
@@ -447,6 +450,7 @@ class Kitchen(State):
                     self.reset_status(3)
 
         surface.fill(FANCY_MOSS)
+        
         if self.step_1:
             cook_patty(surface)
         elif self.step_2:
@@ -459,6 +463,7 @@ class Kitchen(State):
     # Define method that cooks the fried chicken
     def cook_chicken(self, surface):
 
+        # Define function for cutting chicken with slice method
         def cut_chicken(surface):
             self.draw_cooking_background(surface, pink_instruction_panel, cutting_board)
 
@@ -471,6 +476,7 @@ class Kitchen(State):
                 if self.next_step:
                     self.reset_status(1)
 
+        # Define function for coating chicken
         def coat_chicken(surface):
             coated_chicken_button = Button(self.game.GAME_X / 4, 135, coated_chicken_1, 1)
             raw_chicken_button = Button(self.game.GAME_X / 4, 135, raw_chicken_1, 1) 
@@ -483,6 +489,7 @@ class Kitchen(State):
                 self.game.draw_text(surface, "CHICKEN!", MINIMAL_FONT, NOBLE_BLACK, 275, 110)
 
             if self.cooking_done:
+            # Generate rating depending on cooking bar position
 
                 if self.chicken_coat_pos >= 104:
                     self.ingredient_rating["second"] = 1
@@ -509,6 +516,7 @@ class Kitchen(State):
                 if raw_chicken_button.draw(surface) and self.chicken_coat_clicks >= 1:
                     self.chicken_coat_clicks -=1
 
+                # End cooking when clicks is equal to 0 or the cooking bar reaches the end
                 if self.chicken_coat_clicks == 0:
                     self.chicken_coat_speed = 0
                     if coated_chicken_button.draw(surface):

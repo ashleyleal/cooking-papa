@@ -14,6 +14,7 @@ import pygame
 # Button class
 class Button():
     
+    # Initialize button with x, y center position, image, and scale multiplier
     def __init__(self, x, y, image, scale):
         width = image.get_width()
         height = image.get_height()
