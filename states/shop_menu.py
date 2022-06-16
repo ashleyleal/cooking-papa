@@ -35,12 +35,6 @@ class Shop_Menu(State):
         self.game.draw_image(characters_button, 1, surface, 80, 120)
         self.game.draw_image(recolour_button, 1, surface, self.game.GAME_X / 2, 120)
         self.game.draw_image(music_button, 1, surface, 242, 120)
-        
-        #(Draw buttons for avaliable music)
-        #(Draw buttons for avaliable characters)
-        #(Draw buttons for avaliable colours)
-        #(Draw buttons for confirm or decline purchase)
-        #(Draw bg for confirm or decline purchase prompt)
   
         self.characters_button = Button(80, 120, characters_button, 1)
         self.recolour_button = Button((self.game.GAME_X / 2), 120, recolour_button, 1)
@@ -277,28 +271,31 @@ class Music(State):
         if self.red_cross.draw(surface):
           self.game.actions["music"] = True
 
-        if self.check_mark.draw(surface):
-          self.game.spend_gold(45)
+        if self.check_mark.draw (surface) and self.game.gold >= 45:
           self.ok = True
           self.game.music = True
           self.game.current_song = jojo_music
           print("money spent")
-        
+
+        elif self.check_mark.draw and self.game.gold < 45:
+            self.game.draw_image(insuficent_funds_bg, 1, surface, self.game.GAME_X / 2, self.game.GAME_Y / 2)
+            self.game.draw_image(ok_button, 1, surface, self.game.GAME_X / 2, 115)
+            self.ok_button = Button(self.game.GAME_X / 2, 115, ok_button, 1)
+
+            if self.ok_button.draw(surface):
+              self.game.actions["music"] = True
+
         if self.ok == True:
           self.game.draw_image(purchased_bg, 1, surface, self.game.GAME_X / 2, self.game.GAME_Y / 2)
           self.game.draw_image(ok_button, 1, surface, self.game.GAME_X / 2, 115)
 
           self.ok_button = Button(self.game.GAME_X / 2, 115, ok_button, 1)
+          pygame.mixer.music.unload()
+          pygame.mixer.music.load("assets/sounds/jojo._theme.mp3")
+          pygame.mixer.music.play(-1)
 
           if self.ok_button.draw(surface):
             self.game.actions["music"] = True
           
-        if self.game.gold < 45:
-          self.game.draw_image(insuficent_funds_bg, 1, surface, self.game.GAME_X / 2, self.game.GAME_Y / 2)
-          self.game.draw_image(ok_button, 1, surface, self.game.GAME_X / 2, 115)
-          self.ok_button = Button(self.game.GAME_X / 2, 115, ok_button, 1)
-
-          if self.ok_button.draw(surface):
-            self.game.actions["music"] = True
   
   

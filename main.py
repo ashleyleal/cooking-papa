@@ -15,6 +15,7 @@ class Game:
     colour_two_owned = False
     owned_character_1 = False
     music = False
+    
 
     # Define init method
     def __init__(self):
