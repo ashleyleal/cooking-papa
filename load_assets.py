@@ -201,6 +201,7 @@ slice_sound = pygame.mixer.Sound("assets/sounds/slice.wav")
 default_music = "assets/sounds/menu_music.mp3"
 jojo_music = "assets/sounds/jojo_theme.mp3"
 alishas_song = "assets/sounds/lil_cafe_beat.wav"
+victory_song = "assets/sounds/victory.wav"
 
 # Countdown
 countdown_3 = pygame.image.load("assets/images/images/number_3.png")

@@ -16,6 +16,7 @@ from load_assets import *
 # Define Game class
 class Game: 
     
+    # Loads the player's gold from the file
     with open(gold_save_data) as f:
         gold = json.load(f)
         print("gold data loaded")
@@ -161,6 +162,7 @@ class Game:
         self.draw_image(gold_icon, 1, surface, px - 10, py)
         self.draw_text(surface, str(self.gold), MINIMAL_FONT, colour, px + 10, py)
             
+    # Defines method that updates the gold data on the file
     def update_save_data(self):
         with open(gold_save_data, "w") as f:
             json.dump(self.gold, f)
