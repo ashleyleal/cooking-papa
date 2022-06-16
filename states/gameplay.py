@@ -718,7 +718,7 @@ class Kitchen(State):
                     self.game.draw_image(pot_smoke, 1, surface, self.game.GAME_X / 4 + 7, 110)
 
                 if self.rating_triggered:
-                    self.rating_screen(surface, blue_background, stew_placeholder)
+                    self.rating_screen(surface, blue_background, cook_stew_placeholder)
                     
                 if self.next_step:
                     self.reset_status(3)
