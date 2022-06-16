@@ -1,4 +1,12 @@
-# Purpose: Main_Menu child class that inherits from State class, provides pathway to switch into other classes 
+'''
+-------------------------------------------------------------------------------
+Name:  main_menu.py
+Purpose: Main_Menu child class that inherits from State class, provides pathway to switch into other classes (states)
+ 
+Author:   Ashley L & Fionna C
+Created:  01/05/2022
+------------------------------------------------------------------------------
+'''
 
 # Import required modules and classes
 from states.state import State

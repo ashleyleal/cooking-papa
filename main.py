@@ -1,4 +1,13 @@
-# Purpose: the main file that runs the framework of the program
+'''
+-------------------------------------------------------------------------------
+Name:  main.py
+Purpose: Contains the Game class which contains the main loop, the event processing loop, various frequently used functions, and the attributes of game instances
+ 
+Author:   Ashley L & Fionna C
+Created:  29/04/2022
+------------------------------------------------------------------------------
+'''
+
 
 import pygame
 

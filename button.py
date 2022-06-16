@@ -1,9 +1,17 @@
-# Purpose: Button class that handles behaviour for all clickable UI
+'''
+-------------------------------------------------------------------------------
+Name:  button.py
+Purpose: Button class that handles behaviour for all clickable UI
+ 
+Author:   Ashley L & Fionna C
+Created:  28/04/2022
+------------------------------------------------------------------------------
+'''
+
 import pygame
 
 # Button class
 class Button():
-    
     
     def __init__(self, x, y, image, scale):
         width = image.get_width()

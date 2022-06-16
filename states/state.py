@@ -1,4 +1,12 @@
-# Purpose: creates new State class that determines behavior for each state
+'''
+-------------------------------------------------------------------------------
+Name:  state.py
+Purpose: State class that determines behavior for each state of the game
+ 
+Author:   Ashley L & Fionna C
+Created:  29/04/2022
+------------------------------------------------------------------------------
+'''
 
 from load_assets import *
 

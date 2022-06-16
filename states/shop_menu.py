@@ -1,4 +1,12 @@
-# Purpose: Shop_Menu child class that inherits from State class 
+'''
+-------------------------------------------------------------------------------
+Name:  shop_menu.py
+Purpose: Contains Shop Menu, Characters, Colours, and Music classes (states) that define behaviour in each section of the shop
+ 
+Author:   Ashley L & Fionna C
+Created:  01/05/2022
+------------------------------------------------------------------------------
+'''
 
 from states.state import State
 from button import Button

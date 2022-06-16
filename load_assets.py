@@ -1,4 +1,12 @@
-# Purpose: Load assets and buttons to keep main program and class programs uncluttered
+'''
+-------------------------------------------------------------------------------
+Name:  load_assets.py
+Purpose: Load assets and frequently used buttons to keep main program and class files uncluttered
+ 
+Author:   Ashley L & Fionna C
+Created:  28/04/2022
+------------------------------------------------------------------------------
+'''
 
 import pygame
 from button import Button

@@ -1,9 +1,12 @@
-# Purpose: Gameplay child class that inherits from State class, controls main game mechanics such as customer and recipe generating and cooking 
-
-"""
-To do list:
-- Add return button to each cooking screen that goes back to restaurant
-"""
+'''
+-------------------------------------------------------------------------------
+Name:  gameplay.py
+Purpose: Contains Restaurant and Kitchen child classes that inherit from State class, controls main game mechanics such as customer and recipe generating and cooking 
+ 
+Author:   Ashley L & Fionna C
+Created:  01/05/2022
+------------------------------------------------------------------------------
+'''
 
 #  Import required modules and classes
 import random
