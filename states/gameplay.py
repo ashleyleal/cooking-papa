@@ -320,6 +320,7 @@ class Kitchen(State):
 
         # Define function for cooking the burger patty
         def cook_patty(surface):
+            
             self.draw_cooking_background(surface, green_instruction_panel, kitchen_grill)
 
             self.timed_cooking(surface, self.timed_cooking_speed, self.timed_cooking_pos, raw_patty, cooked_patty, burned_patty, "first", flip_button, "FLIP AT THE")
@@ -395,6 +396,7 @@ class Kitchen(State):
 
         # Define function for cutting chicken with slice method
         def cut_chicken(surface):
+            
             self.draw_cooking_background(surface, pink_instruction_panel, cutting_board)
 
             self.slice(surface, self.slice_speed, self.slice_pos, chicken_breast, self.slice_statuses, 105, 165, 25, "first")
@@ -408,8 +410,10 @@ class Kitchen(State):
 
         # Define function for coating chicken
         def coat_chicken(surface):
+            
             coated_chicken_button = Button(self.game.GAME_X / 4, 135, coated_chicken_1, 1)
             raw_chicken_button = Button(self.game.GAME_X / 4, 135, raw_chicken_1, 1) 
+            
             self.draw_cooking_background(surface, pink_instruction_panel, cutting_board)
             self.game.draw_image(chicken_coating, 1, surface, self.game.GAME_X / 4, 130)
             
@@ -467,15 +471,15 @@ class Kitchen(State):
                 if self.next_step:
                     self.reset_status(2)
 
-        # Define function for frying chicken        
+        # Define function for frying chicken with timed cooking method      
         def fry_chicken(surface):
+            
             self.draw_cooking_background(surface, pink_instruction_panel, deep_fryer)
-
             self.timed_cooking(surface, self.timed_cooking_speed, self.timed_cooking_pos, coated_chicken_1, cooked_chicken_1, burned_chicken_1, "third", flip_button, "FLIP AT THE")
-
+            
             if self.rating_triggered:
                 self.rating_screen(surface, pink_background, fry_chicken_a)
-                
+
             if self.next_step:
                 self.reset_status(3)
 
@@ -642,11 +646,13 @@ class Kitchen(State):
     # Define method for cooking steps that require timed cooking
     def timed_cooking(self, surface, speed, arrow_pos, raw_image, cooked_image, burned_image, step, stop_button_image, firstline_text):
         
+        # Show instructions while player is still cooking
         if not self.cooking_done:
             
             self.game.draw_text(surface, firstline_text, MINIMAL_FONT, NOBLE_BLACK, 275, 95)
             self.game.draw_text(surface, "RIGHT TIME!", MINIMAL_FONT, NOBLE_BLACK, 275, 110)
 
+        # Calculate rating based on arrow position and show message when player is done cooking
         if self.cooking_done: 
             
             if (arrow_pos[0] and arrow_pos[0] <= 40) or arrow_pos[0] > 90:
@@ -668,7 +674,11 @@ class Kitchen(State):
 
         # Start cooking process when countdown is completed
         if self.countdown_completed:
-            
+
+            # Draw animated cooking arrow to show cooking progress
+            self.game.draw_image(cooking_arrow, 1, surface, self.game.GAME_X / 2 + self.game.GAME_X / 4 - 65 + arrow_pos[0], self.game.GAME_Y / 4 + 10)
+
+            # Initialize button and set constantly moving position that appears to bounce off the boundaries
             stop_button = Button(self.stop_button_posx, self.stop_button_posy, stop_button_image, 1)
 
             self.stop_button_posx += self.stop_button_velx
@@ -680,6 +690,7 @@ class Kitchen(State):
             if self.stop_button_posy >= self.game.GAME_Y / 2 - 28 or self.stop_button_posy <= 5:
                 self.stop_button_vely *= -1
 
+            # Set cooking to done when player presses the button and stop cooking arrow 
             if stop_button.draw(surface):
                 if step == "third":
                     self.play_victory_music()
@@ -687,14 +698,13 @@ class Kitchen(State):
                 self.completed_time = pygame.time.get_ticks()
                 speed, self.stop_button_velx, self.stop_button_vely = 0, 0, 0
 
-            self.game.draw_image(cooking_arrow, 1, surface, self.game.GAME_X / 2 + self.game.GAME_X / 4 - 65 + arrow_pos[0], self.game.GAME_Y / 4 + 10)
-            
+            # Set cooking to done when player presses the button
             if not self.cooking_done and not arrow_pos[0] >= 135:
                 arrow_pos.append(speed)
                 arrow_pos[0] += arrow_pos[1]
                 arrow_pos.pop()
 
-            # Stops the cooking arrow when it reaches the end of the bar
+            # Stops the cooking arrow when it reaches the end of the bar and set cooking ro done
             if arrow_pos[0] >= 135:
                 self.stop_button_velx, self.stop_button_vely = 0, 0, 0
 
@@ -704,7 +714,7 @@ class Kitchen(State):
                     self.cooking_done = True
                     self.completed_time = pygame.time.get_ticks()
 
-            # Draw the appropriate patty depending on the cooking arrow position
+            # Draw the appropriate ingredient image depending on the cooking arrow position
             elif arrow_pos[0] >= 0 and arrow_pos[0] <= 40:
                 self.game.draw_image(raw_image, 1, surface, self.game.GAME_X / 4, 135)
 
@@ -733,7 +743,7 @@ class Kitchen(State):
         elif ingredient_rating == 1:
             self.game.draw_image(one_star, 1, surface, self.game.GAME_X / 2, self.game.GAME_Y / 2)
 
-    # Resets the status for cooking processes
+    # Resets the status for cooking processes after each step
     def reset_status(self, current_step):
         self.cooking_done = False
         self.countdown_triggered = False
@@ -778,6 +788,7 @@ class Kitchen(State):
         self.game.draw_image(cooking_papa, 1, surface, 215, 128)
         self.game.draw_image(papa_speech, 1, surface, 275, 110)
 
+    # Define method that draws a rating screen after a cooking step is completed
     def display_rating_message(self, surface):
         
         if self.step_1:
@@ -799,6 +810,7 @@ class Kitchen(State):
             self.game.draw_text(surface, "TRY HARDER", MINIMAL_FONT, NOBLE_BLACK, 275, 95)
             self.game.draw_text(surface, "NEXT TIME!", MINIMAL_FONT, NOBLE_BLACK, 275, 110)
 
+    # Define method that draws the final rating screen when the player is done the whole recipe
     def final_rating(self, surface, recipe, bg_image):
         
         self.game.draw_image(bg_image, 1, surface, self.game.GAME_X / 2, self.game.GAME_Y / 2)
@@ -828,7 +840,8 @@ class Kitchen(State):
             pygame.mixer.music.unload()
             pygame.mixer.music.load(self.game.current_song)
             pygame.mixer.music.play(-1)
-        
+
+    # Define method that plays celebratory music    
     def play_victory_music(self):
             pygame.mixer.music.unload()
             pygame.mixer.music.load(victory_song)
