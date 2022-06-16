@@ -59,6 +59,6 @@ class Main_Menu(State):
             self.game.actions["shop"] = True
             pygame.mixer.music.unload()
             pygame.mixer.music.load(alishas_song)
-            pygame.mixer.music.play()
+            pygame.mixer.music.play(-1)
         if self.quit_button.draw(surface):
             self.game.actions["quit"] = True
