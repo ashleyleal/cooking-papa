@@ -8,8 +8,6 @@ Author:   Ashley L & Fionna C
 Created:  29/04/2022
 ------------------------------------------------------------------------------
 '''
-
-
 import pygame
 
 from states.main_menu import Main_Menu
@@ -20,7 +18,7 @@ class Game:
     
     current_recipe = None
     current_song = default_music
-    gold = 100
+    gold = 0
     colour_one_owned = False
     colour_two_owned = False
     owned_character_1 = False

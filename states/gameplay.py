@@ -272,6 +272,7 @@ class Kitchen(State):
                 elif self.burger_assembled_properly == 1 or self.burger_assembled_properly == 0:
                     self.ingredient_rating["third"] = 1
 
+                self.play_victory_music()
                 self.cooking_done = True
                 self.completed_time = pygame.time.get_ticks()
 
@@ -588,6 +589,7 @@ class Kitchen(State):
                     self.stop_button_vely *= -1
 
                 if stop_button.draw(surface):
+                    self.play_victory_music()
                     self.cooking_done = True
                     self.completed_time = pygame.time.get_ticks()
                     self.burger_patty_speed, self.stop_button_velx, self.stop_button_vely = 0, 0, 0
@@ -601,6 +603,7 @@ class Kitchen(State):
                     self.burger_patty_speed, self.stop_button_velx, self.stop_button_vely = 0, 0, 0
 
                     if skip_button.draw(surface):
+                        self.play_victory_music()
                         self.cooking_done = True
                         self.completed_time = pygame.time.get_ticks()
 
@@ -696,6 +699,7 @@ class Kitchen(State):
                     self.stop_button_vely *= -1
 
                 if stop_button.draw(surface):
+                    self.play_victory_music()
                     self.cooking_done = True
                     self.completed_time = pygame.time.get_ticks()
                     self.stew_speed, self.stop_button_velx, self.stop_button_vely = 0, 0, 0
@@ -709,8 +713,10 @@ class Kitchen(State):
                     self.stew_speed, self.stop_button_velx, self.stop_button_vely = 0, 0, 0
 
                     if skip_button.draw(surface):
+                        self.play_victory_music()
                         self.cooking_done = True
                         self.completed_time = pygame.time.get_ticks()
+
                 
                 elif self.stew_pos >= 0 and self.stew_pos <= 40:
                     self.game.draw_image(pot, 1, surface, self.game.GAME_X / 4 + 7, 125)
@@ -784,6 +790,8 @@ class Kitchen(State):
 
                 if arrow_pos[0] >= 135:
                     if skip_button.draw(surface):
+                        if step == "third":
+                            self.play_victory_music()
                         self.cooking_done = True
                         self.completed_time = pygame.time.get_ticks()
 
@@ -819,6 +827,8 @@ class Kitchen(State):
                     if slice_6_button.draw(surface):
                         pygame.mixer.Channel(1).play(pygame.mixer.Sound(slice_sound))
                         slice_status[6] = True
+                        if step == "third":
+                            self.play_victory_music()
                         self.cooking_done = True
                         self.completed_time = pygame.time.get_ticks()
 
@@ -921,9 +931,6 @@ class Kitchen(State):
             self.game.draw_text(surface, "NEXT TIME!", MINIMAL_FONT, NOBLE_BLACK, 275, 110)
 
     def final_rating(self, surface, recipe, bg_image):
-        pygame.mixer.music.unload()
-        pygame.mixer.music.load("assets/sounds/victory_song.mp3")
-        pygame.mixer.music.play(-1)
         
         self.game.draw_image(bg_image, 1, surface, self.game.GAME_X / 2, self.game.GAME_Y / 2)
 
@@ -949,18 +956,15 @@ class Kitchen(State):
         if skip_button.draw(surface):
             self.game.actions["start"] = True
             self.game.customer_payment(self.total_rating)
-            if self.game.music == True:
-                pygame.mixer.music.unload()
-                pygame.mixer.music.load("assets/sounds/jojo_theme.mp3")
-                pygame.mixer.music.rewind()
-                pygame.mixer.music.play(-1, 225)
-            else:
-                pygame.mixer.music.unload()
-                pygame.mixer.music.load("assets/sounds/menu_music.mp3")
-                pygame.mixer.music.play(-1)
-                pygame.mixer.music.unload()
-                pygame.mixer.music.load("assets/sounds/menu_music.mp3")
-                pygame.mixer.music.play(-1)
+            pygame.mixer.music.unload()
+            pygame.mixer.music.load(self.game.current_song)
+            pygame.mixer.music.play(-1)
+        
+    def play_victory_music(self):
+            pygame.mixer.music.unload()
+            pygame.mixer.music.load(victory_song)
+            pygame.mixer.music.play(-1)
+
     
 
 
