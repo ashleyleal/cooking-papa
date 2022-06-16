@@ -1,6 +1,7 @@
 '''
 -------------------------------------------------------------------------------
 Name:  load_assets.py
+Course: ICS4U1
 Purpose: Load assets and frequently used buttons to keep main program and class files uncluttered
  
 Author:   Ashley L & Fionna C

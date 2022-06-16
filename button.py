@@ -1,7 +1,8 @@
 '''
 -------------------------------------------------------------------------------
 Name:  button.py
-Purpose: Button class that handles behaviour for all clickable UI
+Course: ICS4U1
+Purpose: Contains Button class that handles behaviour for all clickable UI
  
 Author:   Ashley L & Fionna C
 Created:  28/04/2022

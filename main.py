@@ -1,6 +1,7 @@
 '''
 -------------------------------------------------------------------------------
 Name:  main.py
+Course: ICS4U1
 Purpose: Contains the Game class which contains the main loop, the event processing loop, various frequently used functions, and the attributes of game instances
  
 Author:   Ashley L & Fionna C

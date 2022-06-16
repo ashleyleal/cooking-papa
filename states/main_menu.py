@@ -1,7 +1,8 @@
 '''
 -------------------------------------------------------------------------------
 Name:  main_menu.py
-Purpose: Main_Menu child class that inherits from State class, provides pathway to switch into other classes (states)
+Course: ICS4U1
+Purpose: Contains Main_Menu child class that inherits from State class, provides pathway to switch into other classes (states)
  
 Author:   Ashley L & Fionna C
 Created:  01/05/2022

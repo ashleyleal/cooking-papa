@@ -1,6 +1,7 @@
 '''
 -------------------------------------------------------------------------------
 Name:  shop_menu.py
+Course: ICS4U1
 Purpose: Contains Shop Menu, Characters, Colours, and Music classes (states) that define behaviour in each section of the shop
  
 Author:   Ashley L & Fionna C

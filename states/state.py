@@ -1,6 +1,7 @@
 '''
 -------------------------------------------------------------------------------
 Name:  state.py
+Course: ICS4U1
 Purpose: State class that determines behavior for each state of the game
  
 Author:   Ashley L & Fionna C

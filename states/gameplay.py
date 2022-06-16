@@ -1,6 +1,7 @@
 '''
 -------------------------------------------------------------------------------
 Name:  gameplay.py
+Course: ICS4U1
 Purpose: Contains Restaurant and Kitchen child classes that inherit from State class, controls main game mechanics such as customer and recipe generating and cooking 
  
 Author:   Ashley L & Fionna C
