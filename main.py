@@ -9,6 +9,7 @@ from load_assets import *
 class Game: 
     
     current_recipe = None
+    current_song = default_music
     gold = 100
     colour_one_owned = False
     colour_two_owned = False
@@ -20,9 +21,6 @@ class Game:
     def __init__(self):
         
         pygame.init()
-
-        pygame.mixer.music.play(-1)
-        pygame.mixer.music.set_volume(0.25)
 
         # Configure window
         self.GAME_X, self.GAME_Y = 320, 180

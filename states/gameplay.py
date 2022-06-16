@@ -718,7 +718,7 @@ class Kitchen(State):
                     self.game.draw_image(pot_smoke, 1, surface, self.game.GAME_X / 4 + 7, 110)
 
                 if self.rating_triggered:
-                    self.rating_screen(surface, blue_background, stew_placeholder)
+                    self.rating_screen(surface, blue_background, cook_stew_placeholder)
                     
                 if self.next_step:
                     self.reset_status(3)
@@ -755,9 +755,6 @@ class Kitchen(State):
                     self.ingredient_rating[step] = 3
 
                 self.display_rating_message(surface)
-
-                for i in range(len(slice_status)):
-                    slice_status[i] = False
 
             self.game.draw_image(time_bar, 1, surface, self.game.GAME_X / 2 + self.game.GAME_X / 4, self.game.GAME_Y / 4)
 
@@ -829,6 +826,10 @@ class Kitchen(State):
 
                 if slice_status[5] and slice_status[6]:
                     pygame.draw.line(surface, WARM_CROISSANT, (button_56_pos_x, bottombutton_pos_y),(button_56_pos_x, topbutton_pos_y))
+
+                if self.rating_triggered:
+                    for i in range(len(slice_status)):
+                        slice_status[i] = False
                     
     # Clears the screen and shows the user's rating after a ingredient cooking step
     def rating_screen(self, surface, background_image, step_text_image):

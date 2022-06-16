@@ -44,6 +44,9 @@ class Shop_Menu(State):
       
         if return_button.draw(surface):
           self.game.actions ["menu"] = True
+          pygame.mixer.music.unload()
+          pygame.mixer.music.load(self.game.current_song)
+          pygame.mixer.music.play()
         if self.characters_button.draw(surface):
             self.game.actions["characters"] = True
         if self.recolour_button.draw(surface):
@@ -252,9 +255,7 @@ class Music(State):
         self.game.actions["shop"] = True
       
       if self.menu_music_button.draw(surface):
-        pygame.mixer.music.unload()
-        pygame.mixer.music.load("assets/sounds/menu_music.mp3")
-        pygame.mixer.music.play()
+        self.game.current_song = default_music
 
       if self.speedwagon_buy_button.draw(surface):
         self.buy = True
@@ -273,7 +274,7 @@ class Music(State):
         if self.check_mark.draw (surface) and self.game.gold >= 45:
           self.ok = True
           self.game.music = True
-          self.game.spend_gold(45)
+          self.game.current_song = jojo_music
           print("money spent")
 
         elif self.check_mark.draw and self.game.gold < 45:
