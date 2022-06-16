@@ -7,7 +7,7 @@ To do list:
 
 #  Import required modules and classes
 import random
-from states.shop_menu import colours
+from states.shop_menu import Colours
 from states.state import State
 from button import Button
 from load_assets import * 
@@ -756,9 +756,6 @@ class Kitchen(State):
 
                 self.display_rating_message(surface)
 
-                for i in range(len(slice_status)):
-                    slice_status[i] = False
-
             self.game.draw_image(time_bar, 1, surface, self.game.GAME_X / 2 + self.game.GAME_X / 4, self.game.GAME_Y / 4)
 
             self.trigger_countdown(surface)
@@ -829,6 +826,10 @@ class Kitchen(State):
 
                 if slice_status[5] and slice_status[6]:
                     pygame.draw.line(surface, WARM_CROISSANT, (button_56_pos_x, bottombutton_pos_y),(button_56_pos_x, topbutton_pos_y))
+
+                if self.rating_triggered:
+                    for i in range(len(slice_status)):
+                        slice_status[i] = False
                     
     # Clears the screen and shows the user's rating after a ingredient cooking step
     def rating_screen(self, surface, background_image, step_text_image):
