@@ -333,7 +333,7 @@ class Kitchen(State):
             if self.next_step:
                 self.reset_status(1)
 
-        # Define function for cutting the tomato
+        # Define function for cutting the tomato using slice method
         def cut_tomato(surface):
             self.draw_cooking_background(surface, green_instruction_panel, cutting_board)
 
