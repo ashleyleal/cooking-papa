@@ -35,12 +35,6 @@ class Shop_Menu(State):
         self.game.draw_image(characters_button, 1, surface, 80, 120)
         self.game.draw_image(recolour_button, 1, surface, self.game.GAME_X / 2, 120)
         self.game.draw_image(music_button, 1, surface, 242, 120)
-        
-        #(Draw buttons for avaliable music)
-        #(Draw buttons for avaliable characters)
-        #(Draw buttons for avaliable colours)
-        #(Draw buttons for confirm or decline purchase)
-        #(Draw bg for confirm or decline purchase prompt)
   
         self.characters_button = Button(80, 120, characters_button, 1)
         self.recolour_button = Button((self.game.GAME_X / 2), 120, recolour_button, 1)
@@ -101,7 +95,7 @@ class Characters(State):
         if self.red_cross.draw(surface):
           self.game.actions["characters"] = True
 
-        if self.check_mark.draw(surface):
+        if self.check_mark.draw(surface) and self.game.gold >= 45:
           self.game.spend_gold(45)
           self.ok = True
           self.game.owned_character_1 = True
@@ -174,7 +168,7 @@ class Colours(State):
         if self.red_cross.draw(surface):
           self.game.actions["colours"] = True
 
-        if self.check_mark.draw(surface):
+        if self.check_mark.draw(surface) and self.game.gold >= 25:
           self.game.spend_gold(25)
           self.cry = True
           self.game.colour_one_owned = True
@@ -277,7 +271,7 @@ class Music(State):
         if self.red_cross.draw(surface):
           self.game.actions["music"] = True
 
-        if self.check_mark.draw(surface):
+        if self.check_mark.draw(surface) and self.game.gold >= 45:
           self.game.spend_gold(45)
           self.ok = True
           self.game.music = True
