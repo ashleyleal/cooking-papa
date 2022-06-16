@@ -34,4 +34,3 @@ class State:
     # Exit state by popping current state from stack
     def exit_state(self):
         self.game.state.state_stack.pop()
-        self.game.actions["fade"] = True
