@@ -55,7 +55,7 @@ class Shop_Menu(State):
           self.game.actions ["menu"] = True
           pygame.mixer.music.unload()
           pygame.mixer.music.load(self.game.current_song)
-          pygame.mixer.music.play()
+          pygame.mixer.music.play(-1)
         if self.characters_button.draw(surface):
             self.game.actions["characters"] = True
         if self.recolour_button.draw(surface):

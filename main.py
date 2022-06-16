@@ -8,7 +8,7 @@ Author:   Ashley L & Fionna C
 Created:  29/04/2022
 ------------------------------------------------------------------------------
 '''
-import pygame
+import pygame, json
 
 from states.main_menu import Main_Menu
 from load_assets import *
@@ -16,9 +16,12 @@ from load_assets import *
 # Define Game class
 class Game: 
     
+    with open(gold_save_data) as f:
+        gold = json.load(f)
+        print("gold data loaded")
+
     current_recipe = None
     current_song = default_music
-    gold = 0
     colour_one_owned = False
     colour_two_owned = False
     owned_character_1 = False
@@ -127,8 +130,9 @@ class Game:
             alpha_key += 1
             pygame.time.delay(1000)
 
+    # Defines method that pays the player gold by increasing the amount of gold
     def customer_payment(self, total_rating):
-        # Add amount to gold. Remove pass keyword after doing function; it is just there so the empty function doesn't error.
+        # Add amount to gold depending on player's rating. Use try and except to prevent the program from crashing during an error.
         try:
             if total_rating >= 3 and total_rating < 6:
                 self.gold += 5
@@ -136,23 +140,32 @@ class Game:
                 self.gold += 10
             elif total_rating == 9:
                 self.gold += 15
+            self.update_save_data()
         except:
             print("An error occurred in paying the player")
 
+    # Defines method that let's the player spend gold by decreasing the amount of gold
     def spend_gold(self, amount):
-        # Subtract amount from gold but check if there is enough first and if there isn't enough return something to indicate that there isn't enough. Remove pass when done. 
+        # Subtract amount from gold but check if there is enough first and if there isn't enough return something to indicate that there isn't enough. 
         try:
             if self.gold >= amount:
                 self.gold -= amount
+                self.update_save_data()
             elif self.gold < amount:
                 return "insufficient funds" 
         except:
             print("An error occurred in spending gold")
 
+    # Defines method that draws the gold icon with the amount of gold owned by the player
     def draw_gold(self, surface, px, py, colour):
         self.draw_image(gold_icon, 1, surface, px - 10, py)
         self.draw_text(surface, str(self.gold), MINIMAL_FONT, colour, px + 10, py)
             
+    def update_save_data(self):
+        with open(gold_save_data, "w") as f:
+            json.dump(self.gold, f)
+            print("gold data updated")
+
 # Creates an instance of Game class and runs the game loop while the program is running            
 if __name__ == "__main__":
     game = Game()

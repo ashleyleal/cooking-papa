@@ -23,33 +23,12 @@ class Restaurant(State):
     def __init__(self, game):
         State.__init__(self, game)
         # Nested dictionary of all possible recipes, the steps, and descriptions for each step
-        self.possible_recipes =  {
-            
-            "Burger": {
-                "Cook Patty": "Flip at the right time!",
-                "Slice Tomato": "Click two points to make a slice.",
-                "Assemble Burger": "Put the ingredients of the burger together by pressing the right button at the right time"
-            },
-            
-            "Fried Chicken": {
-                "": "",
-                "": "",
-                "": "",
-            },
-
-            "Stew": {
-                "": "",
-                "": "",
-                "": "",
-            }
-        } 
-
+        self.possible_recipes =  ["Burger", "Fried Chicken", "Stew"]
         self.set_order()
 
     # Method that selects and returns a recipe from possible_recipes dictionary
-    def generate_order(self): 
-        selected = random.choice(list(self.possible_recipes.keys()))
-        return(selected, self.possible_recipes[selected])
+    def generate_order(self):  
+        return random.choice(self.possible_recipes)
 
     # Method that selects and returns a customer image
     def generate_customer(self):
@@ -60,10 +39,8 @@ class Restaurant(State):
 
     # Method that sets the returned recipes and customers and passes them to the game class variable current_recipe
     def set_order(self):
-        returned = self.generate_order()
         self.selected_customer = self.generate_customer()
-        self.selected_recipe = returned[0]
-        self.game.current_recipe = self.selected_recipe
+        self.game.current_recipe = self.generate_order()
 
     # Updates events based on action triggers
     def update(self, actions):
@@ -110,14 +87,13 @@ class Restaurant(State):
         
         icon_position = self.game.GAME_X/ 2 + 80, self.game.GAME_Y / 2 - 57
         
-        if self.selected_recipe == "Burger":
+        if self.game.current_recipe == "Burger":
             self.game.draw_image(burger_icon, 1, surface, icon_position[0], icon_position[1])
         
-        elif self.selected_recipe == "Fried Chicken":
+        elif self.game.current_recipe == "Fried Chicken":
             self.game.draw_image(chicken_icon, 1, surface, icon_position[0], icon_position[1])
         
-        
-        elif self.selected_recipe == "Stew":
+        elif self.game.current_recipe == "Stew":
             self.game.draw_image(stew_icon, 1, surface, icon_position[0], icon_position[1])
         
         
@@ -323,7 +299,6 @@ class Kitchen(State):
                     if self.cooking_done:
                         pygame.mixer.Sound.stop(sizzling_sound)
                     
-
     # Render loop that continously updates screen based on current conditions 
     def render(self, surface):
 
@@ -335,7 +310,6 @@ class Kitchen(State):
         elif self.current_recipe == "Stew":
             self.cook_stew(surface)
         
-
     # Define method that cooks the burger
     def cook_burger(self, surface):
 
@@ -475,6 +449,7 @@ class Kitchen(State):
         elif self.evaluation:
             self.final_rating(surface, "Burger", green_background)
 
+    # Define method that cooks the fried chicken
     def cook_chicken(self, surface):
 
         def cut_chicken(surface):
@@ -634,6 +609,7 @@ class Kitchen(State):
         elif self.evaluation:
             self.final_rating(surface, "Fried Chicken", pink_background)
 
+    # Define method that cooks the stew
     def cook_stew(self, surface):
 
         def cut_carrot(surface):
@@ -744,6 +720,7 @@ class Kitchen(State):
         elif self.evaluation:
             self.final_rating(surface, "Stew", blue_background)
 
+    # Define method for cooking steps that require slicing action
     def slice(self, surface, speed, arrow_pos, image, slice_status, top_pos, bottom_pos, x_offset, step):
 
             if not self.cooking_done:
