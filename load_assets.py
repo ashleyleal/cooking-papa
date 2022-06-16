@@ -215,3 +215,5 @@ down_arrow = pygame.image.load("assets/images/icons/blue_down.png")
 one_star = pygame.image.load("assets/images/images/one_star.png")
 two_stars = pygame.image.load("assets/images/images/two_stars.png")
 three_stars = pygame.image.load("assets/images/images/three_stars.png")
+
+gold_save_data = "gold_data.txt"

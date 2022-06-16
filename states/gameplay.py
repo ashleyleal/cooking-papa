@@ -22,7 +22,8 @@ class Restaurant(State):
     # Inherits from game and State class
     def __init__(self, game):
         State.__init__(self, game)
-        # Nested dictionary of all possible recipes, the steps, and descriptions for each step
+        
+        # List of all possible recipes, the steps, and descriptions for each step
         self.possible_recipes =  ["Burger", "Fried Chicken", "Stew"]
         self.set_order()
 
@@ -103,12 +104,20 @@ class Kitchen(State):
     # Inherit attributes from parent state class State 
     def __init__(self, game):
         State.__init__(self, game)
-
-        # Variables that set attributes for events in the cooking processes
+        
         self.current_recipe = self.game.current_recipe
+        
+        # Variables that set attributes for events in the cooking processes
+        # Initializes a variable that will trigger a countdown when set to True
         self.countdown_triggered = False
+        
+        # Initializes a variable that will be set to True once the countdown is completed
         self.countdown_completed = False
+        
+        # Initializes a variable that will trigger the rating screen when set to True
         self.rating_triggered = False
+        
+        # Initializes a dictionary that holds the player's score for each step of a cooking process
         self.ingredient_rating = {
 
             "first": 0,
@@ -116,7 +125,11 @@ class Kitchen(State):
             "third": 0
 
         }
+        
+        # Initializes a variable that will store the player's total score
         self.total_rating = 0
+        
+        # Initializes a variable that will be set to True when a cooking step is completed
         self.next_step = False
 
         # Controls which number is shown on the screen to emulate countdown
@@ -133,21 +146,6 @@ class Kitchen(State):
         self.stew_pos = 0
         self.stop_button_posx, self.stop_button_posy = self.game.GAME_X / 4, self.game.GAME_Y / 5
         self.stop_button_velx, self.stop_button_vely = 1,1
-        
-        self.slice_speed = 0.25
-        self.slice_pos = [0]
-
-        
-        self.slice_statuses = {
-            
-            1: False,
-            2: False,
-            3: False,
-            4: False,
-            5: False,
-            6: False
-
-            }
 
         self.burger_positions = {
 
@@ -166,8 +164,11 @@ class Kitchen(State):
 
         self.burger_assembly_progress = 0
         self.burger_assembled_properly = 0
-
-        self.chicken_slice = {
+        
+        # Variables and statuses for slicing steps
+        self.slice_speed = 0.25
+        self.slice_pos = [0]
+        self.slice_statuses = {
             
             1: False,
             2: False,
@@ -178,9 +179,9 @@ class Kitchen(State):
 
             }
 
+        # Variables and statuses for coating chicken
         self.chicken_coat_speed = 0.30
         self.chicken_coat_pos = 0
-
         self.chicken_coat_clicks = 20
         self.current_chicken = raw_chicken_1
 
@@ -195,10 +196,13 @@ class Kitchen(State):
 
     # Things that happen when certain variables are modified through gameplay, is outside of render loop
     def update(self, actions):
+        
         # If menu actions is triggered the main menu state is entered
         if actions["menu"]:
             main_menu = self.game.state_stack[0]
             main_menu.enter_state()
+        
+        # If start actions is triggered the restaurant state is entered
         if actions["start"]:
             new_state = Restaurant(self.game)
             new_state.enter_state()
@@ -225,9 +229,10 @@ class Kitchen(State):
                 self.countdown_triggered = False
                 self.countdown_completed = True
                 
-
+        # Specific cooking process for unique burger assembly step
         if self.current_recipe == "Burger" and self.step_3:
-            
+
+            # Define function that adds up the number of ingredients in the right position and calculates a score      
             def get_rating():
                 self.burger_positions["done"] = True
                 if self.burger_positions[1][1] == sliced_tomato:
@@ -252,6 +257,7 @@ class Kitchen(State):
                 self.cooking_done = True
                 self.completed_time = pygame.time.get_ticks()
 
+            # While cooking is not done yet, allow user to place ingredients using arrow keys and make sure that there are no duplicates
             if not self.burger_positions["done"]:
                 if self.game.actions["arrowup"]:
                     if self.burger_positions["cheese"] == False:
@@ -293,6 +299,7 @@ class Kitchen(State):
                 if pygame.time.get_ticks() > self.completed_time + 6000:
                     self.next_step = True
 
+        # Specific sizzling sound for steps requiring sound effect
         if self.countdown_completed:
             if (self.current_recipe == "Burger" and self.step_1) or (self.current_recipe == "Fried Chicken" and self.step_3):
                     pygame.mixer.Sound.play(sizzling_sound)
