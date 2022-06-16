@@ -189,6 +189,7 @@ countdown_sound = pygame.mixer.Sound("assets/sounds/countdown.wav")
 sizzling_sound = pygame.mixer.Sound("assets/sounds/sizzling.wav")
 slice_sound = pygame.mixer.Sound("assets/sounds/slice.wav")
 
+
 pygame.mixer.music.load("assets/sounds/menu_music.mp3")
 #jojo = pygame.mixer.Sound("assets/sounds/jojo.mo3")
 
