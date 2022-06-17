@@ -159,6 +159,8 @@ class Kitchen(State):
         self.burger_assembly_progress = 0
         self.burger_assembled_properly = 0
         
+        self.stew_pos = 0
+        self.stew_speed = 0.25
         # Variables and statuses for slicing steps
         self.slice_speed = 0.25
         self.slice_pos = [0]
@@ -493,6 +495,7 @@ class Kitchen(State):
     # Define method that cooks the stew
     def cook_stew(self, surface):
 
+        # Define method for slicing carrot with the slice method
         def cut_carrot(surface):
             self.draw_cooking_background(surface, blue_instruction_panel, cutting_board)
 
@@ -503,7 +506,8 @@ class Kitchen(State):
                     
                 if self.next_step:
                     self.reset_status(1)
-        
+
+        # Define method for slicing beef with the slice method
         def cut_beef(surface):
             self.draw_cooking_background(surface, blue_instruction_panel, cutting_board)
 
@@ -515,16 +519,71 @@ class Kitchen(State):
                 if self.next_step:
                     self.reset_status(2)
 
+        # Define method for cooking the stew using the timed_cooking method
         def make_stew(surface):
             self.draw_cooking_background(surface, blue_instruction_panel, kitchen_grill)
-            
-            self.timed_cooking(surface, self.timed_cooking_speed, self.timed_cooking_pos, pot, pot_smoke, pot_smoke, "third", click_button, "CLICK AT THE")
-          
-            if self.rating_triggered:
-                self.rating_screen(surface, blue_background, cook_stew_placeholder)
+
+            # Changes the text in cooking papa's speech bubble depending on the conditions
+            if not self.cooking_done:
+
+                self.game.draw_text(surface, "CLICK AT THE", MINIMAL_FONT, NOBLE_BLACK, 275, 95)
+                self.game.draw_text(surface, "RIGHT TIME!", MINIMAL_FONT, NOBLE_BLACK, 275, 110)
+            if self.cooking_done: 
                 
-            if self.next_step:
-                self.reset_status(3)
+                if (self.stew_pos >= 0 and self.stew_pos <= 40) or self.stew_pos > 90:
+                    self.ingredient_rating["third"] = 1
+                elif (self.stew_pos > 40 and self.stew_pos <= 50) or (self.stew_pos > 80 and self.stew_pos <= 90):
+                    self.ingredient_rating["third"] = 2
+                elif self.stew_pos > 50 and self.stew_pos <= 80:
+                    self.ingredient_rating["third"] = 3
+
+                self.display_rating_message(surface) 
+
+            # Draw the cooking bar that shows how cooked the stew is
+            self.game.draw_image(cooking_bar, 1, surface, self.game.GAME_X / 2 + self.game.GAME_X / 4, self.game.GAME_Y / 4)
+
+            # Prompt countdown
+            self.trigger_countdown(surface)
+
+            # Start cooking process when countdown is completed
+            if self.countdown_completed:
+
+                # Initialize button
+                stop_button = Button(self.stop_button_posx, self.stop_button_posy, click_button, 1)
+
+                self.stop_button_posx += self.stop_button_velx
+                self.stop_button_posy += self.stop_button_vely
+                if self.stop_button_posx >= self.game.GAME_X / 2 - 9 or self.stop_button_posx <= 9:
+                    self.stop_button_velx *= -1
+                if self.stop_button_posy >= self.game.GAME_Y / 2 - 28 or self.stop_button_posy <= 5:
+                    self.stop_button_vely *= -1
+                if stop_button.draw(surface):
+                    self.play_victory_music()
+                    self.cooking_done = True
+                    self.completed_time = pygame.time.get_ticks()
+                    self.stew_speed, self.stop_button_velx, self.stop_button_vely = 0, 0, 0
+                self.game.draw_image(cooking_arrow, 1, surface, self.game.GAME_X / 2 + self.game.GAME_X / 4 - 65 + self.stew_pos, self.game.GAME_Y / 4 + 10)
+                
+                self.stew_pos += self.stew_speed
+                # Stops the cooking arrow when it reaches the end of the bar
+                if self.stew_pos >= 135:
+                    self.stew_speed, self.stop_button_velx, self.stop_button_vely = 0, 0, 0
+                    if skip_button.draw(surface):
+                        self.play_victory_music()
+                        self.cooking_done = True
+                        self.completed_time = pygame.time.get_ticks()
+                
+                elif self.stew_pos >= 0 and self.stew_pos <= 40:
+                    self.game.draw_image(pot, 1, surface, self.game.GAME_X / 4 + 7, 125)
+                elif self.stew_pos > 40 and self.stew_pos <= 90:
+                    self.game.draw_image(pot_smoke, 1, surface, self.game.GAME_X / 4 + 7, 110)
+                elif self.stew_pos > 90:
+                    self.game.draw_image(pot_smoke, 1, surface, self.game.GAME_X / 4 + 7, 110)
+                if self.rating_triggered:
+                    self.rating_screen(surface, blue_background, cook_stew_placeholder)
+                    
+                if self.next_step:
+                    self.reset_status(3)
 
         surface.fill(YUCCA_CREAM)
 
@@ -662,7 +721,7 @@ class Kitchen(State):
 
             self.display_rating_message(surface) 
                         
-        # Draw the cooking bar that shows how cooked the chicken is
+        # Draw the cooking bar that shows how cooked the food is
         self.game.draw_image(cooking_bar, 1, surface, self.game.GAME_X / 2 + self.game.GAME_X / 4, self.game.GAME_Y / 4)
 
         # Prompt countdown
@@ -833,9 +892,14 @@ class Kitchen(State):
         if skip_button.draw(surface):
             self.game.actions["start"] = True
             self.game.customer_payment(self.total_rating)
-            pygame.mixer.music.unload()
-            pygame.mixer.music.load(self.game.current_song)
-            pygame.mixer.music.play(-1)
+            if self.game.music == True:
+                pygame.mixer.music.unload()
+                pygame.mixer.music.load(jojo_music)
+                pygame.mixer.music.play(-1, 238)
+            else:
+                pygame.mixer.music.unload()
+                pygame.mixer.music.load(default_music)
+                pygame.mixer.music.play(-1)
 
     # Define method that plays celebratory music    
     def play_victory_music(self):
