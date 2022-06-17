@@ -1,5 +1,5 @@
 # cooking-papa
- ICS4U1 CPT by Ashley Land Fionna C
+ ICS4U1 CPT by Ashley L and Fionna C
 
  Ashley L:
  main.py
