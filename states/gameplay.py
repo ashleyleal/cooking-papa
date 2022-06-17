@@ -543,11 +543,13 @@ class Kitchen(State):
     # Define method for cooking steps that require slicing action
     def slice(self, surface, speed, arrow_pos, image, slice_status, top_pos, bottom_pos, x_offset, step):
 
+            # Show instructions when cooking isn't done
             if not self.cooking_done:
                 
                 self.game.draw_text(surface, "SLICE AS FAST", MINIMAL_FONT, NOBLE_BLACK, 275, 95)
                 self.game.draw_text(surface, "AS YOU CAN!", MINIMAL_FONT, NOBLE_BLACK, 275, 110)
 
+            # Generate rating when cooking is done
             if self.cooking_done:
 
                 pygame.mixer.Sound.stop(slice_sound)
@@ -579,12 +581,14 @@ class Kitchen(State):
                 bottombutton_pos_y = bottom_pos
 
                 self.game.draw_image(cooking_arrow, 1, surface, self.game.GAME_X / 2 + self.game.GAME_X / 4 - 65 + arrow_pos[0], self.game.GAME_Y / 4 + 10)
-                
+            
+                # Animate cooking arrow
                 if not self.cooking_done and not arrow_pos[0] >= 135:
                     arrow_pos.append(speed)
                     arrow_pos[0] += arrow_pos[1]
                     arrow_pos.pop()
 
+                # Stop cooking when arrow reaches end
                 if arrow_pos[0] >= 135:
                     if skip_button.draw(surface):
                         if step == "third":
@@ -592,6 +596,7 @@ class Kitchen(State):
                         self.cooking_done = True
                         self.completed_time = pygame.time.get_ticks()
 
+                # Create new button instances
                 slice_1_button = Button(button_12_pos_x, bottombutton_pos_y, slice_icon, 1)
                 slice_2_button = Button(button_12_pos_x, topbutton_pos_y, slice_icon, 1)
                 slice_3_button = Button(button_34_pos_x, bottombutton_pos_y, slice_icon, 1)
@@ -599,6 +604,7 @@ class Kitchen(State):
                 slice_5_button = Button(button_56_pos_x, bottombutton_pos_y, slice_icon, 1)
                 slice_6_button = Button(button_56_pos_x, topbutton_pos_y, slice_icon, 1)
 
+                # Draw the next button only when the last one has been pressed
                 if slice_1_button.draw(surface):
                     slice_status[1] = True
 
@@ -629,6 +635,7 @@ class Kitchen(State):
                         self.cooking_done = True
                         self.completed_time = pygame.time.get_ticks()
 
+                # Draw lines between buttons to simulate slicing
                 if slice_status[1] and slice_status[2]:
                     pygame.draw.line(surface, WARM_CROISSANT, (button_12_pos_x, bottombutton_pos_y),(button_12_pos_x, topbutton_pos_y))
                 
@@ -638,6 +645,7 @@ class Kitchen(State):
                 if slice_status[5] and slice_status[6]:
                     pygame.draw.line(surface, WARM_CROISSANT, (button_56_pos_x, bottombutton_pos_y),(button_56_pos_x, topbutton_pos_y))
 
+                # Reset status of slice buttons
                 if self.rating_triggered:
                     for i in range(len(slice_status)):
                         slice_status[i] = False
@@ -824,8 +832,10 @@ class Kitchen(State):
             self.game.draw_image(stew_placeholder, 1, surface, self.game.GAME_X / 2, self.game.GAME_Y / 5)
             self.game.draw_image(stew_final, 1, surface, self.game.GAME_X / 2, self.game.GAME_Y / 2)
             
+        # Calculate total rating
         self.total_rating = self.ingredient_rating["first"] + self.ingredient_rating["second"] + self.ingredient_rating["third"]
 
+        # Draw correct number of stars based on total rating
         if self.total_rating >= 3 and self.total_rating < 6:
             self.game.draw_image(one_star, 1, surface, self.game.GAME_X / 2, self.game.GAME_Y / 2 + self.game.GAME_Y / 3)
         elif self.total_rating >= 6 and self.total_rating < 9:
@@ -833,6 +843,7 @@ class Kitchen(State):
         elif self.total_rating == 9:
             self.game.draw_image(three_stars, 1, surface, self.game.GAME_X / 2, self.game.GAME_Y / 2 + self.game.GAME_Y / 3)
 
+        # Go back to restaurant when arrow button is pressed
         if skip_button.draw(surface):
             self.game.actions["start"] = True
             self.game.customer_payment(self.total_rating)
