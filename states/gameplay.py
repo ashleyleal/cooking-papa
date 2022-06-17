@@ -319,7 +319,7 @@ class Kitchen(State):
             
             self.draw_cooking_background(surface, green_instruction_panel, kitchen_grill)
 
-            self.timed_cooking(surface, self.timed_cooking_speed, self.timed_cooking_pos, raw_patty, cooked_patty, burned_patty, "first", flip_button, "FLIP AT THE", 0)
+            self.timed_cooking(surface, self.timed_cooking_speed, self.timed_cooking_pos, raw_patty, cooked_patty, burned_patty, "first", flip_button, "FLIP AT THE")
 
             if self.rating_triggered:
                 self.rating_screen(surface, green_background, cook_patty_a)
@@ -471,7 +471,7 @@ class Kitchen(State):
         def fry_chicken(surface):
             
             self.draw_cooking_background(surface, pink_instruction_panel, deep_fryer)
-            self.timed_cooking(surface, self.timed_cooking_speed, self.timed_cooking_pos, coated_chicken_1, cooked_chicken_1, burned_chicken_1, "third", flip_button, "FLIP AT THE", 0)
+            self.timed_cooking(surface, self.timed_cooking_speed, self.timed_cooking_pos, coated_chicken_1, cooked_chicken_1, burned_chicken_1, "third", flip_button, "FLIP AT THE")
             
             if self.rating_triggered:
                 self.rating_screen(surface, pink_background, fry_chicken_a)
@@ -521,7 +521,7 @@ class Kitchen(State):
         def make_stew(surface):
             self.draw_cooking_background(surface, blue_instruction_panel, kitchen_grill)
 
-            self.timed_cooking(surface, self.timed_cooking_speed, self.timed_cooking_pos, pot, pot_smoke, pot_smoke, "third", click_button, "CLICK AT THE", 15)
+            self.timed_cooking(surface, self.timed_cooking_speed, self.timed_cooking_pos, pot, pot_smoke, pot_smoke, "third", click_button, "CLICK AT THE")
             # Changes the text in cooking papa's speech bubble depending on the conditions
             if self.rating_triggered:
                 self.rating_screen(surface, blue_background, cook_stew_placeholder)
@@ -652,7 +652,7 @@ class Kitchen(State):
                     
 
     # Define method for cooking steps that require timed cooking
-    def timed_cooking(self, surface, speed, arrow_pos, raw_image, cooked_image, burned_image, step, stop_button_image, firstline_text, offset):
+    def timed_cooking(self, surface, speed, arrow_pos, raw_image, cooked_image, burned_image, step, stop_button_image, firstline_text):
         
         # Show instructions while player is still cooking
         if not self.cooking_done:
@@ -724,13 +724,13 @@ class Kitchen(State):
 
             # Draw the appropriate ingredient image depending on the cooking arrow position
             elif arrow_pos[0] >= 0 and arrow_pos[0] <= 40:
-                self.game.draw_image(raw_image, 1, surface, self.game.GAME_X / 4, 135 - offset)
+                self.game.draw_image(raw_image, 1, surface, self.game.GAME_X / 4, 135)
 
             elif arrow_pos[0] > 40 and arrow_pos[0] <= 90:
-                self.game.draw_image(cooked_image, 1, surface, self.game.GAME_X / 4, 135 - offset)
+                self.game.draw_image(cooked_image, 1, surface, self.game.GAME_X / 4, 135)
 
             elif arrow_pos[0] > 90:
-                self.game.draw_image(burned_image, 1, surface, self.game.GAME_X / 4, 135 - offset)               
+                self.game.draw_image(burned_image, 1, surface, self.game.GAME_X / 4, 135)               
 
     # Clears the screen and shows the user's rating after a ingredient cooking step
     def rating_screen(self, surface, background_image, step_text_image):
