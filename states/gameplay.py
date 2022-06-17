@@ -27,10 +27,6 @@ class Restaurant(State):
         self.possible_recipes =  ["Burger", "Fried Chicken", "Stew"]
         self.set_order()
 
-    # Method that selects and returns a recipe from possible_recipes dictionary
-    def generate_order(self):  
-        return random.choice(self.possible_recipes)
-
     # Method that selects and returns a customer image
     def generate_customer(self):
         possible_customers = [customer_1, customer_2, customer_3]
@@ -41,7 +37,7 @@ class Restaurant(State):
     # Method that sets the returned recipes and customers and passes them to the game class variable current_recipe
     def set_order(self):
         self.selected_customer = self.generate_customer()
-        self.game.current_recipe = self.generate_order()
+        self.game.current_recipe = random.choice(self.possible_recipes)
 
     # Updates events based on action triggers
     def update(self, actions):
@@ -139,8 +135,8 @@ class Kitchen(State):
             1: False
         }
 
-        # Variables for burger cooking
-        self.timed_cooking_speed = 0.15
+        # Variables for timed cooking processes
+        self.timed_cooking_speed = 0.10
         self.timed_cooking_pos = [0]
         self.stop_button_posx, self.stop_button_posy = self.game.GAME_X / 4, self.game.GAME_Y / 5
         self.stop_button_velx, self.stop_button_vely = 1,1
@@ -829,7 +825,7 @@ class Kitchen(State):
 
         if self.total_rating >= 3 and self.total_rating < 6:
             self.game.draw_image(one_star, 1, surface, self.game.GAME_X / 2, self.game.GAME_Y / 2 + self.game.GAME_Y / 3)
-        elif self.total_rating >=6 and self.total_rating < 9:
+        elif self.total_rating >= 6 and self.total_rating < 9:
             self.game.draw_image(two_stars, 1, surface, self.game.GAME_X / 2, self.game.GAME_Y / 2 + self.game.GAME_Y / 3)
         elif self.total_rating == 9:
             self.game.draw_image(three_stars, 1, surface, self.game.GAME_X / 2, self.game.GAME_Y / 2 + self.game.GAME_Y / 3)
