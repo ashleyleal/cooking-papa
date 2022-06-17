@@ -836,14 +836,9 @@ class Kitchen(State):
         if skip_button.draw(surface):
             self.game.actions["start"] = True
             self.game.customer_payment(self.total_rating)
-            if self.game.music == True:
-                pygame.mixer.music.unload()
-                pygame.mixer.music.load(jojo_music)
-                pygame.mixer.music.play(-1, 238)
-            else:
-                pygame.mixer.music.unload()
-                pygame.mixer.music.load(default_music)
-                pygame.mixer.music.play(-1)
+            pygame.mixer.music.unload()
+            pygame.mixer.music.load(self.game.current_song)
+            pygame.mixer.music.play(-1)
 
     # Define method that plays celebratory music    
     def play_victory_music(self):
