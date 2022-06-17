@@ -564,7 +564,7 @@ class Kitchen(State):
                     self.ingredient_rating[step] = 3
 
                 self.display_rating_message(surface)
-
+    
             self.game.draw_image(time_bar, 1, surface, self.game.GAME_X / 2 + self.game.GAME_X / 4, self.game.GAME_Y / 4)
 
             self.trigger_countdown(surface)
@@ -649,7 +649,7 @@ class Kitchen(State):
                 if self.rating_triggered:
                     for i in range(len(slice_status)):
                         slice_status[i] = False
-                    arrow_pos[0] = 0
+                    
 
     # Define method for cooking steps that require timed cooking
     def timed_cooking(self, surface, speed, arrow_pos, raw_image, cooked_image, burned_image, step, stop_button_image, firstline_text, offset):
@@ -758,6 +758,7 @@ class Kitchen(State):
         self.countdown_completed = False
         self.rating_triggered = False
         self.next_step = False
+        self.slice_pos = [0]
 
         if current_step == 1:
             self.step_1 = False
